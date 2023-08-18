@@ -3,7 +3,7 @@
 
     <div class="category-list__head">
       <span class="category-list__title title">Категории</span>
-      <nuxt-link class="category-list__go-categories" to="/catalog">Смотреть все</nuxt-link>
+      <button class="category-list__go-categories" v-if="!isShowAll" @click="showAll()">Смотреть все</button>
     </div>
 
     <div class="category-list__content">
@@ -17,18 +17,27 @@
 </template>
 
 <script setup>
-const categories = [
-  {name: "Алгоритмы", code: "algorithm"},
-  {name: "Программирование", code: "coding"},
-  {name: "Математика", code: "math"},
-  {name: "Физика", code: "phis"},
-  {name: "Химия", code: "chemistry"},
-]
+import {computed} from "vue";
+
+const props = defineProps({
+  categories: Array
+})
+
+// Список показанных категорий
+const categories = computed(() => isShowAll.value ? props.categories : props.categories.slice(0, 5));
+
+// Показать все
+const isShowAll = ref(false);
+const showAll = () => isShowAll.value = true;
 </script>
 
 <style lang="scss" scoped>
 .category-list {
   margin-top: 20px;
+
+  * {
+    transition: 0s;
+  }
 
   &__head {
     display: flex;

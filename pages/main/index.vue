@@ -3,7 +3,7 @@
   <div class="main">
     <base-media/>
 
-    <category-list/>
+    <category-list :categories="mainStore.getCategories"/>
 
     <card-list title="Интересные" to="/catalog">
       <lesson-card
@@ -49,6 +49,7 @@ const mainStore = useMainStore();
 
 // Запрашиваю инетересные уроки
 mainStore.fetchMainLists();
+mainStore.fetchCategories();
 
 // Пустой лист для примера
 const exampleList = [{}, {}, {}, {}, {}];

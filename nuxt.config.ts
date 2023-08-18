@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  nitro: undefined,
+  experimental: undefined,
   app: {
     head: {
       charset: "utf-8",
@@ -17,11 +19,17 @@ export default defineNuxtConfig({
           additionalData: `@use "@/assets/styles/variables.scss" as *;`
         }
       }
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      BACKEND_URL: process.env.BACKEND_URL
     }
   },
 
   modules: [
     '@nuxtjs/device',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
 })
