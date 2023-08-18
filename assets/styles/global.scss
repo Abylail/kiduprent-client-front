@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: $color--black;
+}
+
+button {
+  cursor: pointer;
+}
+
+a, button, input, textarea {
+  padding: 0;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background: none;
+  &:active {
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+// Шрифты
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+// Вспомогательные классы
+
+// Тайтл
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 28px;
+  margin: 5px 0;
+}
+
+// Чипс
+.chip {
+  color: $color--blue;
+  background: $color--gray-light;
+  padding: 8px 12px;
+  margin-right: 8px;
+  border-radius: 16px;
+  font-size: $fs--mini;
+  transition: $transition;
+
+  &--active {
+    color: white;
+    background: $color--blue;
+  }
+}
+
+// Задний фон синяя иллююстрация
+.background-blue-illustration {
+  background-image: url('~/assets/images/background-blue-illustration.svg');
+  background-size: cover;
+  background-color: $color--blue;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
