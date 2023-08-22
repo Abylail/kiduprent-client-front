@@ -1,37 +1,20 @@
 <template>
-  <mobile-header title="Главная kidup"/>
+  <mobile-header>
+    <img class="main-page__mini-logo" src="~/assets/images/logo.svg" alt="logo"/>
+    <h2 class="main-page__title">Kidup - главная</h2>
+  </mobile-header>
   <div class="main">
     <base-media/>
 
-    <category-list :categories="mainStore.getCategories"/>
-
-    <card-list title="Интересные" to="/catalog">
-      <lesson-card
-          v-for="(lesson, index) in mainStore.getInterestingLessons" :key="index"
+    <card-list title="Популярные уроки" to="/catalog">
+      <subject-card
+          v-for="(lesson, index) in mainStore.getInterestingSubjects" :key="index"
           :info="lesson"
       />
     </card-list>
+    <subject-list/>
 
-    <card-list title="Центры около вас" to="/catalog">
-      <center-card
-          v-for="(center, index) in exampleList" :key="index"
-          :info="center"
-      />
-    </card-list>
-
-    <card-list title="Популярные" to="/catalog">
-      <lesson-card
-          v-for="(lesson, index) in exampleList" :key="index"
-          :info="lesson"
-      />
-    </card-list>
-
-    <card-list title="Развитие ребенка" to="/catalog">
-      <center-card
-          v-for="(center, index) in exampleList" :key="index"
-          :info="center"
-      />
-    </card-list>
+<!--    <category-list :categories="mainStore.getCategories"/>-->
 
   </div>
 </template>
@@ -44,6 +27,8 @@ import LessonCard from "../../components/common/miniCards/lessonCard";
 import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
 import BaseMedia from "../../components/base/BaseMedia";
+import SubjectCard from "../../components/common/miniCards/subjectCard";
+import SubjectList from "../../components/common/main/subjectList";
 
 const mainStore = useMainStore();
 
@@ -55,6 +40,17 @@ mainStore.fetchCategories();
 const exampleList = [{}, {}, {}, {}, {}];
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.main-page {
 
+  &__mini-logo {
+    height: 50px;
+    width: 50px;
+  }
+
+  &__title {
+    font-size: $fs--title;
+  }
+
+}
 </style>

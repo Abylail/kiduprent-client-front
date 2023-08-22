@@ -35,6 +35,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   height: 50px;
   padding: 0 40px;
   background: $color--background-white;
+  border-top: 1px solid $color--gray;
 
   &__link {
     display: flex;

@@ -1,7 +1,7 @@
 <template>
   <div class="lesson-card-list">
     <div class="lesson-card-list__head">
-      <span class="title">{{ props.title }}</span>
+      <h2 class="lesson-card-list__title title">{{ props.title }}</h2>
       <nuxt-link class="lesson-card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
     </div>
 
@@ -29,7 +29,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .lesson-card-list {
-  margin-top: 20px;
+  margin: 16px 0;
 
   &__head {
     display: flex;
@@ -44,6 +44,9 @@ const props = defineProps({
   }
 
   &__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     width: auto;
     white-space:nowrap;
     overflow-x: auto;
@@ -53,6 +56,7 @@ const props = defineProps({
     ::v-deep {
       & > * {
         margin-right: 10px;
+        flex: 1;
       }
     }
   }

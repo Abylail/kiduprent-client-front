@@ -37,7 +37,7 @@ const myAutoplay = computed(() => props.autoplay ? 5000 : 0)
 .base-media {
 
   &__slide {
-    height: 200px;
+    height: 150px;
     object-fit: cover;
     width: 100%;
     border-radius: 10px;
@@ -53,17 +53,17 @@ const myAutoplay = computed(() => props.autoplay ? 5000 : 0)
 
   .carousel__slide--prev {
     opacity: 1;
-    transform: rotateY(-20deg) scale(0.94);
+    transform: rotateY(-20deg);
   }
 
   .carousel__slide--next {
     opacity: 1;
-    transform: rotateY(20deg) scale(0.94);
+    transform: rotateY(20deg);
   }
 
   .carousel__slide--active {
     opacity: 1;
-    transform: rotateY(0) scale(1.05);
+    transform: rotateY(0);
     min-width: 74vw;
   }
 }

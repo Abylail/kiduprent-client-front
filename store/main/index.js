@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import {api} from "~/composables/api";
+import api from "~/composables/api";
 
 const state = () => ({
     // Интересные уроки
-    interestingLessons: null,
+    interestingSubjects: null,
 
     // Список категорий
     categories: null,
@@ -11,7 +11,7 @@ const state = () => ({
 
 const getters = {
     // Интересные уроки
-    getInterestingLessons: state => state.interestingLessons || [],
+    getInterestingSubjects: state => state.interestingSubjects || [],
 
     // Список категорий
     getCategories: state => state.categories || [],
@@ -21,18 +21,22 @@ const actions = {
     // Запросить категории
     async fetchCategories() {
         if (this.categories) return;
-        const { body, err } = await api("/category/get");
+        const { body, err } = await api.get("/category/get");
         if (!err) this.categories = body;
     },
 
     // Запросить списки уроков
-    fetchMainLists() {
-        this.fetchInterestingLessons();
+    async fetchMainLists() {
+        await Promise.all([
+            this.fetchInterestingSubjects()
+        ])
     },
 
     // Запросить интересные уроки
-    fetchInterestingLessons() {
-        this.interestingLessons = [{}, {}];
+    async fetchInterestingSubjects() {
+        if (this.interestingSubjects) return;
+        const { body, err } = await api("/category/populyarnye/getInstitutionSubjects");
+        if (!err) this.interestingSubjects = body;
     },
 }
 

@@ -1,7 +1,7 @@
 <template>
   <button
       class="base-button"
-      :class="[`base-button--type-${props.type}`, `base-button--size-${props.size}`, {'base-button--full-width': props.fullWidth}]"
+      :class="[`base-button--type-${props.type}`, `base-button--size-${props.size}`, {'base-button--full-width': props.fullWidth}, {'base-button--loading': props.loading}]"
       v-bind="$attrs"
   ><slot/></button>
 </template>
@@ -19,6 +19,10 @@ const props = defineProps({
     validator: s => ["mini", "default", "big"]
   },
   fullWidth: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
     type: Boolean,
     default: false
   }
@@ -66,6 +70,11 @@ const props = defineProps({
 
   &--full-width {
     width: 100%;
+  }
+
+  &--loading {
+    pointer-events: none;
+    opacity: 0.7;
   }
 }
 </style>

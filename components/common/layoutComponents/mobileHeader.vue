@@ -6,7 +6,7 @@
       </button>
     </slot>
     <div class="mobile-header__title" :class="{'mobile-header__title--big': !goBack}">
-      {{ title }}
+      <slot>{{ title }}</slot>
     </div>
     <div class="mobile-header__right">
       <slot name="right"/>
@@ -53,6 +53,9 @@ const goBackHandle = () => {
   }
 
   &__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     padding: 0 8px;
     font-size: $fs--title;
 
