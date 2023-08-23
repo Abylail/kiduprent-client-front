@@ -46,6 +46,10 @@ const myAutoplay = computed(() => props.autoplay ? 5000 : 0)
 }
 
 ::v-deep {
+  .carousel__track {
+    margin: 0;
+  }
+
   .carousel__slide {
     transition: $transition;
     min-width: 66vw;

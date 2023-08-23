@@ -29,7 +29,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .lesson-card-list {
-  margin: 16px 0;
 
   &__head {
     display: flex;

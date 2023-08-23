@@ -1,7 +1,13 @@
+html {
+  background-color: $color--blue;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   color: $color--black;
+  background-color: $color--gray-light;
 }
 
 button {
@@ -63,4 +69,16 @@ h1, h2, h3, h4, p {
 
 .no-scroll {
   overflow: hidden;
+}
+
+.container {
+  width: calc(100% - 2*#{$side-space-mobile});
+  margin-left: auto !important;
+  margin-right: auto !important;
+  &--white {
+    box-sizing: content-box !important;
+    width: calc(100% - 2*#{$side-space-mobile});
+    padding: $side-space-mobile;
+    background-color: white;
+  }
 }

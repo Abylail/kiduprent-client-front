@@ -93,12 +93,12 @@ const centerName = computed(() => props.info?.institution?.name);
   border-radius: 5px;
   overflow: hidden;
   flex: 1;
-  //background: $color--gray-light;
-  border: 2px solid $color--gray-light;
+  background: white;
+  border: 2px solid white;
   color: $color--black;
 
   &__head {
-    background-color: $color--gray-light;
+    background-color: white;
     color: white;
     padding: 8px;
   }
@@ -124,7 +124,7 @@ const centerName = computed(() => props.info?.institution?.name);
 
   &__groups {
     padding: 10px;
-    border-top: 2px solid $color--gray-light;
+    border-top: 2px solid white;
   }
 
   &__group {

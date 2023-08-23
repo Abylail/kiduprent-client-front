@@ -28,6 +28,6 @@ const { $device } = useNuxtApp();
 }
 
 .main-mobile {
-  padding: 10px $side-space-mobile 70px;
+  padding-bottom: 70px;
 }
 </style>

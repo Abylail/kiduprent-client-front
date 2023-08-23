@@ -108,7 +108,7 @@ $input-height: 32px;
   &__hit-box {
     display: flex;
     position: relative;
-    padding: 8px;
+    padding: 4px 8px;
     border: 1px solid $color--black;
     border-radius: 5px;
   }
@@ -117,7 +117,7 @@ $input-height: 32px;
     position: absolute;
     font-size: $fs--title;
     line-height: $input-height;
-    top: 8px;
+    top: 4px;
     transition: $transition;
 
     &--top {
