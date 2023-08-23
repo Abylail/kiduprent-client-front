@@ -1,13 +1,46 @@
 <template>
   <div class="subjects-feed">
+    <div class="subjects-feed__list">
+      <subject-card
+        v-for="subject in feedStore.getFeed"
+        :info="subject"
+        full
+      />
+    </div>
 
+    <!-- Кнопка загрузить еще -->
+    <div class="subjects-feed__more" v-if="feedStore.getHaveMore">
+      <base-button type="naked" :loading="isLoading" @click="fetchMore()">Смотреть еще</base-button>
+    </div>
   </div>
 </template>
 
 <script setup>
+import {useSubjectFeedStore} from "../../../store/main/subjectFeed";
+import SubjectCard from "../miniCards/subjectCard";
+import BaseButton from "../../base/BaseButton";
 
+const feedStore = useSubjectFeedStore();
+feedStore.fetchSubjectsInit();
+
+const isLoading = ref(false);
+const fetchMore = async () => {
+  isLoading.value = true;
+  await feedStore.fetchSubjectsMore();
+  isLoading.value = false;
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.subjects-feed {
 
+  &__list > * {
+    margin-bottom: $side-space-mobile;
+  }
+
+  &__more {
+    text-align: center;
+  }
+
+}
 </style>

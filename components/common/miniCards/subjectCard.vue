@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="subject-card" :to="'/'" :style="{borderColor: subjectColor}">
+  <nuxt-link class="subject-card" :class="{'subject-card--full': full}" :to="'/'" :style="{borderColor: subjectColor}">
     <div class="subject-card__head" :style="{backgroundColor: subjectColor}">
       <div class="subject-card__name">{{ props.info?.name }}</div>
       <div class="subject-card__center">{{ centerName }}</div>
@@ -38,7 +38,11 @@ import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 
 const props = defineProps({
-  info: Object
+  info: Object,
+  full: {
+    type: Boolean,
+    default: false
+  }
 })
 
 // Получить время уроков группы
@@ -96,6 +100,11 @@ const centerName = computed(() => props.info?.institution?.name);
   background: white;
   border: 2px solid white;
   color: $color--black;
+
+  &--full {
+    width: 100%;
+    max-width: none;
+  }
 
   &__head {
     background-color: white;
