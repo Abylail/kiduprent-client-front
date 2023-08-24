@@ -38,10 +38,10 @@ subjectStore.fetchListInit();
 const page = ref(0);
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*5));
 
-const fetchMore = () => {
+const fetchMore = async () => {
   isLoading.value = true;
   page.value++;
-  subjectStore.fetchListMore(page.value);
+  await subjectStore.fetchListMore(page.value);
   isLoading.value = false;
 }
 </script>
@@ -51,7 +51,7 @@ const fetchMore = () => {
   margin: 16px 0;
 
   &__list {
-    padding: 12px 0;
+    padding-top: 12px;
   }
 
   &__item {

@@ -50,14 +50,17 @@ watch(() => props.active, (newVal) => {
 })
 
 const onOpen = () => {
-  // Контроль скрола боди
+  console.log(window.document.documentElement)
+  // Контроль скрола
+  window.document.documentElement.classList.add('no-scroll');
   window.document.body.classList.add('no-scroll');
   // Контроль скрола контента
   contentElement.value.scrollTop = 0;
 }
 
 const onClose = () => {
-  // Контроль скрола боди
+  // Контроль скрола
+  window.document.documentElement.classList.remove('no-scroll');
   window.document.body.classList.remove('no-scroll');
 }
 

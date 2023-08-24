@@ -6,7 +6,7 @@
       <div class="base-input__title" :class="[{'base-input__title--with-icon': prevIcon}, {'base-input__title--top': titleTop}]">{{ title }}</div>
 
       <!-- Иконка -->
-      <base-icon class="base-input__prev-icon" size="28" v-if="prevIcon" :name="prevIcon"/>
+      <base-icon class="base-input__prev-icon" v-if="prevIcon" :name="prevIcon"/>
 
       <input
           class="base-input__input"
@@ -48,6 +48,11 @@ const props = defineProps({
   autofocus: {
     type: Boolean,
     default: false
+  },
+  type: {
+    type: String,
+    default: "default",
+    validator: value => ["default", "naked-gray"].includes(value),
   }
 })
 
@@ -107,6 +112,7 @@ $input-height: 32px;
 
   &__hit-box {
     display: flex;
+    align-items: center;
     position: relative;
     padding: 4px 8px;
     border: 1px solid $color--black;

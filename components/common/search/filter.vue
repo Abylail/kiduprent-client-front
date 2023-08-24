@@ -7,32 +7,34 @@
   <!-- Страница фильтра -->
   <div class="filter-page" v-if="isOpen">
     <mobile-header title="Фильтр и сортировка" :go-back="toggleHandle"/>
-    <base-select
+    <div class="filter-page__content">
+      <base-select
         title="Город"
         prev-icon="mdi-city-variant-outline"
         :model-value="selfOptions.city"
         :options="[{name: 'Алматы', key: 'almaty'}, {name: 'Астана', key: 'astana'}]"
         @update:modelValue="setOption($event, 'city')"
-    />
-    <base-options
+      />
+      <base-options
         title="Сортировать по"
         :model-value="selfOptions.sortBy"
         :options="[{name: 'совпадению', key: 'sovpadenie'}, {name: 'рейтигну', key: 'rating'}]"
         @update:modelValue="setOption($event, 'sortBy')"
-    />
-    <base-options
+      />
+      <base-options
         title="Язык"
         :model-value="selfOptions.lang"
         :options="[{name: 'Русский', key: 'ru'}, {name: 'Казахский', key: 'kz'}]"
         multi
         @update:modelValue="setOption($event, 'lang')"
-    />
-    <base-options
+      />
+      <base-options
         title="Возраст"
         :model-value="selfOptions.age"
         :options="[{name: 'с 9 до 16', key: '9-16'}, {name: 'с 5 до 9', key: '5-9'}, {name: 'до 5', key: '-5'}]"
         @update:modelValue="setOption($event, 'age')"
-    />
+      />
+    </div>
 
     <div class="filter-page__actions">
       <base-button class="filter-page__action" type="outline" full-width @click="clearHandle()">Сбросить</base-button>
@@ -96,7 +98,10 @@ const applyHandle = () => {
   right: 0;
   z-index: 2;
   background: white;
-  padding: 10px $side-space-mobile;
+
+  &__content {
+    padding: 0 $side-space-mobile;
+  }
 
   &__actions {
     position: absolute;

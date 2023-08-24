@@ -50,6 +50,8 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   height: $header-height;
   font-weight: bold;
   background-color: white;
+  padding: 0 $side-space-mobile;
+  grid-column-gap: 8px;
 
   &--two-cols--right {
     display: grid;
@@ -70,7 +72,6 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   }
 
   &__go-back {
-    padding: 0;
     width: 36px;
     color: $color--blue;
   }
@@ -79,7 +80,6 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0 8px;
     font-size: $fs--title;
 
     &--big {

@@ -1,9 +1,13 @@
 <template>
   <mobile-header>
-    <img class="main-page__mini-logo" src="~/assets/images/logo.svg" alt="logo"/>
-    <h2 class="main-page__title">Kidup - главная</h2>
+    <div class="main-page__mobile-header-title">
+      <img class="main-page__mini-logo" src="~/assets/images/logo.svg" alt="logo"/>
+    </div>
   </mobile-header>
   <div class="main-page">
+
+    <!-- Поиск -->
+    <search/>
 
     <!-- Фото -->
     <base-media class="container--white"/>
@@ -52,6 +56,7 @@ import SubjectList from "../../components/common/main/subjectList";
 import BaseInput from "../../components/base/BaseInput";
 import BaseButton from "../../components/base/BaseButton";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
+import Search from "../../components/common/main/search";
 
 const mainStore = useMainStore();
 
@@ -66,9 +71,21 @@ const exampleList = [{}, {}, {}, {}, {}];
 <style lang="scss" scoped>
 .main-page {
 
+  &__mobile-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__search-wrapper {
+    padding: $side-space-mobile;
+    background-color: white;;
+  }
+
   &__mini-logo {
     height: 50px;
-    width: 50px;
   }
 
   &__title {

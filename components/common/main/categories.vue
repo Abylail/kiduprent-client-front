@@ -32,8 +32,8 @@ const categories = computed(() => categoriesStore.getCategories.slice(0, 6))
   &__grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 8px;
-    grid-row-gap: 8px;
+    grid-column-gap: $side-space-mobile;
+    grid-row-gap: 24px;
   }
 
   &__item {
@@ -43,7 +43,6 @@ const categories = computed(() => categoriesStore.getCategories.slice(0, 6))
     justify-content: center;
     color: $color--blue;
     text-align: center;
-    padding: 8px;
   }
 
   &__item-name {

@@ -31,7 +31,7 @@ const selectHandle = key => emit("update:modelValue", key);
   &__option {
     flex: 1;
     font-size: $fs--default;
-    padding: 8px 0;
+    padding: 4px 0;
     color: $color--blue;
 
     &:not(:first-child) {

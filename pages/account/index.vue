@@ -11,23 +11,6 @@
       <children/>
     </div>
 
-    <div class="account__block">
-      <card-list title="Избранные центры" to="/account/favorite?type=centers">
-        <center-card
-            v-for="(lesson, index) in exampleList" :key="index"
-            :info="lesson"
-        />
-      </card-list>
-    </div>
-
-    <div class="account__block">
-      <card-list title="Избранные уроки" to="/account/favorite?type=lessons">
-        <lesson-card
-            v-for="(lesson, index) in exampleList" :key="index"
-            :info="lesson"
-        />
-      </card-list>
-    </div>
   </div>
 </template>
 
@@ -44,6 +27,7 @@ const exampleList = [{}, {}, {}, {}]
 
 <style lang="scss" scoped>
 .account {
+  padding: 0 $side-space-mobile;
 
   &__block {
     &:first-child {margin-top: 16px}

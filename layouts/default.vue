@@ -30,5 +30,6 @@ const { $device } = useNuxtApp();
 .main-mobile {
   padding-bottom: 70px;
   background-color: $color--gray-light;
+  min-height: calc(#{100vh} - 70px);
 }
 </style>

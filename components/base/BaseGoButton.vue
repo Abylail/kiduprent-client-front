@@ -27,7 +27,7 @@ const props = defineProps({
   align-items: center;
   font-size: $fs--default;
   width: 100%;
-  background: $color--gray-light;
+  background: white;
   padding: 10px;
   min-height: 64px;
   border-radius: 14px;
