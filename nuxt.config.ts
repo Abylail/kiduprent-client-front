@@ -24,7 +24,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      BACKEND_URL: process.env.BACKEND_URL
+      BACKEND_URL: process.env.BACKEND_URL,
+      CDN_URL: process.env.CDN_URL,
     }
   },
 

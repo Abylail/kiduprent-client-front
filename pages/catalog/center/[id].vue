@@ -3,7 +3,7 @@
   <div class="center-info">
 
     <!-- Фотки -->
-    <base-media/>
+    <base-slider/>
 
     <!-- Основная информация -->
     <div class="center-info__main">
@@ -72,11 +72,11 @@
 
 <script setup>
 import MobileHeader from "../../../components/common/layoutComponents/mobileHeader";
-import BaseMedia from "../../../components/base/BaseMedia";
 import CardList from "../../../components/common/cardList";
 import LessonCard from "../../../components/common/miniCards/lessonCard";
 import BaseMap from "../../../components/base/BaseMap";
 import BaseIcon from "../../../components/base/BaseIcon";
+import BaseSlider from "../../../components/base/BaseSlider";
 
 const lessonsExample = [{}, {}, {}]
 </script>

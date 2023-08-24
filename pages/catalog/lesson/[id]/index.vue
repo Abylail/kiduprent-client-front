@@ -3,7 +3,7 @@
   <div class="lesson-info">
 
     <!-- Фотки -->
-    <base-media/>
+    <base-slider/>
 
     <!-- Основная информация -->
     <div class="lesson-info__main">
@@ -59,9 +59,9 @@ import BaseIcon from "~/components/base/BaseIcon";
 import BaseGoButton from "~/components/base/BaseGoButton";
 import LessonTimeTable from "../../../../components/common/lesson/lessonTimeTable";
 import BaseMap from "../../../../components/base/BaseMap";
-import BaseMedia from "../../../../components/base/BaseMedia";
 import CenterCard from "../../../../components/common/miniCards/centerCard";
 import {useRoute, useRouter} from "nuxt/app";
+import BaseSlider from "../../../../components/base/BaseSlider";
 
 const router = useRouter();
 const route = useRoute();

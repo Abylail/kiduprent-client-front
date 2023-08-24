@@ -10,7 +10,7 @@
     <search/>
 
     <!-- Фото -->
-    <base-media class="container--white"/>
+    <base-slider class="container--white"/>
 
     <div class="main-page__info container--white main-page__block">
       <h1 class="main-page__title title">Kidup - платформа</h1>
@@ -38,7 +38,7 @@
       <base-button>Напишите нам</base-button>
     </div>
 
-    <subjects-feed class="container"/>
+    <subjects-feed/>
 
   </div>
 </template>
@@ -50,13 +50,13 @@ import CardList from "../../components/common/cardList";
 import LessonCard from "../../components/common/miniCards/lessonCard";
 import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
-import BaseMedia from "../../components/base/BaseMedia";
 import SubjectCard from "../../components/common/miniCards/subjectCard";
 import SubjectList from "../../components/common/main/subjectList";
 import BaseInput from "../../components/base/BaseInput";
 import BaseButton from "../../components/base/BaseButton";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import Search from "../../components/common/main/search";
+import BaseSlider from "../../components/base/BaseSlider";
 
 const mainStore = useMainStore();
 
