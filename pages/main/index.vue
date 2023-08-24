@@ -13,6 +13,11 @@
       <p>Найдите курс</p>
     </div>
 
+    <categories class="container--white main-page__block"/>
+
+    <!-- Список предметов -->
+    <subject-list class="container--white main-page__block"/>
+
     <!-- Популярные уроки -->
     <div class="container--white main-page__block">
       <card-list title="Популярные уроки" to="/catalog">
@@ -23,23 +28,20 @@
       </card-list>
     </div>
 
-    <!-- Список предметов -->
-    <subject-list class="container--white main-page__block"/>
-
     <!-- Напишите нам -->
     <div class="main-page__questions container main-page__block">
       <h3 class="main-page__questions__title title">Остались вопросы?</h3>
       <base-button>Напишите нам</base-button>
     </div>
 
-    <subjects-feed class="container--white"/>
+    <subjects-feed class="container"/>
 
   </div>
 </template>
 
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
-import CategoryList from "../../components/common/main/categoryList";
+import Categories from "../../components/common/main/categories";
 import CardList from "../../components/common/cardList";
 import LessonCard from "../../components/common/miniCards/lessonCard";
 import CenterCard from "../../components/common/miniCards/centerCard";

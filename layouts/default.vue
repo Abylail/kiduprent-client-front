@@ -29,5 +29,6 @@ const { $device } = useNuxtApp();
 
 .main-mobile {
   padding-bottom: 70px;
+  background-color: $color--gray-light;
 }
 </style>
