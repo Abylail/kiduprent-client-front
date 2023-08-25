@@ -5,6 +5,9 @@ const state = () => ({
     // Интересные уроки
     interestingSubjects: null,
 
+    // Центры с высоким рейтингом
+    topCenters: null,
+
     // Список категорий
     categories: null,
 })
@@ -12,6 +15,9 @@ const state = () => ({
 const getters = {
     // Интересные уроки
     getInterestingSubjects: state => state.interestingSubjects || [],
+
+    // Центры с высоким рейтингом
+    getTopCenters: state => state.topCenters || [],
 
     // Список категорий
     getCategories: state => state.categories || [],
@@ -37,6 +43,13 @@ const actions = {
         if (this.interestingSubjects) return;
         const { body, err } = await api("/category/populyarnye/getInstitutionSubjects");
         if (!err) this.interestingSubjects = body;
+    },
+
+    // Запросить центры с высоким рейтингом
+    async fetchTopCenters() {
+        if (this.topCenters) return;
+        const { body, err } = await api("/institution/top");
+        if (!err) this.topCenters = body;
     },
 }
 

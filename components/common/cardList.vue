@@ -1,11 +1,11 @@
 <template>
-  <div class="lesson-card-list">
-    <div class="lesson-card-list__head">
-      <h2 class="lesson-card-list__title title">{{ props.title }}</h2>
-      <nuxt-link class="lesson-card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
+  <div class="card-list">
+    <div class="card-list__head">
+      <h2 class="card-list__title title">{{ props.title }}</h2>
+      <nuxt-link class="card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
     </div>
 
-    <div class="lesson-card-list__content">
+    <div class="card-list__content">
       <slot/>
     </div>
   </div>
@@ -28,7 +28,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.lesson-card-list {
+.card-list {
 
   &__head {
     display: flex;
@@ -44,18 +44,17 @@ const props = defineProps({
 
   &__content {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     width: auto;
     white-space:nowrap;
     overflow-x: auto;
     padding: 15px 0;
+    scroll-snap-type: x mandatory;
 
     // Для элементов внутри контента
     ::v-deep {
       & > * {
         margin-right: 10px;
-        flex: 1;
+        scroll-snap-align: center;
       }
     }
   }

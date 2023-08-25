@@ -1,29 +1,38 @@
 <template>
   <nuxt-link class="center-card" :class="{'center-card--full': props.full}" to="/catalog/center/1">
+
     <div class="center-card__head">
-      <img class="center-card__logo" src="~/assets/images/center-logo-example.png" alt="logo"/>
-      <span class="center-card__name">Наши дети</span>
-    </div>
-    <div class="center-card__description">
-      Продленка для школьников
-    </div>
-    <div class="center-card__address">
-      ул. Макатаев, 117
-    </div>
-    <div class="center-card__bottom-content">
-      <div class="center-card__rating">
-        <base-icon class="center-card__icon" name="mdi-star-outline"/>
-        <span>4.9</span>
+      <div>
+        <img class="center-card__logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
+        <div class="center-card__name">{{ info.name }}</div>
       </div>
-      <div class="center-card__city">
-        Алматы
+      <div>
+        <span class="center-card__rating-text">{{ info.rating }}</span>
+        <base-icon class="center-card__rating-icon" name="mdi-star"/>
       </div>
     </div>
+
+    <div class="center-card__description">{{ info.description }}</div>
+
+    <!-- Время работы -->
+    <div class="center-card__info" v-if="workTime">
+      <base-icon class="center-card__info-icon" name="mdi-clock-time-eight-outline" size="20"/>
+      <span class="center-card__info-text">{{ workTime }}</span>
+    </div>
+
+    <div class="center-card__subjects">
+      <span class="center-card__subject" v-for="(subjectName, index) in subjectNames" :key="index">{{ subjectName }}</span>
+    </div>
+
   </nuxt-link>
 </template>
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
+import {computed} from "vue";
+import {useRuntimeConfig} from "nuxt/app";
+
+const config = useRuntimeConfig();
 
 const props = defineProps({
   full: {
@@ -35,19 +44,27 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+// Ссылка на лого
+const logoUrl = computed(() => props.info?.logo && (config.public.CDN_URL + props.info?.logo) || null);
+
+// Список предметов
+const subjects = computed(() => (props.info?.institutionSubjects || []));
+const subjectNames = computed(() => subjects.value.map(({name}, index) => name + (index + 1 < subjects.value.length ? ", " : "")));
+
+// Время работы
+const workTime = computed(() => props.info.end_time && props.info.start_time && `${props.info.start_time}-${props.info.end_time}` || null)
 </script>
 
 <style lang="scss" scoped>
 .center-card {
-  display: inline-flex;
-  flex-direction: column;
-  min-width: 150px;
-  max-width: 200px;
+  min-width: 300px;
   border-radius: 5px;
   overflow: hidden;
   flex: 1;
-  background: $color--gray-light;
   color: $color--black;
+  padding: $side-space-mobile 0;
+  border: 1px solid $color--gray-light;
 
   &--full {
     display: flex;
@@ -58,36 +75,13 @@ const props = defineProps({
   &__head {
     display: flex;
     align-items: center;
-    padding: 8px;
-  }
-
-  &__bottom-content {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    font-size: $fs--mini;
+    justify-content: space-between;
+    padding: 0 $side-space-mobile;
+    height: 40px;
     & > * {
       display: flex;
       align-items: center;
-      line-height: 20px;
     }
-
-    & > *:not(:last-child) {
-      margin-right: 20px;
-    }
-  }
-
-  &__address {
-    padding: 8px;
-    border-bottom: 1px solid $color--gray;
-    font-size: $fs--mini;
-  }
-
-  &__description {
-    padding: 0 8px 8px;
-    font-size: $fs--mini;
-    color: $color--gray-dark;
-    white-space: normal;
   }
 
   &__logo {
@@ -97,16 +91,54 @@ const props = defineProps({
     padding: 4px;
     border-right: 60px;
     margin-right: 6px;
+    border-radius: 32px;
   }
 
   &__name {
     font-weight: bold;
   }
 
-  &__rating {
+  &__rating-text {
+    font-size: $fs--mini;
+  }
+
+  &__rating-icon {
+    color: $color--yellow;
+  }
+
+  &__description {
+    color: $color--gray-dark;
+    margin: 8px 0;
+    padding: 0 $side-space-mobile;
+  }
+
+  &__subjects {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 8px 0;
+    padding: 0 $side-space-mobile;
+    font-size: $fs--mini;
+
+    & > * {
+      white-space: nowrap;
+    }
+  }
+
+  &__info {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin: 8px 0;
+    padding: 0 $side-space-mobile;
   }
+
+  &__info-icon {
+    color: $color--blue;
+    margin-right: 4px;
+  }
+
+  &__info-text {
+    font-size: $fs--mini;
+  }
+
 }
 </style>

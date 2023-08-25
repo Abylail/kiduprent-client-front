@@ -22,6 +22,16 @@
     <!-- Список предметов -->
     <subject-list class="container--white main-page__block"/>
 
+    <!-- Топ центры -->
+    <div class="container--white main-page__block">
+      <card-list title="Топ центры" to="/catalog">
+        <center-card
+            v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
+            :info="lesson"
+        />
+      </card-list>
+    </div>
+
     <!-- Популярные уроки -->
     <div class="container--white main-page__block">
       <card-list title="Популярные уроки" to="/catalog">
@@ -35,6 +45,7 @@
     <!-- Напишите нам -->
     <div class="main-page__questions container main-page__block">
       <h3 class="main-page__questions__title title">Остались вопросы?</h3>
+      <p class="main-page__questions__text">Оставьте заявку и ваш вопрос обязательно рассмотрят</p>
       <base-button>Напишите нам</base-button>
     </div>
 
@@ -63,9 +74,8 @@ const mainStore = useMainStore();
 // Запрашиваю инетересные уроки
 mainStore.fetchMainLists();
 mainStore.fetchCategories();
+mainStore.fetchTopCenters();
 
-// Пустой лист для примера
-const exampleList = [{}, {}, {}, {}, {}];
 </script>
 
 <style lang="scss" scoped>
@@ -97,16 +107,21 @@ const exampleList = [{}, {}, {}, {}, {}];
   }
 
   &__questions {
-    height: 130px;
     border-radius: 10px;
     background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    width: calc(100% - 4*#{$side-space-mobile});
+    margin-left: auto;
+    margin-right: auto;
 
     &__title {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+
+    &__text {
+      margin: 5px 0 20px;
+      color: $color--gray-dark;
     }
   }
 

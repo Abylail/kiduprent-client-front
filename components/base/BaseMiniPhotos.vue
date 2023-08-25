@@ -1,7 +1,7 @@
 <template>
   <div class="base-mini-photos">
     <img
-        class="base-mini-photos__photo"
+        class="base-mini-photos__slide"
         v-for="(photo, index) in props.list"
         :src="getImageUrl(photo)"
         :alt="`slide-${index}`"
@@ -25,17 +25,25 @@ const getImageUrl = url => config.public.CDN_URL + url;
 
 <style lang="scss" scoped>
 .base-mini-photos {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  user-select: none;
+  height: 100%;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  border-radius: 5px;
 
-  &__photo {
-    height: 50px;
-    width: 50px;
+  &__slide {
+    display: inline-block;
+    scroll-snap-align: center;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    margin: 0 4px;
     box-sizing: content-box;
-    &:not(:last-child) {
-      margin-right: 8px;
-    }
+    object-fit: cover;
+    &:first-child {margin-left: 0}
+    &:last-child {margin-right: 0}
   }
 
 }
