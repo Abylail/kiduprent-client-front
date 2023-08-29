@@ -1,5 +1,5 @@
 <template>
-  <div class="otp-input" :ref="el => otpContainer = el">
+  <div class="otp-input" :class="{'otp-input--error': error}" :ref="el => otpContainer = el">
     <input
         class="otp-input__digit"
         v-for="(_, index) in props.digitCount" :key="index"
@@ -14,39 +14,48 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
+const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
   modelValue: String,
+  error: {
+    type: Boolean,
+    default: false
+  },
   digitCount: {
     type: Number,
     default: 4
   }
 })
 
+const digits = computed(() => props.modelValue?.split("") || [])
 
 const otpContainer = ref(null);
-const digits = ref([]);
 const digitRegex = new RegExp('^([0-9]$)')
 const keyDownHandle = (event, index) => {
+  let newDigits = digits.value.slice();
+
   // Если удаление
   if (event.key === "Backspace") {
-    digits.value[index] = null;
+    newDigits[index] = null;
     if (index !== 0) {
       setTimeout(() => otpContainer.value.children[index - 1].focus());
     }
     // Если удаляют какой то среднюю цифру
-    if (index !== props.digitCount - 1 &&  digits.value[index + 1]) {
-      digits.value = [];
+    if (index !== props.digitCount - 1 &&  newDigits[index + 1]) {
+      newDigits = [];
     }
   }
 
   // Если ввод числа
   else if (digitRegex.test(event.key)) {
-    digits.value[index] = event.key;
+    newDigits[index] = event.key;
     if (index !== props.digitCount - 1) {
       setTimeout(() => otpContainer.value.children[index + 1].focus());
     }
   }
+
+  emit("update:modelValue", newDigits.join(""))
 }
 
 const onFocusHandle = index => {
@@ -83,6 +92,10 @@ const onFocusHandle = index => {
     &:focus {
       border: 2px solid $color--black;
     }
+  }
+
+  &--error &__digit{
+    border-color: $color--red;
   }
 
 }

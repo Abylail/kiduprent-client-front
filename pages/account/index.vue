@@ -1,6 +1,8 @@
 <template>
   <mobile-header title="Личный кабинет"/>
-  <div class="account">
+
+  <!-- Авторизованный -->
+  <div class="account" v-if="authStore.isAuth">
 
     <div class="account__block">
       <personal-data/>
@@ -12,17 +14,23 @@
     </div>
 
   </div>
+
+  <!-- Не авторизованный -->
+  <div class="account" v-else>
+    <div class="account__auth">
+      <p class="account__auth-text">Войдите что бы вы могли записываться и смотреть расписание</p>
+      <auth/>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import PersonalData from "../../components/common/account/personalData";
 import Children from "../../components/common/account/children";
-import CenterCard from "../../components/common/miniCards/centerCard";
-import LessonCard from "../../components/common/miniCards/lessonCard";
-import CardList from "../../components/common/cardList";
-
-const exampleList = [{}, {}, {}, {}]
+import {useAuthStore} from "../../store/client/auth";
+import Auth from "../../components/common/auth/auth";
+const authStore = useAuthStore();
 </script>
 
 <style lang="scss" scoped>
@@ -38,6 +46,16 @@ const exampleList = [{}, {}, {}, {}]
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+  }
+
+  &__auth {
+    text-align: center;
+    margin-top: 200px;
+  }
+
+  &__auth-text {
+    color: $color--gray-dark;
+    margin: 12px 0;
   }
 
 }

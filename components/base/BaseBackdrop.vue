@@ -50,7 +50,6 @@ watch(() => props.active, (newVal) => {
 })
 
 const onOpen = () => {
-  console.log(window.document.documentElement)
   // Контроль скрола
   window.document.documentElement.classList.add('no-scroll');
   window.document.body.classList.add('no-scroll');
@@ -141,7 +140,7 @@ const clearDragState = () => {
   }
 
   &__title {
-    font-size: $fs--big-title;
+    font-size: $fs--title;
     font-weight: bold;
     padding: 10px $side-space-mobile;
   }

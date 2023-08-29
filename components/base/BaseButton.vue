@@ -73,8 +73,30 @@ const props = defineProps({
   }
 
   &--loading {
+    opacity: .6;
     pointer-events: none;
-    opacity: 0.7;
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      margin: 0 auto;
+      background-color: rgba(255,255,255,.28);
+      box-shadow: 0 0 50px rgba(255,255,255);
+      z-index: 1;
+      animation: btn-loading-pulse 1.5s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes btn-loading-pulse {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(200%);
   }
 }
 </style>

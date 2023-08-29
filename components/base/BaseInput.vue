@@ -1,5 +1,5 @@
 <template>
-  <div class="base-input">
+  <div :class="['base-input', `base-input--${type}`]">
 
     <div class="base-input__hit-box" @click.stop="hitBoxHandle()">
 
@@ -114,26 +114,34 @@ $input-height: 32px;
     display: flex;
     align-items: center;
     position: relative;
+    border-radius: 10px;
     padding: 4px 8px;
+  }
+
+  &--default &__hit-box {
     border: 1px solid $color--black;
-    border-radius: 5px;
+  }
+
+  &--naked-gray &__hit-box {
+    border: 1px solid $color--gray-light;
+    background-color: $color--gray-light;
   }
 
   &__title {
     position: absolute;
-    font-size: $fs--title;
+    font-size: $fs--default;
     line-height: $input-height;
     top: 4px;
     transition: $transition;
 
     &--top {
-      font-size: $fs--mini;
-      line-height: $fs--mini + 2px;
-      top: 4px;
+      font-size: $fs--nano;
+      line-height: $fs--nano + 2px;
+      top: 3px;
     }
 
     &--with-icon {
-      left: 44px;
+      left: 40px;
     }
   }
 
