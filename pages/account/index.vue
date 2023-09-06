@@ -28,7 +28,7 @@
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import PersonalData from "../../components/common/account/personalData";
 import Children from "../../components/common/account/children";
-import {useAuthStore} from "../../store/client/auth";
+import {useAuthStore} from "../../store/client/parent/auth";
 import Auth from "../../components/common/auth/auth";
 const authStore = useAuthStore();
 </script>

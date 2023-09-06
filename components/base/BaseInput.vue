@@ -115,7 +115,7 @@ $input-height: 32px;
     align-items: center;
     position: relative;
     border-radius: 10px;
-    padding: 4px 8px;
+    padding: 8px;
   }
 
   &--default &__hit-box {
@@ -137,7 +137,7 @@ $input-height: 32px;
     &--top {
       font-size: $fs--nano;
       line-height: $fs--nano + 2px;
-      top: 3px;
+      top: 4px;
     }
 
     &--with-icon {
@@ -153,8 +153,8 @@ $input-height: 32px;
   &__input {
     flex: 1;
     height: $input-height - 14px;
-    padding-top: 14px;
-    font-size: 18px;
+    padding-top: 12px;
+    font-size: 16px;
   }
 
 }

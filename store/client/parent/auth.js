@@ -54,6 +54,12 @@ const actions = {
     logout() {
 
     },
+
+    // Обновить данные родителя
+    async updateParentInfo(parentInfo = {}) {
+        const { err, body } = await api.put("/parent/data/update", parentInfo)
+        if (!err && body) this.clientData = body;
+    },
 }
 
 export const useAuthStore = defineStore("auth", {

@@ -8,25 +8,28 @@
 
   <base-backdrop v-model:active="openEditor" title="Личные данные">
     <div class="personal-data__editor">
-      <base-input title="Фамилия" v-model="editorPersonalData.last_name"/>
-      <base-input title="Имя" v-model="editorPersonalData.first_name"/>
-      <base-input title="Номер" v-model="editorPersonalData.phone" phone/>
+      <base-input title="Фамилия" v-model="editorPersonalData.last_name" type="naked-gray"/>
+      <base-input title="Имя" v-model="editorPersonalData.first_name" type="naked-gray"/>
+      <base-input title="Номер" v-model="editorPersonalData.phone" phone type="naked-gray"/>
       <div class="personal-data__editor-actions">
         <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
-        <base-button full-width @click="saveHandle()">Сохранить</base-button>
+        <base-button :loading="isLoading" full-width @click="saveHandle()">Сохранить</base-button>
       </div>
     </div>
   </base-backdrop>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import BaseButton from "../../base/BaseButton";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BaseInput from "../../base/BaseInput";
 import BaseGoButton from "../../base/BaseGoButton";
+import {useAuthStore} from "../../../store/client/parent/auth";
 
-const personalData = ref({first_name: "Абылай", last_name: "Базарбаев", phone: "+7 705 670 78 91"});
+const authStore = useAuthStore();
+const personalData = computed(() => authStore.getClientData);
+
 const editorPersonalData = ref({});
 
 const openEditor = ref(false);
@@ -35,12 +38,16 @@ const openEditorHandle = () => {
   openEditor.value = true;
 }
 
+const isLoading = ref(false);
+
 const cancelHandle = () => {
   openEditor.value = false;
 }
-const saveHandle = () => {
+const saveHandle = async () => {
+  isLoading.value = true;
+  await authStore.updateParentInfo(editorPersonalData.value);
   openEditor.value = false;
-  personalData.value = editorPersonalData.value;
+  isLoading.value = false;
 }
 </script>
 
@@ -56,7 +63,7 @@ const saveHandle = () => {
   }
 
   &__editor-actions {
-    margin-top: 50px;
+    margin-top: 100px;
     & > *:not(:last-child) {
       margin-bottom: 8px;
     }

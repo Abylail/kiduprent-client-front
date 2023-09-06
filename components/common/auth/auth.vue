@@ -39,7 +39,7 @@
 <script setup>
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BaseButton from "../../base/BaseButton";
-import {useAuthStore} from "../../../store/client/auth";
+import {useAuthStore} from "../../../store/client/parent/auth";
 import {computed, watch} from "vue";
 import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";

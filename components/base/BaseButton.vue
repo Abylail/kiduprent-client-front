@@ -11,7 +11,7 @@ const props = defineProps({
   type: {
     type: String,
     default: "default",
-    validator: t => ["default", "outline", "danger-outline", "naked"].includes(t),
+    validator: t => ["default", "outline", "danger-outline", "naked", "naked-blue"].includes(t),
   },
   size: {
     type: String,
@@ -51,6 +51,11 @@ const props = defineProps({
 
   &--type-naked {
     color: $color--blue;
+  }
+
+  &--type-naked-blue {
+    color: $color--blue;
+    background-color: $color--blue-light;
   }
 
   &--size-mini {

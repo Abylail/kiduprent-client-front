@@ -7,18 +7,20 @@
         icon="mdi-human"
         @click="openEditorHandle(child)"
     />
-    <button class="children__add" @click="openEditorHandle({})">Добавить ребенка +</button>
+    <div class="children__empty" v-if="!children.length">Добавьте ребенка что бы вы могли его записать</div>
+    <base-button v-if="!children.length" class="children__add" type="naked-blue" full-width @click="openEditorHandle({})">Добавить ребенка +</base-button>
+    <base-button v-else class="children__add" type="naked" full-width @click="openEditorHandle({})">Добавить ребенка +</base-button>
 
     <!-- Редактор -->
     <base-backdrop v-model:active="openEditor" title="Редактирование">
       <div class="children__editor">
         <base-input title="Имя" v-model="editChildData.name"/>
         <base-input title="Возраст" v-model="editChildData.age" number/>
-        <base-switch title="Пол" v-model="editChildData.gender" :options="[{name: 'Мужской', key: 'm'},{name: 'Женский', key: 'w'}]"/>
+        <base-switch title="Пол" v-model="editChildData.gender" :options="[{name: 'Мужской', key: 'M'},{name: 'Женский', key: 'W'}]"/>
         <div class="children__editor-actions">
 <!--          <base-button type="danger-outline" full-width>Удалить</base-button>-->
           <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
-          <base-button full-width @click="saveHandle()">Сохранить</base-button>
+          <base-button :loading="isLoading" full-width @click="saveHandle()">Сохранить</base-button>
         </div>
       </div>
     </base-backdrop>
@@ -26,14 +28,18 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import BaseGoButton from "../../base/BaseGoButton";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BaseInput from "../../base/BaseInput";
 import BaseButton from "../../base/BaseButton";
 import BaseSwitch from "../../base/BaseSwitch";
+import {useParentChildrenStore} from "../../../store/client/parent/children";
 
-const children = ref([{id: 1, name: "Ансар", age: 10, gender: "m"}, {id: 2, name: "Арина", age: 8, gender: "w"}]);
+const parentChildrenStore = useParentChildrenStore();
+parentChildrenStore.fetchChildren();
+
+const children = computed(() => parentChildrenStore.getChildren);
 
 const editChildData = ref({});
 const openEditor = ref(false);
@@ -42,12 +48,14 @@ const openEditorHandle = child => {
   openEditor.value = true;
 }
 
-const saveHandle = () => {
-  const childIndex = editChildData.value.id ? children.value.findIndex(c => c.id === editChildData.value.id) : -1;
-  if (childIndex < 0) children.value = [...children.value, editChildData.value]
-  else children.value[childIndex] = editChildData.value;
+const isLoading = ref(false);
+
+const saveHandle = async () => {
+  isLoading.value = true;
+  if (!editChildData.value?.id) await parentChildrenStore.addChild(editChildData.value);
+  else await parentChildrenStore.updateChild(editChildData.value);
   openEditor.value = false;
-  console.log(children.value);
+  isLoading.value = false;
 }
 
 const cancelHandle = () => {
@@ -65,14 +73,7 @@ const cancelHandle = () => {
   }
 
   &__add {
-    font-size: $fs--default;
-    text-align: center;
-    width: 100%;
-    background-color: $color--gray-light;
-    padding: 12px;
-    font-weight: bold;
-    border-radius: 14px;
-    color: $color--blue;
+    margin-top: 16px;
   }
 
   &__editor {
@@ -84,6 +85,10 @@ const cancelHandle = () => {
     & > *:not(:last-child) {
       margin-bottom: 8px;
     }
+  }
+
+  &__empty {
+
   }
 
 }
