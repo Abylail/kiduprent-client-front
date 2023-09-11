@@ -131,7 +131,7 @@ $input-height: 32px;
     position: absolute;
     font-size: $fs--default;
     line-height: $input-height;
-    top: 4px;
+    top: 8px;
     transition: $transition;
 
     &--top {

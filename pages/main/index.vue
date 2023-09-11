@@ -6,15 +6,15 @@
   </mobile-header>
   <div class="main-page">
 
-    <!-- Поиск -->
-    <search/>
-
     <!-- Фото -->
     <base-slider class="container--white"/>
 
+    <!-- Поиск -->
+    <search/>
+
     <div class="main-page__info container--white main-page__block">
-      <h1 class="main-page__title title">Kidup - платформа</h1>
-      <p>Найдите курс</p>
+      <h1 class="main-page__title"><strong>Kidup</strong> - платформа для развития ребенка</h1>
+
     </div>
 
     <categories class="container--white main-page__block"/>
@@ -100,6 +100,7 @@ mainStore.fetchTopCenters();
 
   &__title {
     font-size: $fs--title;
+    font-weight: normal;
   }
 
   &__block {

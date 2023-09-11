@@ -1,24 +1,35 @@
 <template>
   <div class="search">
-    <div class="search__fake-input" @click="showModalHandle()">
-      <base-icon class="search__fake-input-icon" name="mdi-magnify"/>
-      <span class="search__fake-input-label">Поиск курсов и центров</span>
+    <div class="search__list">
+      <button class="search__item" @click="showModalHandle()">
+        <span class="search__item-name">Найти детский центр</span>
+        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
+      </button>
+      <button class="search__item" @click="showModalHandle()">
+        <span class="search__item-name">Найти кружки для ребенка</span>
+        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
+      </button>
+      <button class="search__item" @click="showModalHandle()">
+        <span class="search__item-name">Найти курсы для ребенка</span>
+        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
+      </button>
     </div>
   </div>
 
-  <div class="search__modal" v-if="showModal">
-    <mobile-header>
-      <template #default>Поиск</template>
-      <template #right><button @click="showModal = false"><base-icon name="mdi-close"/></button></template>
-    </mobile-header>
-    <search-view/>
-  </div>
+    <div class="search__modal" v-if="showModal">
+      <mobile-header>
+        <template #default>Поиск</template>
+        <template #right><button @click="showModal = false"><base-icon name="mdi-close"/></button></template>
+      </mobile-header>
+      <search-view/>
+    </div>
 </template>
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
 import SearchView from "../search/searchView";
 import MobileHeader from "../layoutComponents/mobileHeader";
+import BaseGoButton from "../../base/BaseGoButton";
 
 const showModal = ref(false);
 const showModalHandle = () => {
@@ -31,19 +42,6 @@ const showModalHandle = () => {
   background-color: white;
   padding: 0 $side-space-mobile;
 
-  &__fake-input {
-    display: flex;
-    align-items: center;
-    background-color: $color--gray-light;
-    height: calc(50px - 2*#{$side-space-mobile});
-    border-radius: 10px;
-    padding: $side-space-mobile;
-  }
-
-  &__fake-input-icon {
-    margin-right: 4px;
-  }
-
   &__modal {
     position: fixed;
     top: 0;
@@ -52,6 +50,26 @@ const showModalHandle = () => {
     right: 0;
     z-index: 10;
     background-color: white;
+  }
+
+  &__list {
+    padding-top: 12px;
+  }
+
+  &__item {
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    align-items: center;
+    padding: 12px 8px;
+    border-top: 1px solid $color--gray-light;
+    color: $color--black;
+    font-size: $fs--default;
+  }
+
+  &__item-arrow {
+    color: $color--gray-dark;
   }
 
 }

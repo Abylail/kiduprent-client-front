@@ -55,9 +55,25 @@ const put = async (path, body = {}, options = {}) => new Promise(resolve => {
         })
 });
 
+// DELETE
+const deleteApi = async (path, options = {}) => new Promise(resolve => {
+    const config = useRuntimeConfig();
+    const apiPath = createPath(path, config);
+    const apiOptions = createOptions(options);
+    useFetch(apiPath, {
+        ...apiOptions,
+        method: "delete"
+    })
+        .then(({data, error}) => {
+            if (error.value) apiErrorCatcher(error.value);
+            resolve({body: data?.value?.body, err: error.value});
+        })
+});
+
 const api = get
 api.get = get
 api.post = post
 api.put = put
+api.delete = deleteApi
 
 export default api;

@@ -158,7 +158,7 @@ const langRu = computed(() => groups.value.some(group => group.language_ru));
     line-height: $fs--default;
 
     &:not(:last-child) {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
   }
 
@@ -184,7 +184,7 @@ const langRu = computed(() => groups.value.some(group => group.language_ru));
     border-radius: 3px;
     padding: 3px 8px;
     margin-right: 5px;
-    color: $color--gray-light;
+    color: $color--blue;
     background-color: $color--blue-light;
     font-size: $fs--mini;
     text-align: center;

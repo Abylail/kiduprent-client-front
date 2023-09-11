@@ -1,5 +1,5 @@
 <template>
-  <div class="children">
+  <div class="children" v-if="!isLoading || children.length">
     <base-go-button
         class="children__child"
         v-for="(child, index) in children" :key="index"
@@ -18,8 +18,10 @@
         <base-input title="Возраст" v-model="editChildData.age" number/>
         <base-switch title="Пол" v-model="editChildData.gender" :options="[{name: 'Мужской', key: 'M'},{name: 'Женский', key: 'W'}]"/>
         <div class="children__editor-actions">
-<!--          <base-button type="danger-outline" full-width>Удалить</base-button>-->
-          <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
+          <div class="children__editor-actions-columns">
+            <base-button v-if="editChildData.id" :loading="isLoading" type="danger-outline" full-width @click="deleteHandle()">Удалить</base-button>
+            <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
+          </div>
           <base-button :loading="isLoading" full-width @click="saveHandle()">Сохранить</base-button>
         </div>
       </div>
@@ -36,8 +38,11 @@ import BaseButton from "../../base/BaseButton";
 import BaseSwitch from "../../base/BaseSwitch";
 import {useParentChildrenStore} from "../../../store/client/parent/children";
 
+const isLoading = ref(true);
+
 const parentChildrenStore = useParentChildrenStore();
-parentChildrenStore.fetchChildren();
+await parentChildrenStore.fetchChildren();
+isLoading.value = false;
 
 const children = computed(() => parentChildrenStore.getChildren);
 
@@ -47,8 +52,6 @@ const openEditorHandle = child => {
   editChildData.value = JSON.parse(JSON.stringify(child));
   openEditor.value = true;
 }
-
-const isLoading = ref(false);
 
 const saveHandle = async () => {
   isLoading.value = true;
@@ -63,6 +66,13 @@ const cancelHandle = () => {
   openEditor.value = false;
 }
 
+const deleteHandle = async () => {
+  isLoading.value = true;
+  if (editChildData.value?.id) await parentChildrenStore.deleteChild(editChildData.value);
+  openEditor.value = false;
+  isLoading.value = false;
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +83,7 @@ const cancelHandle = () => {
   }
 
   &__add {
-    margin-top: 16px;
+    margin-top: 8px;
   }
 
   &__editor {
@@ -84,6 +94,14 @@ const cancelHandle = () => {
     margin-top: 50px;
     & > *:not(:last-child) {
       margin-bottom: 8px;
+    }
+  }
+
+  &__editor-actions-columns {
+    display: flex;
+    gap: 8px;
+    & > * {
+      flex: 1;
     }
   }
 

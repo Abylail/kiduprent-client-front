@@ -30,6 +30,12 @@ const actions = {
         const { err, body } = await api.put("/parent/data/children/update", childInfo)
         if (!err) this.children = body;
     },
+
+    // Обновить ребенка
+    async deleteChild(childInfo) {
+        const { err, body } = await api.delete(`/parent/data/children/delete/${childInfo.id}`)
+        if (!err) this.children = body;
+    },
 }
 
 export const useParentChildrenStore = defineStore("parentChildren", {
