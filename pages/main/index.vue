@@ -7,14 +7,18 @@
   <div class="main-page">
 
     <!-- Фото -->
-    <base-slider class="container--white"/>
+<!--    <base-slider class="container&#45;&#45;white"/>-->
 
     <!-- Поиск -->
     <search/>
 
     <div class="main-page__info container--white main-page__block">
       <h1 class="main-page__title"><strong>Kidup</strong> - платформа для развития ребенка</h1>
-
+      <div class="main-page__steps">
+        <div class="main-page__step"><span class="main-page__step-count">1</span>Найдите занятия и выберите группу</div>
+        <div class="main-page__step"><span class="main-page__step-count">2</span>Запишитесь на пробный</div>
+        <div class="main-page__step"><span class="main-page__step-count">3</span>Приходите на занятие</div>
+      </div>
     </div>
 
     <categories class="container--white main-page__block"/>
@@ -124,6 +128,28 @@ mainStore.fetchTopCenters();
       margin: 5px 0 20px;
       color: $color--gray-dark;
     }
+  }
+
+  &__steps {
+    margin-top: 16px;
+  }
+
+  &__step {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+  }
+
+  &__step-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: $color--blue;
+    color: white;
+    margin-right: 8px;
   }
 
 }

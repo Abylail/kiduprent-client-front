@@ -39,7 +39,7 @@ const myAutoplay = computed(() => props.autoplay ? 5000 : 0)
   &__slide {
     height: 150px;
     object-fit: cover;
-    width: 100%;
+    width: max-content;
     border-radius: 10px;
   }
 
@@ -50,25 +50,25 @@ const myAutoplay = computed(() => props.autoplay ? 5000 : 0)
     margin: 0;
   }
 
-  .carousel__slide {
-    transition: $transition;
-    min-width: 66vw;
-  }
-
-  .carousel__slide--prev {
-    opacity: 1;
-    transform: rotateY(-20deg);
-  }
-
-  .carousel__slide--next {
-    opacity: 1;
-    transform: rotateY(20deg);
-  }
-
-  .carousel__slide--active {
-    opacity: 1;
-    transform: rotateY(0);
-    min-width: 74vw;
-  }
+  //.carousel__slide {
+  //  transition: $transition;
+  //  min-width: 66vw;
+  //}
+  //
+  //.carousel__slide--prev {
+  //  opacity: 1;
+  //  transform: rotateY(-20deg);
+  //}
+  //
+  //.carousel__slide--next {
+  //  opacity: 1;
+  //  transform: rotateY(20deg);
+  //}
+  //
+  //.carousel__slide--active {
+  //  opacity: 1;
+  //  transform: rotateY(0);
+  //  min-width: 74vw;
+  //}
 }
 </style>

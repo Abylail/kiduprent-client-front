@@ -2,15 +2,15 @@
   <div class="search">
     <div class="search__list">
       <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Найти детский центр</span>
+        <span class="search__item-name">Детские центры</span>
         <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
       </button>
       <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Найти кружки для ребенка</span>
+        <span class="search__item-name">Развивающие курсы</span>
         <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
       </button>
       <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Найти курсы для ребенка</span>
+        <span class="search__item-name">Курсы по школьной программе</span>
         <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
       </button>
     </div>
@@ -62,14 +62,14 @@ const showModalHandle = () => {
     display: grid;
     grid-template-columns: 1fr 20px;
     align-items: center;
-    padding: 12px 8px;
+    padding: 12px 0;
     border-top: 1px solid $color--gray-light;
     color: $color--black;
     font-size: $fs--default;
   }
 
   &__item-arrow {
-    color: $color--gray-dark;
+    color: $color--blue;
   }
 
 }

@@ -32,7 +32,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: 60px;
   padding: 0 40px;
   background: $color--background-white;
   border-top: 1px solid $color--gray;
