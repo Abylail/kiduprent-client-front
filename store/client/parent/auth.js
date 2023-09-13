@@ -48,11 +48,12 @@ const actions = {
     async loginToken() {
         const { err, body } = await api("/parent/tokenAuth")
         if (!err) this.clientData = body;
+        else this.logout();
     },
 
     // Выход
     logout() {
-
+        // cookie.userToken.remove();
     },
 
     // Обновить данные родителя

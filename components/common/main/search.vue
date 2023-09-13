@@ -1,40 +1,24 @@
 <template>
   <div class="search">
-    <div class="search__list">
-      <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Детские центры</span>
-        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
-      </button>
-      <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Развивающие курсы</span>
-        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
-      </button>
-      <button class="search__item" @click="showModalHandle()">
-        <span class="search__item-name">Курсы по школьной программе</span>
-        <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
-      </button>
+    
+<!-- Выбор типа (центры/уроки) -->
+    <div class="search__select-type">
+      <div class="search__list">
+        <nuxt-link class="search__item" to="/catalog/almaty/centers">
+          <span class="search__item-name">Детские центры</span>
+          <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
+        </nuxt-link>
+        <nuxt-link class="search__item" to="/catalog/almaty/lessons">
+          <span class="search__item-name">Уроки и курсы</span>
+          <base-icon class="search__item-arrow" size="24" name="mdi-chevron-right"/>
+        </nuxt-link>
+      </div>
     </div>
   </div>
-
-    <div class="search__modal" v-if="showModal">
-      <mobile-header>
-        <template #default>Поиск</template>
-        <template #right><button @click="showModal = false"><base-icon name="mdi-close"/></button></template>
-      </mobile-header>
-      <search-view/>
-    </div>
 </template>
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
-import SearchView from "../search/searchView";
-import MobileHeader from "../layoutComponents/mobileHeader";
-import BaseGoButton from "../../base/BaseGoButton";
-
-const showModal = ref(false);
-const showModalHandle = () => {
-  showModal.value = true;
-}
 </script>
 
 <style lang="scss" scoped>
@@ -66,6 +50,7 @@ const showModalHandle = () => {
     border-top: 1px solid $color--gray-light;
     color: $color--black;
     font-size: $fs--default;
+    font-weight: bold;
   }
 
   &__item-arrow {

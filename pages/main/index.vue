@@ -10,7 +10,7 @@
 <!--    <base-slider class="container&#45;&#45;white"/>-->
 
     <!-- Поиск -->
-    <search/>
+    <search-select-type/>
 
     <div class="main-page__info container--white main-page__block">
       <h1 class="main-page__title"><strong>Kidup</strong> - платформа для развития ребенка</h1>
@@ -62,16 +62,13 @@
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import Categories from "../../components/common/main/categories";
 import CardList from "../../components/common/cardList";
-import LessonCard from "../../components/common/miniCards/lessonCard";
 import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
 import SubjectCard from "../../components/common/miniCards/subjectCard";
 import SubjectList from "../../components/common/main/subjectList";
-import BaseInput from "../../components/base/BaseInput";
 import BaseButton from "../../components/base/BaseButton";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
-import Search from "../../components/common/main/search";
-import BaseSlider from "../../components/base/BaseSlider";
+import SearchSelectType from "../../components/common/search/steps/searchSelectType";
 
 const mainStore = useMainStore();
 
@@ -144,8 +141,8 @@ mainStore.fetchTopCenters();
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 100%;
     background-color: $color--blue;
     color: white;
