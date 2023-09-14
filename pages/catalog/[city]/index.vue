@@ -6,7 +6,7 @@
 <script setup>
 
 import MobileHeader from "../../../components/common/layoutComponents/mobileHeader";
-import SearchSelectType from "../../../components/common/search/steps/searchSelectType";
+import SearchSelectType from "../../../components/common/search/searchSelectType";
 </script>
 
 <style scoped>

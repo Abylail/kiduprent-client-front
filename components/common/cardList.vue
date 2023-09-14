@@ -1,11 +1,11 @@
 <template>
   <div class="card-list">
-    <div class="card-list__head">
+    <div class="card-list__head container">
       <h2 class="card-list__title title">{{ props.title }}</h2>
       <nuxt-link class="card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
     </div>
 
-    <div class="card-list__content">
+    <div class="card-list__content container--white">
       <slot/>
     </div>
   </div>
@@ -47,7 +47,8 @@ const props = defineProps({
     width: auto;
     white-space:nowrap;
     overflow-x: auto;
-    padding: 15px 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
     scroll-snap-type: x mandatory;
 
     // Для элементов внутри контента

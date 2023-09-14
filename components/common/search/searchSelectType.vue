@@ -14,17 +14,13 @@
 </template>
 
 <script setup>
-import BaseIcon from "../../../base/BaseIcon";
+import BaseIcon from "../../base/BaseIcon";
 </script>
 
 <style lang="scss" scoped>
 .search-select-type {
   background-color: white;
   padding: 0 $side-space-mobile;
-
-  &__list {
-    padding-top: 12px;
-  }
 
   &__item {
     width: 100%;

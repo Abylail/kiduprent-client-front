@@ -21,13 +21,13 @@
       </div>
     </div>
 
-    <categories class="container--white main-page__block"/>
+<!--    <categories class="container&#45;&#45;white main-page__block"/>-->
 
     <!-- Список предметов -->
     <subject-list class="container--white main-page__block"/>
 
     <!-- Топ центры -->
-    <div class="container--white main-page__block">
+    <div class="main-page__block">
       <card-list title="Топ центры" to="/catalog">
         <center-card
             v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Популярные уроки -->
-    <div class="container--white main-page__block">
+    <div class="main-page__block">
       <card-list title="Популярные уроки" to="/catalog">
         <subject-card
             v-for="(lesson, index) in mainStore.getInterestingSubjects" :key="index"
@@ -53,7 +53,7 @@
       <base-button>Напишите нам</base-button>
     </div>
 
-    <subjects-feed/>
+    <subjects-feed title="Интереные занятия"/>
 
   </div>
 </template>
@@ -68,7 +68,7 @@ import SubjectCard from "../../components/common/miniCards/subjectCard";
 import SubjectList from "../../components/common/main/subjectList";
 import BaseButton from "../../components/base/BaseButton";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
-import SearchSelectType from "../../components/common/search/steps/searchSelectType";
+import SearchSelectType from "../../components/common/search/searchSelectType";
 
 const mainStore = useMainStore();
 
@@ -134,7 +134,7 @@ mainStore.fetchTopCenters();
   &__step {
     display: flex;
     align-items: center;
-    margin: 16px 0;
+    margin-top: 16px;
   }
 
   &__step-count {
@@ -144,7 +144,7 @@ mainStore.fetchTopCenters();
     width: 28px;
     height: 28px;
     border-radius: 100%;
-    background-color: $color--blue;
+    background-color: $color--red;
     color: white;
     margin-right: 8px;
   }
