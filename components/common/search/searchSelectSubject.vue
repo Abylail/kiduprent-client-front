@@ -3,7 +3,7 @@
     <button class="search-select-subject__select" @click="setShowModal(true)">
       <span class="search-select-subject__select-left">
         <span class="search-select-subject__title">Предмет</span>
-        <span class="search-select-subject__value">{{ selectedSubjectName }}</span>
+        <span class="search-select-subject__value">{{ activeSubjectName }}</span>
       </span>
       <base-icon name="mdi-chevron-right"/>
     </button>
@@ -37,6 +37,11 @@ import {useRoute, useRouter} from "nuxt/app";
 import {useSubjectsStore} from "../../../store/subjects";
 import MobileHeader from "../layoutComponents/mobileHeader";
 
+const emit = defineEmits(["update:subject"]);
+const props = defineProps({
+  subject: String
+})
+
 const showSelectModal = ref(false);
 const setShowModal = (val = false) => showSelectModal.value = val;
 
@@ -47,14 +52,12 @@ const page = ref(0);
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*100));
 
 const route = useRoute();
-const selectedSubjectCode = computed(() => route.params?.subject || null);
-const selectedSubjectName = computed(() => "Все предметы")
+const activeSubjectCode = computed(() => props.subject || null);
+const activeSubjectName = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.name || "Все предметы");
 
 const router = useRouter();
 const selectSubject = subject => {
-  console.log(subject.code)
-  if (selectedSubjectCode.value) {}
-  else {router.push("/")}
+  emit("update:subject", subject.code);
 }
 </script>
 

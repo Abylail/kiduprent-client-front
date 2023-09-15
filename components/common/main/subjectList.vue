@@ -7,7 +7,7 @@
       <nuxt-link
           class="subject-list__item"
           v-for="(subject, index) in subjectList" :key="index"
-          to="/"
+          :to="`/catalog/almaty/lessons/${subject.code}`"
       >
 <!--        <span class="subject-list__item-color"/>-->
         <span class="subject-list__item-name">{{ subject.name }}</span>
