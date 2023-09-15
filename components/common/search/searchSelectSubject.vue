@@ -100,6 +100,7 @@ const selectSubject = subject => {
     right: 0;
     background-color: white;
     z-index: 1;
+    color: $color--black;
   }
 
   &__modal-subject {
