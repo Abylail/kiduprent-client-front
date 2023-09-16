@@ -9,7 +9,11 @@ const apiErrorCatcher = error => {
 const createPath = (path, config) => config.public.BACKEND_URL + path;
 
 // Создание опций
-const createOptions = (options = {}) => ({credentials: "include", headers: useRequestHeaders(["cookie"]), ...options})
+const createOptions = (options = {}) => ({
+    credentials: "include",
+    headers: useRequestHeaders(["cookie"]),
+    ...options,
+})
 
 // GET
 const get = async (path, options = {}) => new Promise(resolve => {
@@ -20,6 +24,20 @@ const get = async (path, options = {}) => new Promise(resolve => {
         .then(({data, error}) => {
             if (error.value) apiErrorCatcher(error.value);
             resolve({body: data?.value?.body, err: error.value});
+        })
+});
+
+// GET
+const $get = async (path, options = {}) => new Promise(resolve => {
+    const config = useRuntimeConfig();
+    const apiPath = createPath(path, config);
+    const apiOptions = createOptions(options);
+    $fetch(apiPath, apiOptions)
+        .then(response => {
+            resolve({body: response?.body});
+        })
+        .catch(response => {
+            resolve({err: response?.data?.message});
         })
 });
 
@@ -71,6 +89,7 @@ const deleteApi = async (path, options = {}) => new Promise(resolve => {
 });
 
 const api = get
+api.$get = $get
 api.get = get
 api.post = post
 api.put = put
