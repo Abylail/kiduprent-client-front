@@ -64,9 +64,14 @@ const loadMoreHandle = () => {
   margin-top: 16px;
 
   &__title {
+    display: table-cell;
+    vertical-align: bottom;
     font-size: $fs--default;
-    line-height: 30px;
+    line-height: $fs--default;
     font-weight: normal;
+    height: 24px;
+    padding: 0 $side-space-mobile;
+    margin-bottom: 8px;
   }
 
   &__result {

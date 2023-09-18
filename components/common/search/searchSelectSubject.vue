@@ -115,6 +115,7 @@ const selectSubject = subject => {
     display: block;
     padding: 12px $side-space-mobile;
     font-size: $fs--default;
+    color: $color--black;
   }
 
 }

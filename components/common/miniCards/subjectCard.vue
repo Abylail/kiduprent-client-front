@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="subject-card" :class="{'subject-card--full': full}" :to="'/'">
+  <nuxt-link class="subject-card" :class="{'subject-card--full': full}" :to="`/catalog/details/lesson-${subjectId}`">
 
     <div class="subject-card__head">
       <div class="subject-card__name">{{ props.info?.name }}</div>
@@ -42,6 +42,8 @@ const props = defineProps({
     default: false
   }
 })
+
+const subjectId = computed(() => props.info?.id)
 
 // Получить время уроков группы
 const getGroupTimes = group => weekdayList

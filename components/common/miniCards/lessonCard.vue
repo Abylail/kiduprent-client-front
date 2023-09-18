@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="lesson-card" :class="{'lesson-card--full': props.full}" to="/catalog/lesson/1">
+  <nuxt-link class="lesson-card" :class="{'lesson-card--full': props.full}" :to="`/catalog/details/lesson-${lessonId}`">
     <div class="lesson-card__head">
       Программирование для детей
     </div>
@@ -25,6 +25,7 @@
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
+import {computed} from "vue";
 
 const props = defineProps({
   full: {
@@ -36,6 +37,8 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
+const lessonId = computed(() => props.info?.id)
 </script>
 
 <style lang="scss" scoped>

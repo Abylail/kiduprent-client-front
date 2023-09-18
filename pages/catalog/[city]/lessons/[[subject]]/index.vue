@@ -27,7 +27,7 @@ const route = useRoute();
 const activeSubjectCode = computed(() => route.params?.subject);
 const activeSubjectName = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.name || "Все предметы");
 const activeSubjectId = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.id || null);
-const searchTitle = computed(() => `${activeSubjectName.value} уроки и курсы для детей Алматы`)
+const searchTitle = computed(() => activeSubjectCode.value ? `${activeSubjectName.value} уроки и курсы для детей Алматы` : "Уроки и курсы для детей Алматы")
 
 // Перейти ы поиск по предметку
 const router = useRouter();

@@ -90,6 +90,7 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   &__right {
     display: flex;
     justify-content: flex-end;
+    color: $color--black;
   }
 }
 </style>
