@@ -1,7 +1,14 @@
 <template>
   <mobile-header title="Уроки и курсы" go-back="/catalog/almaty"/>
   <search-select-subject :subject="activeSubjectCode" @update:subject="selectSubject($event)"/>
-  <search-list :title="searchTitle" :list="searchLessonStore.getLessons" type="lessons"/>
+  <search-list
+      :title="searchTitle"
+      :list="searchLessonStore.getLessons"
+      :pagination="searchLessonStore.getHaveMore"
+      :loading="isLoading"
+      type="lessons"
+      @paginate="search($event)"
+  />
 </template>
 
 <script setup>
@@ -14,6 +21,7 @@ import SearchList from "../../../../../components/common/search/searchList";
 import {useSearchLessonsStore} from "../../../../../store/search/lessons";
 
 const subjectStore = useSubjectsStore();
+await subjectStore.fetchList();
 
 const route = useRoute();
 const activeSubjectCode = computed(() => route.params?.subject);
@@ -24,19 +32,19 @@ const searchTitle = computed(() => `${activeSubjectName.value} уроки и к�
 // Перейти ы поиск по предметку
 const router = useRouter();
 const selectSubject = subjectCode => {
-  router.push(`/catalog/almaty/lessons/${subjectCode}`);
+  if (subjectCode) router.push(`/catalog/almaty/lessons/${subjectCode}`);
+  else router.push(`/catalog/almaty/lessons`)
 }
 
 // Поиск уроков
 const searchLessonStore = useSearchLessonsStore();
 const isLoading = ref(true);
-const search = async () => {
+const search = async (page = 1) => {
   isLoading.value = true;
   await searchLessonStore.searchLessons({
-    subjectId: activeSubjectId.value
+    subjectId: activeSubjectId.value,
+    page
   });
-  console.log(activeSubjectId.value);
-  console.log("getLessons", searchLessonStore.getLessons);
   isLoading.value = false;
 }
 

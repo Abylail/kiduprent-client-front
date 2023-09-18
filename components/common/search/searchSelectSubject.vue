@@ -23,6 +23,10 @@
     <div class="search-select-subject__modal-list">
       <button
           class="search-select-subject__modal-subject"
+          @click="selectSubject(null)"
+      >Все предметы</button>
+      <button
+          class="search-select-subject__modal-subject"
           v-for="subject in subjectList" :key="subject.code"
           @click="selectSubject(subject)"
       >{{ subject.name }}</button>
@@ -46,7 +50,7 @@ const showSelectModal = ref(false);
 const setShowModal = (val = false) => showSelectModal.value = val;
 
 const subjectStore = useSubjectsStore();
-subjectStore.fetchListInit();
+subjectStore.fetchList();
 
 const page = ref(0);
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*100));
@@ -57,7 +61,8 @@ const activeSubjectName = computed(() => subjectStore.getList?.find(subject => s
 
 const router = useRouter();
 const selectSubject = subject => {
-  emit("update:subject", subject.code);
+  emit("update:subject", subject?.code);
+  setTimeout(() => showSelectModal.value = false, 0);
 }
 </script>
 

@@ -60,7 +60,7 @@
 
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
-import Categories from "../../components/common/main/categories";
+// import Categories from "../../components/common/main/categories";
 import CardList from "../../components/common/cardList";
 import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
@@ -77,6 +77,10 @@ mainStore.fetchMainLists();
 mainStore.fetchCategories();
 mainStore.fetchTopCenters();
 
+definePageMeta({
+  key: (route) => route.fullPath,
+  keepalive: true
+})
 </script>
 
 <style lang="scss" scoped>

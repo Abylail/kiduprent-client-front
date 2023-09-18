@@ -22,19 +22,10 @@ const getters = {
 const actions = {
 
     // Изначальный запрос
-    async fetchListInit() {
+    async fetchList() {
         if (this.list) return;
-        const { body, err } = await api("/subject/get", {params: {limit: pageCount, offset: 0}});
-        this.list = body;
-    },
-
-    // Запрос дополнительный инфы
-    async fetchListMore(page) {
-        if (page <= this.page) return;
-        this.page = page;
-        const { body, err } = await api("/subject/get", {params: {limit: pageCount, offset: page * pageCount}});
-        this.list = [...this.list, ...body];
-        if (body.length < pageCount) this.haveMore = false;
+        const { body, err } = await api.get("/subject/get");
+        if (!err) this.list = body;
     },
 }
 

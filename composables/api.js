@@ -1,4 +1,4 @@
-import {useFetch, useRuntimeConfig, useRequestHeaders} from "nuxt/app";
+import {useRuntimeConfig, useRequestHeaders} from "nuxt/app";
 
 // Обработка ошибок
 const apiErrorCatcher = error => {
@@ -9,26 +9,17 @@ const apiErrorCatcher = error => {
 const createPath = (path, config) => config.public.BACKEND_URL + path;
 
 // Создание опций
-const createOptions = (options = {}) => ({
-    credentials: "include",
-    headers: useRequestHeaders(["cookie"]),
-    ...options,
-})
+const createOptions = (options = {}, method = "get") => {
+    return {
+        credentials: "include",
+        headers: useRequestHeaders(["cookie"]),
+        ...options,
+        method,
+    }
+}
 
 // GET
 const get = async (path, options = {}) => new Promise(resolve => {
-    const config = useRuntimeConfig();
-    const apiPath = createPath(path, config);
-    const apiOptions = createOptions(options);
-    useFetch(apiPath, apiOptions)
-        .then(({data, error}) => {
-            if (error.value) apiErrorCatcher(error.value);
-            resolve({body: data?.value?.body, err: error.value});
-        })
-});
-
-// GET
-const $get = async (path, options = {}) => new Promise(resolve => {
     const config = useRuntimeConfig();
     const apiPath = createPath(path, config);
     const apiOptions = createOptions(options);
@@ -45,15 +36,15 @@ const $get = async (path, options = {}) => new Promise(resolve => {
 const post = async (path, body = {}, options = {}) => new Promise(resolve => {
     const config = useRuntimeConfig();
     const apiPath = createPath(path, config);
-    const apiOptions = createOptions(options);
-    useFetch(apiPath, {
-        ...apiOptions,
-        method: "post",
-        body,
-    })
-        .then(({data, error}) => {
-            if (error.value) apiErrorCatcher(error.value);
-            resolve({body: data?.value?.body, err: error.value});
+    const apiOptions = createOptions(options, "post");
+    $fetch(apiPath, {...apiOptions, body})
+        .then(response => {
+            resolve({body: response?.body});
+        })
+        .catch(response => {
+            const error = response?.data?.message;
+            apiErrorCatcher(error);
+            resolve({err: error});
         })
 });
 
@@ -61,15 +52,15 @@ const post = async (path, body = {}, options = {}) => new Promise(resolve => {
 const put = async (path, body = {}, options = {}) => new Promise(resolve => {
     const config = useRuntimeConfig();
     const apiPath = createPath(path, config);
-    const apiOptions = createOptions(options);
-    useFetch(apiPath, {
-        ...apiOptions,
-        method: "put",
-        body,
-    })
-        .then(({data, error}) => {
-            if (error.value) apiErrorCatcher(error.value);
-            resolve({body: data?.value?.body, err: error.value});
+    const apiOptions = createOptions(options, "put");
+    $fetch(apiPath, {...apiOptions, body})
+        .then(response => {
+            resolve({body: response?.body});
+        })
+        .catch(response => {
+            const error = response?.data?.message;
+            apiErrorCatcher(error);
+            resolve({err: error});
         })
 });
 
@@ -77,19 +68,17 @@ const put = async (path, body = {}, options = {}) => new Promise(resolve => {
 const deleteApi = async (path, options = {}) => new Promise(resolve => {
     const config = useRuntimeConfig();
     const apiPath = createPath(path, config);
-    const apiOptions = createOptions(options);
-    useFetch(apiPath, {
-        ...apiOptions,
-        method: "delete"
-    })
-        .then(({data, error}) => {
-            if (error.value) apiErrorCatcher(error.value);
-            resolve({body: data?.value?.body, err: error.value});
+    const apiOptions = createOptions(options, "delete");
+    $fetch(apiPath, apiOptions)
+        .then(response => {
+            resolve({body: response?.body});
+        })
+        .catch(response => {
+            resolve({err: response?.data?.message});
         })
 });
 
 const api = get
-api.$get = $get
 api.get = get
 api.post = post
 api.put = put

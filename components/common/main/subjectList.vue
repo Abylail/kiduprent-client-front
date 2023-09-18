@@ -16,34 +16,30 @@
     </div>
 
     <div class="subject-list__more" v-if="showMoreButton">
-      <base-button type="naked" :loading="isLoading" @click="fetchMore()">Смотреть еще</base-button>
+      <base-button type="naked" :loading="isLoading" @click="showMore()">Смотреть еще</base-button>
     </div>
   </div>
 </template>
 
 <script setup>
-import {useMainSubjectsStore} from "../../../store/main/subjects";
 import BaseIcon from "../../base/BaseIcon";
 import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
+import {useSubjectsStore} from "../../../store/subjects";
+
+const subjectStore = useSubjectsStore();
+await subjectStore.fetchList();
 
 const isLoading = ref(false);
 
 // Показывать ли кнопку еще
-const showMoreButton = computed(() => subjectStore.getHaveMore || subjectList.value.length < subjectStore.getList.length)
+const showMoreButton = computed(() => subjectStore.getList.length !== subjectList.value.length)
 
-const subjectStore = useMainSubjectsStore();
-subjectStore.fetchListInit();
-
+// Показать еще
 const page = ref(0);
+const showMore = () => page.value++;
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*5));
 
-const fetchMore = async () => {
-  isLoading.value = true;
-  page.value++;
-  await subjectStore.fetchListMore(page.value);
-  isLoading.value = false;
-}
 </script>
 
 <style lang="scss" scoped>
