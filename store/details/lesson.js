@@ -3,7 +3,7 @@ import api from "~/composables/api";
 
 const state = () => ({
     // Основная информация о уроке
-    lessonMainInfo: null,
+    lessonInfo: null,
 })
 
 const getters = {
@@ -13,9 +13,10 @@ const getters = {
 
 const actions = {
     // Запросить основную информацию
-    async fetchLessonMainInfo({id}) {
+    async fetchLessonInfo({id}) {
         if (this.lessonInfo?.id === id) return;
-        this.lessonInfo = null;
+        const {body, err} = await api.get(`/institutionSubject/details/${id}`);
+        if (!err) this.lessonInfo = body;
     },
 }
 

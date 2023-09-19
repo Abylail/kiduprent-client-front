@@ -1,6 +1,6 @@
 <template>
   <div class="base-mini-photos">
-    <div class="base-mini-photos__slides">
+    <div class="base-mini-photos__slides" :class="[{'base-mini-photos__slides--rounded': props.rounded}]">
       <img
           class="base-mini-photos__slide"
           v-for="(photo, index) in props.list"
@@ -25,6 +25,10 @@ const props = defineProps({
   showCount: {
     type: Boolean,
     default: true
+  },
+  rounded: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -42,7 +46,10 @@ const getImageUrl = url => config.public.CDN_URL + url;
     overflow-y: hidden !important;
     white-space: nowrap;
     scroll-snap-type: x mandatory;
-    border-radius: 5px;
+
+    &--rounded {
+      border-radius: 5px;
+    }
   }
 
   &__slide {

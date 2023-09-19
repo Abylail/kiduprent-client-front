@@ -58,6 +58,8 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
 
 <style lang="scss" scoped>
 .center-card {
+  display: inline-flex;
+  flex-direction: column;
   min-width: 300px;
   border-radius: 5px;
   overflow: hidden;
@@ -70,6 +72,7 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
     display: flex;
     width: 100%;
     max-width: none;
+    background-color: white;
   }
 
   &__head {
