@@ -28,7 +28,20 @@
       <p class="lesson-info__description">{{ lessonDescription }}</p>
     </div>
 
-    <center-card class="lesson-info__center-info" :info="institutionInfo" full/>
+    <div class="lesson-info__timetable container--white">
+      <h3 class="lesson-info__title">Расписание групп</h3>
+      <lesson-group
+          v-for="group in groups"
+          :info="group"
+      />
+    </div>
+
+    <center-card
+        class="lesson-info__center-info"
+        v-if="institutionInfo"
+        :info="institutionInfo"
+        full
+    />
   </div>
 </template>
 
@@ -36,21 +49,30 @@
 import {useLessonDetailsStore} from "../../../../store/details/lesson";
 import {useRoute} from "nuxt/app";
 import MobileHeader from "../../../../components/common/layoutComponents/mobileHeader";
-import {computed} from "vue";
+import {computed, onMounted} from "vue";
 import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import CenterCard from "../../../../components/common/miniCards/centerCard";
+import {useCenterDetailsStore} from "../../../../store/details/center";
+import LessonGroup from "../../../../components/common/lesson/lessonGroup";
 
 const route = useRoute();
 const lessonDetailsStore = useLessonDetailsStore();
 await lessonDetailsStore.fetchLessonInfo({id: route.params.id});
+
+const centerDetailsStore = useCenterDetailsStore();
+const isCenterLoading = ref(true);
+const institutionInfo = computed(() => centerDetailsStore.getCenterInfo)
+const fetchCenterInfo = async () => {
+  isCenterLoading.value = true;
+  await centerDetailsStore.fetchCenterInfo({id: lessonDetailsStore.getLessonInfo?.id})
+  isCenterLoading.value = false;
+}
 
 // Информация центра
 const lessonName = computed(() => lessonDetailsStore.getLessonInfo.name)
 const lessonDescription = computed(() => lessonDetailsStore.getLessonInfo.description)
 const photos = computed(() => lessonDetailsStore.getLessonInfo.photos)
 const groups = computed(() => lessonDetailsStore.getLessonInfo.institutionGroups || []);
-
-const institutionInfo = computed(() => lessonDetailsStore.getLessonInfo.institution)
 
 // Цена {min, max}
 const price = computed(() => {
@@ -90,6 +112,10 @@ const language = computed(() => ({
   kz: groups.value.some(group => group.language_kz),
   ru: groups.value.some(group => group.language_ru),
 }))
+
+onMounted(() => {
+  fetchCenterInfo();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -123,9 +149,13 @@ const language = computed(() => ({
     height: 5px;
     width: 5px;
     border-radius: 100%;
-    background: $color--black;
+    background: #222222b0;
     content: "";
     margin: 0 8px;
+  }
+
+  &__timetable {
+    margin: 16px 0;
   }
 
   &__center-info {
