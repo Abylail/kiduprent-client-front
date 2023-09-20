@@ -1,8 +1,16 @@
 <template>
   <div class="lesson-group">
-    <div class="lesson-group__title">{{ title }}</div>
+    <h4 class="lesson-group__title">{{ title }}</h4>
+    <div class="lesson-group__content">
+      <p class="lesson-group__content-item">
+        Время: <span class="lesson-group__content-value chip--outlined" v-for="time in times">{{ time }}</span>
+      </p>
+      <p class="lesson-group__content-item">
+        Возраст: <span class="lesson-group__content-value">{{ age }}</span>
+      </p>
+    </div>
     <div class="lesson-group__action">
-      <base-button type="outline" size="mini">Записаться на пробный</base-button>
+      <base-button size="mini">Выбрать группу</base-button>
     </div>
   </div>
 </template>
@@ -21,6 +29,16 @@ const title = computed(() => weekdayList
     .map(weekday => weekday.name)
     .join(" - ")
 )
+
+const times = computed(() => {
+  return ["10:00 - 12:00"]
+})
+
+const age = computed(() => {
+  const max = props.info.max_age;
+  const min = props.info.min_age;
+  return `${min || ""} - ${max || ""} лет`
+})
 </script>
 
 <style lang="scss" scoped>
@@ -32,8 +50,18 @@ const title = computed(() => weekdayList
   }
 
   &__title {
-    font-size: $fs--mini;
     font-weight: bold;
+    font-size: $fs--mini;
+  }
+
+  &__content {
+    margin-top: 12px;
+  }
+
+  &__content-item {
+    margin: 8px 0;
+    line-height: 20px;
+    font-size: $fs--mini;
   }
 
   &__action {
