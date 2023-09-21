@@ -36,6 +36,10 @@
       />
     </div>
 
+    <div class="lesson-info__timetable container--white">
+      <h3 class="lesson-info__title">Контакты</h3>
+    </div>
+
     <center-card
         class="lesson-info__center-info"
         v-if="institutionInfo"
