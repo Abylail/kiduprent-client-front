@@ -18,8 +18,8 @@
         Детей в группе: <span class="lesson-group__content-value">{{ maxChildrenCount }}</span>
       </p>
     </div>
-    <div class="lesson-group__action">
-      <base-button size="mini">Выбрать группу</base-button>
+    <div class="lesson-group__action" v-if="props.selectable">
+      <base-button size="mini" @click="selectHandle()">Выбрать группу</base-button>
     </div>
   </div>
 </template>
@@ -29,8 +29,13 @@ import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 import BaseButton from "../../base/BaseButton";
 
+const emit = defineEmits(["select"]);
 const props = defineProps({
-  info: Object
+  info: Object,
+  selectable: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const title = computed(() => weekdayList
@@ -63,11 +68,15 @@ const languages = computed(() => {
 })
 
 const maxChildrenCount = computed(() => props.info.max_children_count);
+
+const selectHandle = () => emit("select");
 </script>
 
 <style lang="scss" scoped>
 .lesson-group {
-  padding-top: 16px;
+  &:not(:first-child) {
+    padding-top: 16px;
+  }
   &:not(:last-child) {
     border-bottom: 1px solid $color--gray;
     padding-bottom: 16px;

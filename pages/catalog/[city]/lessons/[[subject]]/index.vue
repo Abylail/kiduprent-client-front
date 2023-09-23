@@ -1,6 +1,13 @@
 <template>
   <mobile-header title="Уроки и курсы" go-back="/catalog/almaty"/>
-  <search-select-subject :subject="activeSubjectCode" @update:subject="selectSubject($event)"/>
+  <base-search-select
+      title="Предмет"
+      modal-title="Выбор предмета"
+      :model-value="activeSubjectCode"
+      :items="subjectStore.getList"
+      empty-title="Все предметы"
+      @update:modelValue="selectSubject($event)"
+  />
   <search-list
       :title="searchTitle"
       :list="searchLessonStore.getLessons"
@@ -13,12 +20,12 @@
 
 <script setup>
 import MobileHeader from "../../../../../components/common/layoutComponents/mobileHeader";
-import SearchSelectSubject from "../../../../../components/common/search/searchSelectSubject";
 import {useRoute, useRouter} from "nuxt/app";
 import {computed, onMounted} from "vue";
 import {useSubjectsStore} from "../../../../../store/subjects";
 import SearchList from "../../../../../components/common/search/searchList";
 import {useSearchLessonsStore} from "../../../../../store/search/lessons";
+import BaseSearchSelect from "../../../../../components/base/BaseSearchSelect";
 
 const subjectStore = useSubjectsStore();
 await subjectStore.fetchList();

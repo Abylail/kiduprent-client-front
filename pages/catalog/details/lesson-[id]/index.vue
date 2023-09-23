@@ -33,11 +33,18 @@
       <lesson-group
           v-for="group in groups"
           :info="group"
+          selectable
+          @select="selectGroupHandle(group)"
       />
     </div>
 
-    <div class="lesson-info__timetable container--white">
+    <!-- Контакты -->
+    <div class="lesson-info__contacts container--white">
       <h3 class="lesson-info__title">Контакты</h3>
+      <lesson-contacts
+          :groups="groups"
+          :institution-info="institutionInfo"
+      />
     </div>
 
     <center-card
@@ -51,32 +58,36 @@
 
 <script setup>
 import {useLessonDetailsStore} from "../../../../store/details/lesson";
-import {useRoute} from "nuxt/app";
+import {useRoute, useRouter} from "nuxt/app";
 import MobileHeader from "../../../../components/common/layoutComponents/mobileHeader";
 import {computed, onMounted} from "vue";
 import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import CenterCard from "../../../../components/common/miniCards/centerCard";
 import {useCenterDetailsStore} from "../../../../store/details/center";
 import LessonGroup from "../../../../components/common/lesson/lessonGroup";
+import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 
+const router = useRouter();
 const route = useRoute();
 const lessonDetailsStore = useLessonDetailsStore();
-await lessonDetailsStore.fetchLessonInfo({id: route.params.id});
+const lessonId = computed(() => +route.params.id);
+const lessonInfo = computed(() => lessonDetailsStore.getLessonInfo || {});
+await lessonDetailsStore.fetchLessonInfo({id: lessonId.value});
 
 const centerDetailsStore = useCenterDetailsStore();
 const isCenterLoading = ref(true);
 const institutionInfo = computed(() => centerDetailsStore.getCenterInfo)
 const fetchCenterInfo = async () => {
   isCenterLoading.value = true;
-  await centerDetailsStore.fetchCenterInfo({id: lessonDetailsStore.getLessonInfo?.id})
+  await centerDetailsStore.fetchCenterInfo({id: lessonInfo.value.institution_id})
   isCenterLoading.value = false;
 }
 
 // Информация центра
-const lessonName = computed(() => lessonDetailsStore.getLessonInfo.name)
-const lessonDescription = computed(() => lessonDetailsStore.getLessonInfo.description)
-const photos = computed(() => lessonDetailsStore.getLessonInfo.photos)
-const groups = computed(() => lessonDetailsStore.getLessonInfo.institutionGroups || []);
+const lessonName = computed(() => lessonInfo.value.name)
+const lessonDescription = computed(() => lessonInfo.value.description)
+const photos = computed(() => lessonInfo.value.photos)
+const groups = computed(() => lessonInfo.value.institutionGroups || []);
 
 // Цена {min, max}
 const price = computed(() => {
@@ -117,6 +128,10 @@ const language = computed(() => ({
   ru: groups.value.some(group => group.language_ru),
 }))
 
+const selectGroupHandle = group => {
+  router.push(`/catalog/details/lesson-${lessonId.value}/group-${group.id}`)
+}
+
 onMounted(() => {
   fetchCenterInfo();
 })
@@ -137,6 +152,7 @@ onMounted(() => {
 
   &__title {
     font-size: $fs--title;
+    margin-bottom: 8px;
   }
 
   &__description {

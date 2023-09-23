@@ -1,17 +1,17 @@
 <template>
-  <div class="search-select-subject">
-    <button class="search-select-subject__select" @click="setShowModal(true)">
-      <span class="search-select-subject__select-left">
-        <span class="search-select-subject__title">Предмет</span>
-        <span class="search-select-subject__value">{{ activeSubjectName }}</span>
+  <div class="search-select">
+    <button class="search-select__select" @click="setShowModal(true)">
+      <span class="search-select__select-left">
+        <span class="search-select__title">{{ props.title }}</span>
+        <span class="search-select__value">{{ activeSubjectName }}</span>
       </span>
       <base-icon name="mdi-chevron-right"/>
     </button>
   </div>
 
-  <!-- Модалка с предметами -->
-  <div class="search-select-subject__modal" v-if="showSelectModal">
-    <mobile-header title="Выбор предмета">
+  <!-- Модалка со списком -->
+  <div class="search-select__modal" v-if="showSelectModal">
+    <mobile-header :title="props.modalTitle || props.title">
       <template #right>
         <button @click="setShowModal(false)">
           <base-icon name="mdi-close"/>
@@ -20,30 +20,48 @@
     </mobile-header>
 
     <!-- Список предметов -->
-    <div class="search-select-subject__modal-list">
+    <div class="search-select__modal-list">
       <button
-          class="search-select-subject__modal-subject"
+          class="search-select__modal-subject"
           @click="selectSubject(null)"
       >Все предметы</button>
       <button
-          class="search-select-subject__modal-subject"
-          v-for="subject in subjectList" :key="subject.code"
+          class="search-select__modal-subject"
+          v-for="subject in list" :key="subject[props.valueField]"
           @click="selectSubject(subject)"
-      >{{ subject.name }}</button>
+      >{{ subject[props.nameField] }}</button>
     </div>
   </div>
 </template>
 
 <script setup>
 import {computed} from "vue";
-import BaseIcon from "../../base/BaseIcon";
+import BaseIcon from "./BaseIcon";
 import {useRoute, useRouter} from "nuxt/app";
-import {useSubjectsStore} from "../../../store/subjects";
-import MobileHeader from "../layoutComponents/mobileHeader";
+import {useSubjectsStore} from "../../store/subjects";
+import MobileHeader from "../common/layoutComponents/mobileHeader";
 
-const emit = defineEmits(["update:subject"]);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
-  subject: String
+  modelValue: String,
+  title: String,
+  modalTitle: String,
+  items: {
+    type: Array,
+    default: () => []
+  },
+  emptyTitle: {
+    type: String,
+    default: "Все"
+  },
+  nameField: {
+    type: String,
+    default: "name"
+  },
+  valueField: {
+    type: String,
+    default: "code"
+  }
 })
 
 const showSelectModal = ref(false);
@@ -52,22 +70,21 @@ const setShowModal = (val = false) => showSelectModal.value = val;
 const subjectStore = useSubjectsStore();
 subjectStore.fetchList();
 
-const page = ref(0);
-const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*100));
+const list = computed(() => props.items || []);
 
 const route = useRoute();
-const activeSubjectCode = computed(() => props.subject || null);
-const activeSubjectName = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.name || "Все предметы");
+const activeSubjectCode = computed(() => props.modelValue || null);
+const activeSubjectName = computed(() => list.value?.find(subject => subject[props.valueField] === activeSubjectCode.value)?.name || props.emptyTitle);
 
 const router = useRouter();
 const selectSubject = subject => {
-  emit("update:subject", subject?.code);
+  emit("update:modelValue", subject?.[props.valueField]);
   setTimeout(() => showSelectModal.value = false, 0);
 }
 </script>
 
 <style lang="scss" scoped>
-.search-select-subject {
+.search-select {
 
   &__select {
     width: 100%;

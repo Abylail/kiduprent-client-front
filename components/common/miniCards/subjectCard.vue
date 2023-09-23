@@ -8,6 +8,7 @@
 
     <div class="subject-card__description">{{ props.info?.description }}</div>
 
+    <!-- Фото + контент -->
     <div class="subject-card__content">
       <base-mini-photos class="subject-card__photos" v-if="info?.photos?.length" :list="info.photos"/>
       <div class="subject-card__info">
@@ -18,6 +19,12 @@
           <div class="chip--outlined" v-if="langKz">Каз</div>
         </div>
       </div>
+    </div>
+
+    <!-- Адреса -->
+    <div class="subject-card__address" v-if="addresses">
+      <base-icon class="subject-card__address-icon" name="mdi-map-marker" size="24"/>
+      <span>{{ addresses }}</span>
     </div>
 
     <!-- Группы -->
@@ -34,6 +41,7 @@
 import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 import BaseMiniPhotos from "../../base/BaseMiniPhotos";
+import BaseIcon from "../../base/BaseIcon";
 
 const props = defineProps({
   info: Object,
@@ -91,6 +99,13 @@ const langKz = computed(() => groups.value.some(group => group.language_kz));
 
 // Рус яз
 const langRu = computed(() => groups.value.some(group => group.language_ru));
+
+// Адреса
+const addresses = computed(() => {
+  if (!groups.value.length) return null;
+  const isAddressesSame = groups.value?.every(g => g.institutionBranch?.id === groups.value[0]?.institutionBranch?.id);
+  return isAddressesSame ? groups.value[0]?.institutionBranch?.address : groups.value?.map(g => g.value?.institutionBranch?.address).join(", ")
+})
 </script>
 
 <style lang="scss" scoped>
@@ -162,6 +177,17 @@ const langRu = computed(() => groups.value.some(group => group.language_ru));
     &:not(:last-child) {
       margin-bottom: 6px;
     }
+  }
+
+  &__address {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    padding: 0 $side-space-mobile;
+  }
+
+  &__address-icon {
+    color: $color--orange;
   }
 
   &__bottom-block {
