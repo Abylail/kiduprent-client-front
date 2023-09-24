@@ -65,7 +65,6 @@ const week = Array(7).fill(null).map((_, index) => {
 
 <style lang="scss" scoped>
 .trial {
-  margin-top: 16px;
 
   &__title {
     font-size: $fs--title;
@@ -83,7 +82,6 @@ const week = Array(7).fill(null).map((_, index) => {
     align-items: center;
     padding: 4px;
     border-radius: 5px;
-    transition: .3s;
     &:not(:last-child) {border-right: 1px solid $color--gray;}
 
     &__name {

@@ -22,14 +22,17 @@
     <!-- Список предметов -->
     <div class="search-select__modal-list">
       <button
-          class="search-select__modal-subject"
-          @click="selectSubject(null)"
+          class="search-select__modal-item"
+          @click="selectHandle(null)"
       >Все предметы</button>
       <button
-          class="search-select__modal-subject"
-          v-for="subject in list" :key="subject[props.valueField]"
-          @click="selectSubject(subject)"
-      >{{ subject[props.nameField] }}</button>
+          class="search-select__modal-item"
+          v-for="item in list" :key="item[props.valueField]"
+          @click="selectHandle(item)"
+      >
+        <base-icon v-if="props.iconField" :name="item[props.iconField]" color="blue"></base-icon>
+        <span>{{ item[props.nameField] }}</span>
+      </button>
     </div>
   </div>
 </template>
@@ -61,6 +64,10 @@ const props = defineProps({
   valueField: {
     type: String,
     default: "code"
+  },
+  iconField: {
+    type: String,
+    default: null
   }
 })
 
@@ -77,7 +84,7 @@ const activeSubjectCode = computed(() => props.modelValue || null);
 const activeSubjectName = computed(() => list.value?.find(subject => subject[props.valueField] === activeSubjectCode.value)?.name || props.emptyTitle);
 
 const router = useRouter();
-const selectSubject = subject => {
+const selectHandle = subject => {
   emit("update:modelValue", subject?.[props.valueField]);
   setTimeout(() => showSelectModal.value = false, 0);
 }
@@ -125,11 +132,13 @@ const selectSubject = subject => {
     color: $color--black;
   }
 
-  &__modal-subject {
+  &__modal-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     width: 100%;
     text-align: left;
     border-top: 1px solid $color--gray-light;
-    display: block;
     padding: 12px $side-space-mobile;
     font-size: $fs--default;
     color: $color--black;

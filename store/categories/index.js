@@ -15,7 +15,7 @@ const actions = {
     // Изначальный запрос
     async fetchList() {
         if (this.list) return;
-        const { body, err } = await api.get("/categories/get");
+        const { body, err } = await api.get("/category/get");
         if (!err) this.list = body;
     },
 }

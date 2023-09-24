@@ -6,6 +6,7 @@
       :model-value="activeCategoryCode"
       :items="categoryStore.getList"
       empty-title="Все категории"
+      icon-field="icon_mdi"
       @update:modelValue="selectCategory($event)"
   />
 </template>
@@ -18,13 +19,14 @@ import {useRoute, useRouter} from "nuxt/app";
 import {computed} from "vue";
 
 const categoryStore = useCategoriesStore();
+await categoryStore.fetchList();
 
 const route = useRoute();
 const activeCategoryCode = computed(() => route.params?.category);
 
 const router = useRouter();
-const selectCategory = subjectCode => {
-  if (subjectCode) router.push(`/catalog/almaty/centers/${subjectCode}`);
-  else router.push(`/catalog/almaty/selectCategory`)
+const selectCategory = categoryCode => {
+  if (categoryCode) router.push(`/catalog/almaty/centers/${categoryCode}`);
+  else router.push(`/catalog/almaty/centers`)
 }
 </script>
