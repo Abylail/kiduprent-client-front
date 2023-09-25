@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="center-card" :class="{'center-card--full': props.full}" to="/catalog/center/1">
+  <nuxt-link class="center-card" :class="{'center-card--full': props.full}" :to="`/catalog/details/center-${info.id}`">
 
     <div class="center-card__head">
       <div>

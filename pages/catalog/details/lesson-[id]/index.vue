@@ -146,10 +146,6 @@ onMounted(() => {
     background-color: white;
   }
 
-  &__main {
-
-  }
-
   &__title {
     font-size: $fs--title;
     margin-bottom: 8px;
