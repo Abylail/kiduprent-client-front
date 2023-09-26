@@ -18,7 +18,7 @@ const props = defineProps({
   },
   controls: {
     type: Array,
-    default: () => ["zoomControl", "geolocationControl"]
+    default: () => ["zoomControl"]
   }
 });
 

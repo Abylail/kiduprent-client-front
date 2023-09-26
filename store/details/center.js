@@ -6,6 +6,7 @@ const state = () => ({
     centerInfo: null,
 
     // Предметы центра
+    subjectsCenterId: null,
     subjects: null,
 })
 
@@ -26,9 +27,12 @@ const actions = {
     },
 
     async fetchCenterSubjects({ id }) {
-        if (this.subjects && this.centerInfo?.id === id) return;
+        if (this.subjects && this.subjectsCenterId === id) return;
         const {body, err} = await api.get(`/institution/details/${id}/subjects`);
-        if (!err) this.subjects = body;
+        if (!err) {
+            this.subjectsCenterId = id;
+            this.subjects = body;
+        }
     },
 }
 
