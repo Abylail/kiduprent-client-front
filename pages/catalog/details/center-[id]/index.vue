@@ -14,7 +14,6 @@
 
     <div class="center-info__main container--white">
       <h1 class="center-info__title">{{ centerInfo.name }}</h1>
-      <p class="center-info__description">{{ centerInfo.description }}</p>
 
       <p class="center-info__description">
         <span>
@@ -30,6 +29,8 @@
           <span>{{ groups.length }} групп</span>
         </span>
       </p>
+
+      <p class="center-info__description">{{ centerInfo.description }}</p>
     </div>
 
     <div class="center-info__contacts container--white">
@@ -40,21 +41,36 @@
       />
     </div>
 
-    <!-- Предметы -->
-    <div class="center-info__subject container--white" v-for="subject in subjects" :key="subjects.id">
-      <h3>{{ subject.name }}</h3>
+    <div class="center-info__contacts container--white">
+      <h3 class="center-info__title">Местоположение</h3>
+      <base-yandex-map height="200px"/>
     </div>
+
+    <div class="center-info__subjects" v-if="subjects.length">
+      <h3 class="center-info__title container">Уроки в центре</h3>
+      <subject-card
+        class="center-info__subject"
+        v-for="subject in subjects" :key="subject.id"
+        :info="subject"
+        full
+      />
+    </div>
+
+    <!-- Предметы -->
+
   </div>
 </template>
 
 <script setup>
 import MobileHeader from "../../../../components/common/layoutComponents/mobileHeader";
 import {useCenterDetailsStore} from "../../../../store/details/center";
-import {useRoute} from "nuxt/app";
-import {computed} from "vue";
+import {useRoute} from "nuxt/app";2
+import {computed, onMounted} from "vue";
 import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import BaseIcon from "../../../../components/base/BaseIcon";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
+import SubjectCard from "../../../../components/common/miniCards/subjectCard";
+import BaseYandexMap from "../../../../components/base/BaseYandexMap";
 
 const route = useRoute();
 const centerId = computed(() => +route.params.id);
@@ -65,8 +81,18 @@ await centerStore.fetchCenterInfo({id: centerId.value});
 const groups = computed(() => centerInfo.value.institutionGroups || []);
 const photos = computed(() => centerInfo.value.photos);
 const workTime = computed(() => `${centerInfo.value.start_time} - ${centerInfo.value.end_time}`)
-const subjects = computed(() => centerInfo.value.institutionSubjects || []);
 
+const isSubjectsLoading = ref(true);
+const subjects = computed(() => centerStore.getSubjects || []);
+const fetchSubjects = async () => {
+  isSubjectsLoading.value = true;
+  await centerStore.fetchCenterSubjects({id: centerId.value})
+  isSubjectsLoading.value = false;
+}
+
+onMounted(() => {
+  fetchSubjects();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -107,8 +133,12 @@ const subjects = computed(() => centerInfo.value.institutionSubjects || []);
     margin: 16px 0;
   }
 
+  &__subjects {
+    margin-top: 16px;
+  }
+
   &__subject {
-    margin: 16px 0;
+    margin: 8px 0;
   }
 
 }

@@ -4,11 +4,17 @@ import api from "~/composables/api";
 const state = () => ({
     // Основная информация о уроке
     centerInfo: null,
+
+    // Предметы центра
+    subjects: null,
 })
 
 const getters = {
     // Основная информация о уроке
     getCenterInfo: state => state.centerInfo || null,
+
+    // Предметы центра
+    getSubjects: state => state.subjects || [],
 }
 
 const actions = {
@@ -17,6 +23,12 @@ const actions = {
         if (this.centerInfo?.id === id) return;
         const {body, err} = await api.get(`/institution/details/${id}`);
         if (!err) this.centerInfo = body;
+    },
+
+    async fetchCenterSubjects({ id }) {
+        if (this.subjects && this.centerInfo?.id === id) return;
+        const {body, err} = await api.get(`/institution/details/${id}/subjects`);
+        if (!err) this.subjects = body;
     },
 }
 
