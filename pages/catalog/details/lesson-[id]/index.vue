@@ -38,6 +38,14 @@
       />
     </div>
 
+    <div class="lesson-info__location container--white">
+      <h3 class="lesson-info__title">Местоположение</h3>
+      <base-yandex-map
+          :branches="branches"
+          height="150px"
+      />
+    </div>
+
     <!-- Контакты -->
     <div class="lesson-info__contacts container--white">
       <h3 class="lesson-info__title">Контакты</h3>
@@ -66,6 +74,7 @@ import CenterCard from "../../../../components/common/miniCards/centerCard";
 import {useCenterDetailsStore} from "../../../../store/details/center";
 import LessonGroup from "../../../../components/common/lesson/lessonGroup";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
+import BaseYandexMap from "../../../../components/base/BaseYandexMap";
 
 const router = useRouter();
 const route = useRoute();
@@ -88,6 +97,10 @@ const lessonName = computed(() => lessonInfo.value.name)
 const lessonDescription = computed(() => lessonInfo.value.description)
 const photos = computed(() => lessonInfo.value.photos)
 const groups = computed(() => lessonInfo.value.institutionGroups || []);
+const branches = computed(() => groups.value
+    .map(group => group.institutionBranch)
+    .filter((group, index, self) => index === self.findIndex((g) => g.id === group.id))
+);
 
 // Цена {min, max}
 const price = computed(() => {
@@ -175,6 +188,10 @@ onMounted(() => {
   }
 
   &__center-info {
+    margin: 16px 0;
+  }
+
+  &__location {
     margin: 16px 0;
   }
 

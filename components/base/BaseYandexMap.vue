@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 
 const props = defineProps({
   height: {
@@ -19,17 +19,36 @@ const props = defineProps({
   controls: {
     type: Array,
     default: () => ["zoomControl"]
+  },
+  branches: {
+    type: Array,
+    default: () => []
   }
 });
 
 const AlmatyCenterCoords = [43.23974123877094, 76.90200964930152];
+
+// Стартовые координаты
+const startCoords = computed(() => props.branches[0]?.coordinates || AlmatyCenterCoords);
+const markers = computed(() => props.branches.map(({coordinates}) => ({coordinates})));
+
+const MarkerOptions = {preset: 'islands#circleIcon', iconColor: '#004BFF'};
+
 const Map = ref(null);
-const mapInit = () => {
+const mapInit = async () => {
   Map.value = new ymaps.Map("base-yandex-map", {
-    center: AlmatyCenterCoords,
-    zoom: 14,
-    controls: props.controls,
+    center: startCoords.value,
+    zoom: 15,
+    markers: [],
+    controls: [],
   });
+
+  // Добавляю маркеры
+  markers.value.forEach(marker => {
+    Map.value.geoObjects.add(new ymaps.Placemark(marker.coordinates, {
+      balloonContent: "test"
+    }, MarkerOptions))
+  })
 }
 
 onMounted(() => {
@@ -42,9 +61,11 @@ onMounted(() => {
   margin: 8px 0;
 
   &__map {
-    height: 400px;
+    height: 300px;
     width: 100%;
     background-color: gray;
+    border-radius: 5px;
+    pointer-events: none;
   }
 }
 

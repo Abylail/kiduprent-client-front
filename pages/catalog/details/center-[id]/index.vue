@@ -43,7 +43,10 @@
 
     <div class="center-info__contacts container--white">
       <h3 class="center-info__title">Местоположение</h3>
-      <base-yandex-map height="200px"/>
+      <base-yandex-map
+          :branches="branches"
+          height="150px"
+      />
     </div>
 
     <div class="center-info__subjects" v-if="subjects.length">
@@ -79,6 +82,7 @@ const centerInfo = computed(() => centerStore.getCenterInfo || {});
 await centerStore.fetchCenterInfo({id: centerId.value});
 
 const groups = computed(() => centerInfo.value.institutionGroups || []);
+const branches = computed(() => centerInfo.value.institutionBranches || []);
 const photos = computed(() => centerInfo.value.photos);
 const workTime = computed(() => `${centerInfo.value.start_time} - ${centerInfo.value.end_time}`)
 
