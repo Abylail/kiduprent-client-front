@@ -43,6 +43,7 @@ import {useAuthStore} from "../../../store/client/parent/auth";
 import {computed, watch} from "vue";
 import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";
+import {phonePreparing} from "../../../helpers/phone";
 
 // Открыто ?
 const openBackdrop = ref(false);
@@ -75,7 +76,7 @@ const phone = ref(null);
 const phoneValid = computed(() => !!phone.value)
 const sendSmsHandle = async () => {
   isLoading.value = true;
-  const isSuccess = await authStore.sendOtp(phone.value);
+  const isSuccess = await authStore.sendOtp(phonePreparing(phone.value));
   isLoading.value = false;
 
   if (isSuccess) step.value = 2;
@@ -86,7 +87,7 @@ const otp = ref(null);
 const otpValid = computed(() => otp.value?.length === 4)
 const submitOtp = async () => {
   isLoading.value = true;
-  const isSuccess = await authStore.login(phone.value, otp.value);
+  const isSuccess = await authStore.login(phonePreparing(phone.value), otp.value);
   isLoading.value = false;
 
   if (isSuccess) successLogin();

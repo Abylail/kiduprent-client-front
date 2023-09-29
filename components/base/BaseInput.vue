@@ -8,7 +8,23 @@
       <!-- Иконка -->
       <base-icon class="base-input__prev-icon" v-if="prevIcon" :name="prevIcon"/>
 
+      <!-- Инпут с маской -->
       <input
+          v-if="isMasked"
+          class="base-input__input"
+          :ref="el => inputElement = el"
+          :value="valueLabel"
+          v-maska :data-maska="dataMaska"
+          :inputmode="inputmode"
+          :autofocus="autofocus"
+          @focus="onFocus()"
+          @blur="onBlur()"
+          @input="inputHandle($event.target?.value)"
+      />
+
+      <!-- Просто инпут -->
+      <input
+          v-else
           class="base-input__input"
           :ref="el => inputElement = el"
           :value="valueLabel"
@@ -26,8 +42,8 @@
 
 <script setup>
 import {computed, onMounted, ref} from "vue";
-// import {default as InputMask} from "vue-inputmask"
 import BaseIcon from "./BaseIcon";
+import { vMaska } from "maska";
 
 const emit = defineEmits(["update:modelValue"])
 const props = defineProps({
@@ -56,6 +72,7 @@ const props = defineProps({
   }
 })
 
+// Видимое значение
 const valueLabel = computed(() => props.modelValue);
 const inputmode = computed(() => {
   if (props.phone) return "tel";
@@ -91,18 +108,12 @@ const inputHandle = value => {
   emit("update:modelValue", value);
 }
 
-const needInputMask = computed(() => props.phone);
-const initMask = async () => {
-  const {default: InputMask} = await import("vue-inputmask")
-  console.log(InputMask)
-  let im = null;
-  if (props.phone) im = new InputMask("+7 (999) 999-99-99", {showMaskOnHover: false});
-  if (im) im.mask(inputElement.value);
-}
-
-onMounted(() => {
-  // if (needInputMask) initMask();
+// Инпус с маской
+const dataMaska = computed(() => {
+  if (props.phone) return "+7 (###) ###-##-##"
+  return null;
 })
+const isMasked = computed(() => !!dataMaska.value);
 </script>
 
 <style lang="scss" scoped>

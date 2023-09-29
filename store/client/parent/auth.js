@@ -1,7 +1,7 @@
 import api from "~/composables/api";
 import cookie from "~/composables/cookie";
 import {defineStore} from "pinia";
-import {phoneValidation} from "~/helpers/validations";
+import {phoneValidation} from "~/helpers/phone";
 
 const state = () => ({
     // Информация клиента
@@ -40,7 +40,7 @@ const actions = {
         const { err, body } = await api.post("/parent/smsAuth", {phone, sms_code: smsCode})
         if (err) return false;
         this.clientData = body;
-        cookie.userToken.set(body.token);
+        await cookie.userToken.set(body.token);
         return true;
     },
 

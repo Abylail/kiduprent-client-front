@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import BaseGoButton from "../../base/BaseGoButton";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BaseInput from "../../base/BaseInput";
@@ -41,8 +41,11 @@ import {useParentChildrenStore} from "../../../store/client/parent/children";
 const isLoading = ref(true);
 
 const parentChildrenStore = useParentChildrenStore();
-await parentChildrenStore.fetchChildren();
-isLoading.value = false;
+const fetchChildren = async () => {
+  isLoading.value = true;
+  await parentChildrenStore.fetchChildren();
+  isLoading.value = false;
+};
 
 const children = computed(() => parentChildrenStore.getChildren);
 
@@ -73,6 +76,9 @@ const deleteHandle = async () => {
   isLoading.value = false;
 }
 
+onMounted(() => {
+  fetchChildren();
+})
 </script>
 
 <style lang="scss" scoped>

@@ -36,7 +36,7 @@ const MarkerOptions = {preset: 'islands#circleIcon', iconColor: '#004BFF'};
 
 const Map = ref(null);
 const mapInit = async () => {
-  Map.value = new ymaps.Map("base-yandex-map", {
+  let _map = new ymaps.Map("base-yandex-map", {
     center: startCoords.value,
     zoom: 15,
     markers: [],
@@ -45,14 +45,18 @@ const mapInit = async () => {
 
   // Добавляю маркеры
   markers.value.forEach(marker => {
-    Map.value.geoObjects.add(new ymaps.Placemark(marker.coordinates, {
+    _map.geoObjects.add(new ymaps.Placemark([...marker.coordinates], {
       balloonContent: "test"
     }, MarkerOptions))
   })
+
+  return _map;
 }
 
 onMounted(() => {
-  mapInit();
+  ymaps.ready(() => {
+    Map.value = mapInit()
+  });
 })
 </script>
 
