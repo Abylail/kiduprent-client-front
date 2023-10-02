@@ -23,6 +23,16 @@
       </div>
     </div>
   </div>
+
+  <div class="container trial__action">
+    <base-button
+        :disabled="!selectedDay"
+        full-width
+        @click="submitHandle()"
+    >Записаться</base-button>
+  </div>
+
+  <select-child-modal v-model:open="openSelectChild"/>
 </template>
 
 <script setup>
@@ -32,6 +42,9 @@ import {useLessonDetailsStore} from "../../../../../store/details/lesson";
 import {useRoute} from "nuxt/app";
 import LessonGroup from "../../../../../components/common/lesson/lessonGroup";
 import {weekdayList} from "../../../../../config/weekdays";
+import BaseButton from "../../../../../components/base/BaseButton";
+import {useAuthStore} from "../../../../../store/client/parent/auth";
+import SelectChildModal from "../../../../../components/common/catalog/selectChildModal";
 
 const route = useRoute();
 const lessonId = computed(() => +route.params.id);
@@ -61,6 +74,15 @@ const week = Array(7).fill(null).map((_, index) => {
     time: groupInfo.value?.[`${weekDay.code}_start`]
   })
 })
+
+const authStore = useAuthStore();
+
+const openSelectChild = ref(false);
+
+// Записаться (кнопка)
+const submitHandle = () => {
+  openSelectChild.value = true;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -82,7 +104,7 @@ const week = Array(7).fill(null).map((_, index) => {
     align-items: center;
     padding: 4px;
     border-radius: 5px;
-    &:not(:last-child) {border-right: 1px solid $color--gray;}
+    //&:not(:last-child) {border-right: 1px solid $color--gray;}
 
     &__name {
       font-weight: bold;
@@ -108,6 +130,10 @@ const week = Array(7).fill(null).map((_, index) => {
       background-color: $color--blue;
       * {color: white !important;}
     }
+  }
+
+  &__action {
+    margin-top: 16px;
   }
 
 }

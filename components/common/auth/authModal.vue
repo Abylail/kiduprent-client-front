@@ -1,8 +1,6 @@
 <template>
-  <base-button @click="openBackdrop = true">Вход / Регистрация</base-button>
-
   <!-- Авторизация -->
-  <base-backdrop v-model:active="openBackdrop" :title="title">
+  <base-backdrop :active="props.open" :title="title" @update:active="emit('update:open', $event)">
 
     <div class="auth__content" v-if="step === 1">
       <base-input
@@ -45,12 +43,20 @@ import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";
 import {phonePreparing} from "../../../helpers/phone";
 
-// Открыто ?
-const openBackdrop = ref(false);
-watch(openBackdrop, (val) => {
-  // Очищаю данные после закрытия
-  if (!val) setTimeout(() => resetData(), 300);
+const emit = defineEmits(["update:open", "final"])
+const props = defineProps({
+  open: Boolean
 })
+
+watch(() => props.open, (val) => {
+  // Очищаю данные после закрытия
+  if (!val) onClose();
+})
+
+const onClose = () => {
+  setTimeout(() => resetData(), 300);
+  emit("final", authStore.isAuth);
+}
 
 // Сбросить все данные
 const resetData = () => {
@@ -62,7 +68,7 @@ const resetData = () => {
 
 // На успешный логин
 const successLogin = () => {
-  openBackdrop.value = false;
+  emit("update:open", false);
 }
 
 const authStore = useAuthStore();

@@ -19,9 +19,11 @@
   <div class="account" v-else>
     <div class="account__auth">
       <p class="account__auth-text">Войдите что бы вы могли записываться и смотреть расписание</p>
-      <auth/>
+      <base-button @click="openAuth = true">Вход / Регистрация</base-button>
     </div>
   </div>
+
+  <auth-modal v-model:open="openAuth"/>
 </template>
 
 <script setup>
@@ -29,8 +31,11 @@ import MobileHeader from "../../components/common/layoutComponents/mobileHeader"
 import PersonalData from "../../components/common/account/personalData";
 import Children from "../../components/common/account/children";
 import {useAuthStore} from "../../store/client/parent/auth";
-import Auth from "../../components/common/auth/auth";
+import AuthModal from "../../components/common/auth/authModal";
+import BaseButton from "../../components/base/BaseButton";
 const authStore = useAuthStore();
+
+const openAuth = ref(false);
 </script>
 
 <style lang="scss" scoped>
