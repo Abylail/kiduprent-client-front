@@ -5,8 +5,22 @@
       create child
     </div>
 
+    <!-- Выбор ребенка -->
     <div class="select-child-modal" v-else>
-      select child
+      <div
+          class="select-child-modal__child-item"
+          :class="{'active': selectedChild?.id === child.id}"
+          v-for="child in children" :key="child.id"
+          @click="selectedChild = child"
+      >
+        <span>{{ child.name }}</span>
+        <span class="select-child-modal__child-tick" :class="{'active': selectedChild?.id === child.id}"/>
+      </div>
+      <base-button class="children__add" type="naked" full-width @click="addChild()">Добавить ребенка +</base-button>
+
+      <div class="select-child-modal__action">
+        <base-button :disabled="!selectedChild" full-width>Записаться</base-button>
+      </div>
     </div>
 
   </base-backdrop>
@@ -20,17 +34,23 @@ import {computed, watch} from "vue";
 import {useAuthStore} from "../../../store/client/parent/auth";
 import AuthModal from "../auth/authModal";
 import {useParentChildrenStore} from "../../../store/client/parent/children";
+import BaseButton from "../../base/BaseButton";
 
 const emit = defineEmits(["update:open"])
 const props = defineProps({
   open: Boolean
 })
 
-const parentChildrenStore = useParentChildrenStore();
-const children = computed(() => parentChildrenStore.getChildren);
-
 const isCreatingChild = ref(false);
 const selectChildTitle = computed(() => isCreatingChild.value ? "Создание" : "Выберите ребенка")
+
+const parentChildrenStore = useParentChildrenStore();
+const children = computed(() => parentChildrenStore.getChildren);
+const selectedChild = ref(null);
+
+const addChild = () => {
+  isCreatingChild.value = true;
+}
 
 const openAuth = ref(false);
 const authFinal = async (successAuth) => {
@@ -76,5 +96,43 @@ watch(() => props.open, (val) => {
 <style lang="scss" scoped>
 .select-child-modal {
   padding: 0 $side-space-mobile;
+
+  &__child-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: $color--gray-light;
+    border-radius: 10px;
+    margin: 12px 0;
+    border: 1px solid transparent;
+
+    &.active {
+      border-color: $color--blue;
+    }
+  }
+
+  &__child-tick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    width: 16px;
+    border: 2px solid $color--gray-dark;
+    border-radius: 100%;
+
+    &.active::after {
+      display: block;
+      content: "";
+      height: 12px;
+      width: 12px;
+      background-color: $color--blue;
+      border-radius: 100%;
+    }
+  }
+
+  &__action {
+    margin-top: 50px;
+  }
 }
 </style>
