@@ -32,7 +32,8 @@
     >Записаться</base-button>
   </div>
 
-  <select-child-modal v-model:open="openSelectChild"/>
+  <select-child-modal v-model:open="openSelectChild" @select="selectChild($event)"/>
+  <success-lesson-book v-model:open="openSuccessModal"/>
 </template>
 
 <script setup>
@@ -45,6 +46,7 @@ import {weekdayList} from "../../../../../config/weekdays";
 import BaseButton from "../../../../../components/base/BaseButton";
 import {useAuthStore} from "../../../../../store/client/parent/auth";
 import SelectChildModal from "../../../../../components/common/catalog/selectChildModal";
+import SuccessLessonBook from "../../../../../components/common/catalog/successLessonBook";
 
 const route = useRoute();
 const lessonId = computed(() => +route.params.id);
@@ -75,9 +77,13 @@ const week = Array(7).fill(null).map((_, index) => {
   })
 })
 
-const authStore = useAuthStore();
-
 const openSelectChild = ref(false);
+const openSuccessModal = ref(false);
+let selectedChild = null;
+const selectChild = child => {
+  selectedChild = child;
+  openSuccessModal.value = true;
+}
 
 // Записаться (кнопка)
 const submitHandle = () => {

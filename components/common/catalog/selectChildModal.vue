@@ -1,8 +1,15 @@
 <template>
-  <base-backdrop :title="selectChildTitle" :active="openSelect" @update:active="updateOpenSelect($event)">
+  <base-backdrop title="Запись ребенка" :active="openSelect" @update:active="updateOpenSelect($event)">
 
     <div class="select-child-modal" v-if="isCreatingChild">
-      create child
+      <children-editor
+          v-model="createChildData"
+          :loading="creatingLoading"
+          :cancelable="!!children.length"
+          cancel-text="Назад к списку"
+          @save="createHandle()"
+          @cancel="cancelCreateHandle()"
+      />
     </div>
 
     <!-- Выбор ребенка -->
@@ -19,7 +26,7 @@
       <base-button class="children__add" type="naked" full-width @click="addChild()">Добавить ребенка +</base-button>
 
       <div class="select-child-modal__action">
-        <base-button :disabled="!selectedChild" full-width>Записаться</base-button>
+        <base-button :disabled="!selectedChild" full-width @click="submitHandle()">Записаться</base-button>
       </div>
     </div>
 
@@ -35,18 +42,38 @@ import {useAuthStore} from "../../../store/client/parent/auth";
 import AuthModal from "../auth/authModal";
 import {useParentChildrenStore} from "../../../store/client/parent/children";
 import BaseButton from "../../base/BaseButton";
+import ChildrenEditor from "./childrenEditor";
 
-const emit = defineEmits(["update:open"])
+const emit = defineEmits(["update:open", "select"])
 const props = defineProps({
   open: Boolean
 })
 
+const children = computed(() => [...parentChildrenStore.getChildren]);
+
 const isCreatingChild = ref(false);
-const selectChildTitle = computed(() => isCreatingChild.value ? "Создание" : "Выберите ребенка")
+const selectedChild = ref(null);
 
 const parentChildrenStore = useParentChildrenStore();
-const children = computed(() => parentChildrenStore.getChildren);
-const selectedChild = ref(null);
+const createChildData = ref({});
+const creatingLoading = ref(false);
+const createHandle = async () => {
+  creatingLoading.value = true;
+  const success = await parentChildrenStore.addChild(createChildData.value);
+  if (success) {
+    selectedChild.value = children.value.find(child =>
+        child.name === createChildData.value.name &&
+        +child.age === +createChildData.value.age &&
+        child.gender === createChildData.value.gender
+    )
+    isCreatingChild.value = false;
+  }
+  creatingLoading.value = false;
+}
+const cancelCreateHandle = () => {
+  isCreatingChild.value = false;
+  createChildData.value = {};
+}
 
 const addChild = () => {
   isCreatingChild.value = true;
@@ -56,11 +83,7 @@ const openAuth = ref(false);
 const authFinal = async (successAuth) => {
   await parentChildrenStore.fetchChildren();
   if (!successAuth) emit("update:open", false);
-  else {
-    setTimeout(() => {
-      showSelect();
-    }, 300);
-  }
+  else showSelect();
 }
 
 const openSelect = ref(false);
@@ -85,6 +108,11 @@ const onOpen = async () => {
 
 const onClose = () => {
   isCreatingChild.value = false;
+}
+
+const submitHandle = () => {
+  emit("select", selectedChild.value)
+  updateOpenSelect(false);
 }
 
 watch(() => props.open, (val) => {

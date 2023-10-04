@@ -13,18 +13,14 @@
 
     <!-- Редактор -->
     <base-backdrop v-model:active="openEditor" title="Редактирование">
-      <div class="children__editor">
-        <base-input title="Имя" v-model="editChildData.name"/>
-        <base-input title="Возраст" v-model="editChildData.age" number/>
-        <base-switch title="Пол" v-model="editChildData.gender" :options="[{name: 'Мужской', key: 'M'},{name: 'Женский', key: 'W'}]"/>
-        <div class="children__editor-actions">
-          <div class="children__editor-actions-columns">
-            <base-button v-if="editChildData.id" :loading="isLoading" type="danger-outline" full-width @click="deleteHandle()">Удалить</base-button>
-            <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
-          </div>
-          <base-button :loading="isLoading" full-width @click="saveHandle()">Сохранить</base-button>
-        </div>
-      </div>
+      <children-editor
+          class="children__editor"
+          v-model="editChildData"
+          :loading="isLoading"
+          @save="saveHandle()"
+          @cancel="cancelHandle()"
+          @delete="deleteHandle()"
+      />
     </base-backdrop>
   </div>
 </template>
@@ -33,10 +29,9 @@
 import {computed, onMounted, ref} from "vue";
 import BaseGoButton from "../../base/BaseGoButton";
 import BaseBackdrop from "../../base/BaseBackdrop";
-import BaseInput from "../../base/BaseInput";
 import BaseButton from "../../base/BaseButton";
-import BaseSwitch from "../../base/BaseSwitch";
 import {useParentChildrenStore} from "../../../store/client/parent/children";
+import ChildrenEditor from "../catalog/childrenEditor";
 
 const isLoading = ref(true);
 
@@ -94,21 +89,6 @@ onMounted(() => {
 
   &__editor {
     padding: 10px $side-space-mobile;
-  }
-
-  &__editor-actions {
-    margin-top: 50px;
-    & > *:not(:last-child) {
-      margin-bottom: 8px;
-    }
-  }
-
-  &__editor-actions-columns {
-    display: flex;
-    gap: 8px;
-    & > * {
-      flex: 1;
-    }
   }
 
   &__empty {
