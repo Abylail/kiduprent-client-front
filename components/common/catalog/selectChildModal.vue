@@ -93,6 +93,7 @@ const updateOpenSelect = val => {
 }
 const showSelect = () => {
   isCreatingChild.value = !children.value.length;
+  if (!isCreatingChild.value && children.value.length === 1) selectedChild.value = children.value[0];
   openSelect.value = true;
 }
 

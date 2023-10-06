@@ -18,7 +18,7 @@
           @click="selectDayHandle(weekDay)"
       >
         <span class="trial__select-item__name">{{ weekDay.info.shortName }}</span>
-        <span class="trial__select-item__date">{{ weekDay.date }}</span>
+        <span class="trial__select-item__date">{{ weekDay.dateNumber }}</span>
         <span class="trial__select-item__time">{{ weekDay.time }}</span>
       </div>
     </div>
@@ -47,6 +47,7 @@ import BaseButton from "../../../../../components/base/BaseButton";
 import {useAuthStore} from "../../../../../store/client/parent/auth";
 import SelectChildModal from "../../../../../components/common/catalog/selectChildModal";
 import SuccessLessonBook from "../../../../../components/common/catalog/successLessonBook";
+import {useParentRegistration} from "../../../../../store/client/parent/registration";
 
 const route = useRoute();
 const lessonId = computed(() => +route.params.id);
@@ -71,17 +72,26 @@ const week = Array(7).fill(null).map((_, index) => {
   const weekDay = weekdayList[day.getDay()]
   return ({
     code: weekDay.code,
-    date: day.getDate(),
+    date: day,
+    dateNumber: day.getDate(),
     info: weekDay,
     time: groupInfo.value?.[`${weekDay.code}_start`]
   })
 })
 
+const parentRegistrationStore = useParentRegistration();
 const openSelectChild = ref(false);
 const openSuccessModal = ref(false);
 let selectedChild = null;
-const selectChild = child => {
+const selectChild = async child => {
   selectedChild = child;
+  await parentRegistrationStore.registrationOnTrial({
+    date: selectedDay.value.date,
+    child_id: selectedChild.id,
+    institution_group_id: groupId.value,
+    weekday: selectedDay.value.info.code,
+    time: selectedDay.value.time,
+  })
   openSuccessModal.value = true;
 }
 
