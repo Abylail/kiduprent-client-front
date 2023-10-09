@@ -33,7 +33,13 @@
   </div>
 
   <select-child-modal v-model:open="openSelectChild" @select="selectChild($event)"/>
-  <success-lesson-book v-model:open="openSuccessModal"/>
+  <success-lesson-book
+      v-model:open="openSuccessModal"
+      :group="groupInfo"
+      :lesson="lessonInfo"
+      :day="selectedDay"
+      @onClose="successModalClose()"
+  />
 </template>
 
 <script setup>
@@ -44,10 +50,10 @@ import {useRoute} from "nuxt/app";
 import LessonGroup from "../../../../../components/common/lesson/lessonGroup";
 import {weekdayList} from "../../../../../config/weekdays";
 import BaseButton from "../../../../../components/base/BaseButton";
-import {useAuthStore} from "../../../../../store/client/parent/auth";
 import SelectChildModal from "../../../../../components/common/catalog/selectChildModal";
 import SuccessLessonBook from "../../../../../components/common/catalog/successLessonBook";
 import {useParentRegistration} from "../../../../../store/client/parent/registration";
+const { $goBack } = useNuxtApp();
 
 const route = useRoute();
 const lessonId = computed(() => +route.params.id);
@@ -93,6 +99,9 @@ const selectChild = async child => {
     time: selectedDay.value.time,
   })
   openSuccessModal.value = true;
+}
+const successModalClose = () => {
+  $goBack(`/catalog/details/lesson-${lessonId.value}`)
 }
 
 // Записаться (кнопка)

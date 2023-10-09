@@ -10,7 +10,7 @@
 
 <script setup>
 import {ref, computed, watch, nextTick, onMounted} from "vue";
-const emit = defineEmits(["update:active"])
+const emit = defineEmits(["update:active", "onClose", "onOpen"])
 const props = defineProps({
   title: {
     type: String,
@@ -55,16 +55,20 @@ const onOpen = () => {
   window.document.body.classList.add('no-scroll');
   // Контроль скрола контента
   contentElement.value.scrollTop = 0;
+  emit("onOpen")
 }
 
 const onClose = () => {
   // Контроль скрола
   window.document.documentElement.classList.remove('no-scroll');
   window.document.body.classList.remove('no-scroll');
+  emit("onClose")
 }
 
 // Закрыть сеюя
-const closeSelf = () => emit("update:active", false);
+const closeSelf = () => {
+  emit("update:active", false);
+}
 
 const dragging = (event, isContent = false) => nextTick(() => {
   if (dragBlocked.value) return;
