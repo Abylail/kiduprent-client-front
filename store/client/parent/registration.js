@@ -4,17 +4,18 @@ import {defineStore} from "pinia";
 import {phoneValidation} from "~/helpers/phone";
 
 const state = () => ({
-    registrations: null,
+    activeRegistrations: null,
 })
 
 const getters = {
-    getRegistrations: state => state.registrations || [],
+    getActiveRegistrations: state => state.activeRegistrations || [],
 }
 
 const actions = {
     /** Запросить список записей */
-    fetchRegistrations() {
-
+    async fetchActiveRegistrations() {
+        const { err, body } = await api.get("/parent/register/trial/activelist")
+        if (!err) this.activeRegistrations = body;
     },
 
     /**

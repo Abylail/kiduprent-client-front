@@ -13,6 +13,11 @@
       <children/>
     </div>
 
+    <div>
+      <div class="title">Записи</div>
+      <registrations/>
+    </div>
+
   </div>
 
   <!-- Не авторизованный -->
@@ -33,6 +38,7 @@ import Children from "../../components/common/account/children";
 import {useAuthStore} from "../../store/client/parent/auth";
 import AuthModal from "../../components/common/auth/authModal";
 import BaseButton from "../../components/base/BaseButton";
+import Registrations from "../../components/common/account/registrations";
 const authStore = useAuthStore();
 
 const openAuth = ref(false);

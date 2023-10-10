@@ -1,0 +1,67 @@
+<template>
+  <div class="registrations">
+
+    <div class="registrations__item" v-for="(registration, index) in registrations" :key="index">
+      <div class="registrations__item-info">{{ getRegistrationMainInfo(registration) }}</div>
+      <div class="registrations__item-child">
+        <base-icon class="registrations__item-icon" name="mdi-human-child" size="18"/>
+        <span>{{ registration.child?.name || registration.child_name }}</span>
+      </div>
+      <div class="registrations__item-address">
+        <base-icon class="registrations__item-icon" name="mdi-map-marker-outline" size="18"/>
+        <span>{{ getAddress(registration) }}</span>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script setup>
+import {useParentRegistration} from "../../../store/client/parent/registration";
+import {computed, onMounted} from "vue";
+import BaseIcon from "../../base/BaseIcon";
+
+const isLoading = ref(false);
+const parentRegistrationStore = useParentRegistration();
+const registrations = computed(() => parentRegistrationStore.getActiveRegistrations)
+const fetchActiveRegistrations = async () => {
+  isLoading.value = true;
+  await parentRegistrationStore.fetchActiveRegistrations();
+  isLoading.value = false;
+}
+
+const getRegistrationDate = (registration) => `${registration.time} ${new Date(registration.date).toLocaleString('ru', { day: 'numeric', month: 'long', weekday: 'long' })}`
+const getRegistrationMainInfo = (registration) => `${registration.institutionGroup?.institutionSubject?.name} (${getRegistrationDate(registration)})`
+const getAddress = (registration) => `${registration.institutionGroup?.institution?.name}, ${registration.institutionGroup?.institutionBranch?.address}`
+
+onMounted(() => {
+  fetchActiveRegistrations();
+})
+</script>
+
+<style lang="scss" scoped>
+.registrations {
+
+  &__item {
+    margin: 12px 0;
+    padding: 10px;
+    background-color: white;
+    border-radius: 14px;
+  }
+
+  &__item-info {
+    margin-bottom: 12px;
+    font-weight: bold;
+  }
+
+  &__item-child {
+    margin-bottom: 4px;
+  }
+
+  &__item-icon {
+    color: $color--blue;
+    margin-right: 4px;
+  }
+
+}
+</style>
