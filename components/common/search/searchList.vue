@@ -14,7 +14,12 @@
 
     <!-- Центры -->
     <div class="search-list__result" v-else-if="type === 'centers'">
-
+      <center-card
+          class="search-list__result-item"
+          v-for="center in props.list" :key="center.id"
+          :info="center"
+          full
+      />
     </div>
 
     <base-loader center-horizontal v-if="props.loading"/>
@@ -30,6 +35,7 @@ import SubjectCard from "../miniCards/subjectCard";
 import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import BaseLoader from "../../base/BaseLoader";
+import CenterCard from "../miniCards/centerCard";
 
 const emits = defineEmits(["paginate"]);
 const props = defineProps({

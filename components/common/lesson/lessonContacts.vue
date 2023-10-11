@@ -1,11 +1,11 @@
 <template>
   <div class="lesson-contacts" v-for="(contact, index) in contacts" :key="index">
-    <h4 class="lesson-contacts__item-address" v-if="!isSameBranches">Филиал: {{ contact.address }}</h4>
+    <h4 class="lesson-contacts__item-address" v-if="!isSameBranches">Филиал: {{ contact?.address }}</h4>
 
-    <p class="lesson-contacts__item" v-if="contact.call_phone">
+    <p class="lesson-contacts__item" v-if="contact?.call_phone">
       <base-icon name="mdi-cellphone"/>
       <span>Сотовый номер:</span>
-      <a class="lesson-contacts__link">{{ contact.call_phone }}</a>
+      <a class="lesson-contacts__link">{{ contact?.call_phone }}</a>
     </p>
 
     <p class="lesson-contacts__item" v-if="contact.whatsapp_phone">
@@ -35,7 +35,7 @@ const isSameBranches = computed(() => props.groups?.every(g => g.institutionBran
 const getBranchContacts = ({address, call_phone, whatsapp_phone, email,instagram_url, two_gis_url}) => ({address, call_phone, whatsapp_phone, email, instagram_url, two_gis_url})
 const contacts = computed(() => isSameBranches
     ? [getBranchContacts(props.groups?.[0]?.institutionBranch)]
-    : props.groups?.map(g => getBranchContacts(g?.institutionBranch))
+    : props.groups?.map(g => getBranchContacts(g?.institutionBranch || {}))
 );
 </script>
 
