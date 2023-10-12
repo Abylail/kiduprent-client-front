@@ -81,6 +81,11 @@ const centerStore = useCenterDetailsStore();
 const centerInfo = computed(() => centerStore.getCenterInfo || {});
 await centerStore.fetchCenterInfo({id: centerId.value});
 
+useSeoMeta({
+  title: () => centerInfo.value?.name,
+  ogTitle: () => centerInfo.value?.name,
+})
+
 const groups = computed(() => centerInfo.value.institutionGroups || []);
 const branches = computed(() => centerInfo.value.institutionBranches || []);
 const photos = computed(() => centerInfo.value.photos);

@@ -102,6 +102,11 @@ const branches = computed(() => groups.value
     .filter((group, index, self) => index === self.findIndex((g) => g.id === group.id))
 );
 
+useSeoMeta({
+  title: () => lessonName.value,
+  ogTitle: () => lessonName.value,
+})
+
 // Цена {min, max}
 const price = computed(() => {
   let minPrice = null;

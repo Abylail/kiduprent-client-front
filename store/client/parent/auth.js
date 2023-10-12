@@ -46,6 +46,7 @@ const actions = {
 
     // Авторизация по токену
     async loginToken() {
+        if (!cookie.userToken.get()) return
         const { err, body } = await api("/parent/tokenAuth")
         if (!err) this.clientData = body;
         else this.logout();
@@ -53,7 +54,7 @@ const actions = {
 
     // Выход
     logout() {
-        // cookie.userToken.remove();
+        if (process.client) cookie.userToken.remove();
     },
 
     // Обновить данные родителя

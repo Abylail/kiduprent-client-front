@@ -36,6 +36,11 @@ const activeSubjectName = computed(() => subjectStore.getList?.find(subject => s
 const activeSubjectId = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.id || null);
 const searchTitle = computed(() => activeSubjectCode.value ? `${activeSubjectName.value} уроки и курсы для детей Алматы` : "Уроки и курсы для детей Алматы")
 
+useSeoMeta({
+  title: () => searchTitle.value,
+  ogTitle: () => searchTitle.value,
+})
+
 // Перейти ы поиск по предметку
 const router = useRouter();
 const selectSubject = subjectCode => {

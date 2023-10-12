@@ -4,11 +4,11 @@
 </template>
 
 <script setup>
-
 import MobileHeader from "../../../components/common/layoutComponents/mobileHeader";
 import SearchSelectType from "../../../components/common/search/searchSelectType";
+
+useSeoMeta({
+  title: "Kidup - каталог",
+  ogTitle: "Kidup - каталог",
+})
 </script>
-
-<style scoped>
-
-</style>

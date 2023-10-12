@@ -42,6 +42,11 @@ import Registrations from "../../components/common/account/registrations";
 const authStore = useAuthStore();
 
 const openAuth = ref(false);
+
+useSeoMeta({
+  title: "Kidup - личный кабинет",
+  ogTitle: "Kidup - личный кабинет",
+})
 </script>
 
 <style lang="scss" scoped>

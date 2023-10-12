@@ -38,6 +38,10 @@ const activeCategoryName = computed(() => categoryStore.getList?.find(category =
 
 const searchTitle = computed(() => activeCategoryCode.value ? `\"${activeCategoryName.value}\" центры Алматы` : "Детские центры Алматы")
 
+useSeoMeta({
+  title: () => searchTitle.value,
+  ogTitle: () => searchTitle.value,
+})
 
 const router = useRouter();
 const selectCategory = categoryCode => {

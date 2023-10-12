@@ -18,6 +18,13 @@
 import MobileFooter from "../components/common/layoutComponents/mobileFooter";
 import DesktopHeader from "../components/common/layoutComponents/desktopHeader";
 const { $device } = useNuxtApp();
+
+useSeoMeta({
+  title: "Kidup - развитие ребенка",
+  ogTitle: "Kidup - развитие ребенка",
+  description: "Центры, курсы и уроки для детей",
+  ogDescription: "Центры, курсы и уроки для детей",
+})
 </script>
 
 <style lang="scss" scoped>

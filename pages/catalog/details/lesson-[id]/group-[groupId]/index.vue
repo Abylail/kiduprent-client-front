@@ -64,6 +64,11 @@ const lessonInfo = computed(() => lessonDetailsStore.getLessonInfo || {});
 await lessonDetailsStore.fetchLessonInfo({id: lessonId.value});
 const lessonName = computed(() => lessonInfo.value.name);
 
+useSeoMeta({
+  title: () => `Запись на пробный - ${lessonName.value}`,
+  ogTitle: () => `Запись на пробный - ${lessonName.value}`,
+})
+
 const groupInfo = computed(() => lessonInfo.value?.institutionGroups?.find(g => g.id === groupId.value));
 
 const selectedDay = ref(null);
