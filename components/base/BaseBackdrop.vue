@@ -10,6 +10,7 @@
 
 <script setup>
 import {ref, computed, watch, nextTick, onMounted} from "vue";
+import {turnOffPageScroll, turnOnPageScroll} from "../../utlis/pageScroll";
 const emit = defineEmits(["update:active", "onClose", "onOpen"])
 const props = defineProps({
   title: {
@@ -51,8 +52,7 @@ watch(() => props.active, (newVal) => {
 
 const onOpen = () => {
   // Контроль скрола
-  window.document.documentElement.classList.add('no-scroll');
-  window.document.body.classList.add('no-scroll');
+  turnOffPageScroll();
   // Контроль скрола контента
   contentElement.value.scrollTop = 0;
   emit("onOpen")
@@ -60,8 +60,7 @@ const onOpen = () => {
 
 const onClose = () => {
   // Контроль скрола
-  window.document.documentElement.classList.remove('no-scroll');
-  window.document.body.classList.remove('no-scroll');
+  turnOnPageScroll();
   emit("onClose")
 }
 

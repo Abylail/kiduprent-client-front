@@ -15,7 +15,7 @@
 
     <div>
       <div class="title">Записи</div>
-      <registrations/>
+      <registrations @select="selectRegistration($event)"/>
     </div>
 
   </div>
@@ -39,9 +39,16 @@ import {useAuthStore} from "../../store/client/parent/auth";
 import AuthModal from "../../components/common/auth/authModal";
 import BaseButton from "../../components/base/BaseButton";
 import Registrations from "../../components/common/account/registrations";
+import {useRouter} from "nuxt/app";
 const authStore = useAuthStore();
 
 const openAuth = ref(false);
+
+// Перейти в детализацию записи
+const router = useRouter();
+const selectRegistration = registration => {
+  router.push(`/account/registrations/${registration.id}`)
+}
 
 useSeoMeta({
   title: "Kidup - личный кабинет",

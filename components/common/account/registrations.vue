@@ -1,7 +1,7 @@
 <template>
   <div class="registrations">
 
-    <div class="registrations__item" v-for="(registration, index) in registrations" :key="index">
+    <div class="registrations__item" v-for="(registration, index) in registrations" :key="index" @click="registrationSelect(registration)">
       <div class="registrations__item-info">{{ getRegistrationMainInfo(registration) }}</div>
       <div class="registrations__item-child">
         <base-icon class="registrations__item-icon" name="mdi-human-child" size="18"/>
@@ -21,6 +21,8 @@ import {useParentRegistration} from "../../../store/client/parent/registration";
 import {computed, onMounted} from "vue";
 import BaseIcon from "../../base/BaseIcon";
 
+const emit = defineEmits(["select"])
+
 const isLoading = ref(false);
 const parentRegistrationStore = useParentRegistration();
 const registrations = computed(() => parentRegistrationStore.getActiveRegistrations)
@@ -33,6 +35,10 @@ const fetchActiveRegistrations = async () => {
 const getRegistrationDate = (registration) => `${registration.time} ${new Date(registration.date).toLocaleString('ru', { day: 'numeric', month: 'long', weekday: 'long' })}`
 const getRegistrationMainInfo = (registration) => `${registration.institutionGroup?.institutionSubject?.name} (${getRegistrationDate(registration)})`
 const getAddress = (registration) => `${registration.institutionGroup?.institution?.name}, ${registration.institutionGroup?.institutionBranch?.address}`
+
+const registrationSelect = registration => {
+  emit("select", registration);
+}
 
 onMounted(() => {
   fetchActiveRegistrations();

@@ -43,6 +43,7 @@ import BaseIcon from "./BaseIcon";
 import {useRoute, useRouter} from "nuxt/app";
 import {useSubjectsStore} from "../../store/subjects";
 import MobileHeader from "../common/layoutComponents/mobileHeader";
+import {turnOffPageScroll, turnOnPageScroll} from "../../utlis/pageScroll";
 
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
@@ -72,7 +73,11 @@ const props = defineProps({
 })
 
 const showSelectModal = ref(false);
-const setShowModal = (val = false) => showSelectModal.value = val;
+const setShowModal = (val = false) => {
+  showSelectModal.value = val;
+  if (val) turnOffPageScroll()
+  else turnOnPageScroll()
+}
 
 const subjectStore = useSubjectsStore();
 subjectStore.fetchList();

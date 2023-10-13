@@ -5,10 +5,13 @@ import {phoneValidation} from "~/helpers/phone";
 
 const state = () => ({
     activeRegistrations: null,
+
+    detailsRegistration: null,
 })
 
 const getters = {
     getActiveRegistrations: state => state.activeRegistrations || [],
+    getDetailsRegistration: state => state.detailsRegistration || {},
 }
 
 const actions = {
@@ -16,6 +19,11 @@ const actions = {
     async fetchActiveRegistrations() {
         const { err, body } = await api.get("/parent/register/trial/activelist")
         if (!err) this.activeRegistrations = body;
+    },
+    /** Запросить пробный записей */
+    async fetchDetailsRegistration(id) {
+        const { err, body } = await api.get(`/parent/register/trial/${id}`)
+        if (!err) this.detailsRegistration = body;
     },
 
     /**
