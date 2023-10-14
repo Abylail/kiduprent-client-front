@@ -22,6 +22,10 @@ const actions = {
     },
     /** Запросить пробный записей */
     async fetchDetailsRegistration(id) {
+        if (Array.isArray(this.activeRegistrations)) {
+            const detailsFromList = this.activeRegistrations.find(r => +r.id === +id);
+            if (detailsFromList) return this.detailsRegistration = detailsFromList;
+        }
         const { err, body } = await api.get(`/parent/register/trial/${id}`)
         if (!err) this.detailsRegistration = body;
     },

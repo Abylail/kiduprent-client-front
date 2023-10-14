@@ -1,10 +1,11 @@
 <template>
-  <mobile-header title="Личный кабинет"/>
+  <mobile-header title="Профиль"/>
 
   <!-- Авторизованный -->
   <div class="account" v-if="authStore.isAuth">
 
     <div class="account__block">
+      <div class="title">Мои данные</div>
       <personal-data/>
     </div>
 

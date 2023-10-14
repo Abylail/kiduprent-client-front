@@ -56,7 +56,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   &__link--active {
     color: $color--blue !important;
     .mobile-footer__link-text {
-      max-width: 70px;
+      max-width: 80px;
     }
   }
 
