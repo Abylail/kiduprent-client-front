@@ -47,11 +47,7 @@
     </div>
 
     <!-- Напишите нам -->
-    <div class="main-page__questions container main-page__block">
-      <h3 class="main-page__questions__title title">Остались вопросы?</h3>
-      <p class="main-page__questions__text">Оставьте заявку и ваш вопрос обязательно рассмотрят</p>
-      <base-button>Напишите нам</base-button>
-    </div>
+    <still-questions/>
 
     <subjects-feed title="Интереные занятия"/>
 
@@ -65,9 +61,9 @@ import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
 import SubjectCard from "../../components/common/miniCards/subjectCard";
 import SubjectList from "../../components/common/main/subjectList";
-import BaseButton from "../../components/base/BaseButton";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import SearchSelectType from "../../components/common/search/searchSelectType";
+import StillQuestions from "../../components/common/main/stillQuestions";
 
 const mainStore = useMainStore();
 
@@ -108,25 +104,6 @@ definePageMeta({
 
   &__block {
     margin: 16px 0;
-  }
-
-  &__questions {
-    border-radius: 10px;
-    background-color: white;
-    padding: 20px;
-    text-align: center;
-    width: calc(100% - 4*#{$side-space-mobile});
-    margin-left: auto;
-    margin-right: auto;
-
-    &__title {
-      margin-bottom: 5px;
-    }
-
-    &__text {
-      margin: 5px 0 20px;
-      color: $color--gray-dark;
-    }
   }
 
   &__steps {
