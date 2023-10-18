@@ -32,7 +32,14 @@ const props = defineProps({
 
 const isSameBranches = computed(() => props.groups?.every(g => g.institutionBranch?.id === props.groups?.[0]?.institutionBranch?.id))
 
-const getBranchContacts = ({address, call_phone, whatsapp_phone, email,instagram_url, two_gis_url}) => ({address, call_phone, whatsapp_phone, email, instagram_url, two_gis_url})
+const getBranchContacts = (_contacts) => ({
+  address: _contacts?.address,
+  call_phone: _contacts?.call_phone,
+  whatsapp_phone: _contacts?.whatsapp_phone,
+  email: _contacts?.email,
+  instagram_url: _contacts?.instagram_url,
+  two_gis_url: _contacts?.two_gis_url
+})
 const contacts = computed(() => isSameBranches
     ? [getBranchContacts(props.groups?.[0]?.institutionBranch)]
     : props.groups?.map(g => getBranchContacts(g?.institutionBranch || {}))

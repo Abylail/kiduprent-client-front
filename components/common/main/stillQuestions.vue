@@ -36,7 +36,7 @@
 
   <!-- Успешно отправлено -->
   <base-backdrop v-model:active="successSendModal">
-    <div class="still-questions__success">
+    <div class="still-questions__success container">
       <base-icon class="still-questions__success-icon" name="mdi-check-circle" color="green" size="100"/>
       <div class="still-questions__success-text">Спасибо за ваше обращение!</div>
       <div class="still-questions__success-subtext">Мы свяжемся с вами по номеру {{ connectPhone }}</div>
