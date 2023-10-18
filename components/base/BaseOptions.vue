@@ -58,13 +58,14 @@ const isSelected = option => props.multi ? props.modelValue?.includes(option.key
   margin: 16px 0;
 
   &__title {
-    font-size: $fs--title;
+    font-size: $fs--default;
   }
 
   &__option {
     display: flex;
     align-items: center;
     margin: 8px 0;
+    font-size: $fs--mini;
   }
 
   &__check {
