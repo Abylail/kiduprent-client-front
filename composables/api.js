@@ -42,7 +42,7 @@ const post = async (path, body = {}, options = {}) => new Promise(resolve => {
             resolve({body: response?.body});
         })
         .catch(response => {
-            const error = response?.data?.message;
+            const error = response?.data?.message || "Ошибка";
             apiErrorCatcher(error);
             resolve({err: error});
         })

@@ -28,6 +28,7 @@
       <base-button
           class="still-questions__send"
           full-width
+          :loading="formLoading"
           :disabled="!canSendForm"
           @click="sendForm()"
       >Отправить</base-button>
@@ -52,12 +53,14 @@ import AuthModal from "../auth/authModal";
 import {useAuthStore} from "../../../store/client/parent/auth";
 import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
+import {useParentRequest} from "../../../store/client/parent/request";
 
 const openAuthModal = ref(false);
 const showFormModal = ref(false);
 const successSendModal = ref(false);
 
 const authStore = useAuthStore();
+const parentRequest = useParentRequest();
 
 // Напишите нам, кнопка
 const writeUsHandle = () => {
@@ -76,15 +79,21 @@ const reasons = [
   { key: "Другое", name: "Другое" },
 ]
 
+const formLoading = ref(false);
 const form = ref({text: "", reason: null});
 const clearForm = () => {
   form.value.text = "";
   form.value.reason = null;
 }
-const sendForm = () => {
-  showFormModal.value = false;
-  successSendModal.value = true;
-  clearForm();
+const sendForm = async () => {
+  formLoading.value = true;
+  const successSend = await parentRequest.sendRequest(form.value)
+  if (successSend) {
+    showFormModal.value = false;
+    successSendModal.value = true;
+    clearForm();
+  }
+  formLoading.value = false;
 }
 
 const canSendForm = computed(() => form.value.text && form.value.reason)
