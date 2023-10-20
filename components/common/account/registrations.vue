@@ -13,6 +13,8 @@
       </div>
     </div>
 
+    <div class="registrations__empty">У вас нет активных записей</div>
+
   </div>
 </template>
 
@@ -31,6 +33,8 @@ const fetchActiveRegistrations = async () => {
   await parentRegistrationStore.fetchActiveRegistrations();
   isLoading.value = false;
 }
+
+const isEmpty = computed(() => !isLoading.value && !registrations.value.length)
 
 const getRegistrationDate = (registration) => `${registration.time} ${new Date(registration.date).toLocaleString('ru', { day: 'numeric', month: 'long', weekday: 'long' })}`
 const getRegistrationMainInfo = (registration) => `${registration.institutionGroup?.institutionSubject?.name} (${getRegistrationDate(registration)})`
@@ -67,6 +71,10 @@ onMounted(() => {
   &__item-icon {
     color: $color--blue;
     margin-right: 4px;
+  }
+
+  &__empty {
+    color: $color--gray-dark
   }
 
 }

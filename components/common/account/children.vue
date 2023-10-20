@@ -92,7 +92,7 @@ onMounted(() => {
   }
 
   &__empty {
-
+    color: $color--gray-dark;
   }
 
 }
