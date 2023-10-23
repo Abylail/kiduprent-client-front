@@ -12,24 +12,24 @@ const createRoutes = ({categories, lessons, subjects, centers}) => {
 
         // Центры по категориям
         `${BaseUrl}/catalog/almaty/centers`,
-        ...categories.map(category => `${BaseUrl}/catalog/almaty/centers/${category}`),
+        ...categories.map(category => `${BaseUrl}/catalog/almaty/centers/${category.replace(" ", "")}`),
 
         // Уроки по категориям
-        `${BaseUrl}catalog/almaty/lessons`,
-        ...subjects.map(subject => `${BaseUrl}catalog/almaty/lessons/${subject}`),
+        `${BaseUrl}/catalog/almaty/lessons`,
+        ...subjects.map(subject => `${BaseUrl}/catalog/almaty/lessons/${subject.replace(" ", "")}`),
 
         // Детали уроков
-        ...lessons.map(lesson => `${BaseUrl}catalog/details/lessons-${lesson}`),
+        ...lessons.map(lesson => `${BaseUrl}/catalog/details/lessons-${lesson}`),
 
         // Детали центра
-        ...centers.map(center => `${BaseUrl}catalog/details/center-${center}`),
+        ...centers.map(center => `${BaseUrl}/catalog/details/center-${center}`),
     ]
 }
 
 export default async (_, nuxt) => {
     if (process.env.NODE_ENV !== 'production') return
     const response = await $fetch(process.env.BACKEND_URL+ "/seo/options").catch(() => {})
-    if (!response.body) return;
+    if (!response?.body) return;
     const {categories, lessons, subjects, centers} = response.body;
 
     const routes = createRoutes({categories, lessons, subjects, centers});
