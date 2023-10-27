@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, onBeforeMount} from "vue";
+import {computed, onMounted} from "vue";
 
 const props = defineProps({
   height: {
@@ -35,13 +35,13 @@ const markers = computed(() => props.branches.map(({coordinates}) => ({coordinat
 const MarkerOptions = {preset: 'islands#circleIcon', iconColor: '#004BFF'};
 
 // Ожидает загрузки скрипта
-const scriptLoader = async (callback = null, count = 0, maxCount = 10) => new Promise(resolve => {
+const scriptLoader = (count = 0, maxCount = 10) => new Promise(resolve => {
   if (window.ymaps || count > maxCount) {
-    ymaps?.ready(resolve)
-    if (callback) callback()
+    ymaps.ready(resolve)
   }
-  else setTimeout(() => {
-    scriptLoader(resolve, count+1, maxCount);
+  else setTimeout(async () => {
+    await scriptLoader(count+1, maxCount);
+    resolve()
   }, 100)
 })
 
@@ -53,7 +53,8 @@ const mapInit = async () => {
 
   await scriptLoader();
 
-  let _map = new ymaps.Map("base-yandex-map", {
+  console.log("create map")
+  let _map = new window.ymaps.Map("base-yandex-map", {
     center: startCoords.value,
     zoom: 15,
     markers: [],
