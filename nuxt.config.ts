@@ -9,9 +9,6 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/logo-reverse.svg' }
       ],
-      script: [
-        {src: '/yandex.js'}
-      ]
     },
   },
   css: ["~/assets/styles/global.scss"],

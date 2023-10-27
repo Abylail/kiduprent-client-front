@@ -43,7 +43,6 @@ const selectSingle = option => {
 
 const selectMulti = option => {
   let newValue = Array.isArray(props.modelValue) ? props.modelValue.slice() : [];
-  console.log(newValue);
   const optionIndex = newValue.findIndex(o => o === option.key);
   if (optionIndex < 0) newValue.push(option.key)
   else newValue.splice(optionIndex, 1)
