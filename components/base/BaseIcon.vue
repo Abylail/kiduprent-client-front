@@ -2,13 +2,14 @@
   <span
     class="base-icon mdi"
     :class="[props.name]"
-    :style="[{fontSize: `${props.size}px`}, {color}]"
+    :style="[{fontSize: size}, {height: size}, {width: size}, {minWidth: size}, {maxWidth: size}, {color}]"
     v-bind="$attrs"
   />
 </template>
 
 <script setup>
 import "@mdi/font/css/materialdesignicons.min.css";
+import {computed} from "vue";
 const props = defineProps({
   name: String, // Имя иконки
   color: {
@@ -20,6 +21,8 @@ const props = defineProps({
     default: 24
   }
 })
+
+const size = computed(() => `${props.size}px`)
 </script>
 
 <style lang="scss" scoped>

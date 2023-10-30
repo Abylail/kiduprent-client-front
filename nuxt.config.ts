@@ -39,8 +39,13 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/device',
     '@pinia/nuxt',
-    'nuxt-delay-hydration'
+    'nuxt-delay-hydration',
+    '@nuxt/image',
   ],
+
+  image: {
+    dir: 'assets/images',
+  },
 
   delayHydration: {
     debug: process.env.NODE_ENV === "development",
