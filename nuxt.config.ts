@@ -4,8 +4,9 @@ export default defineNuxtConfig({
     routeRules: {
       '/api-client/**': {
         proxy: process.env.BACKEND_URL_PROXY + "/**"
-      }
-    }
+      },
+    },
+    compressPublicAssets: true,
   },
 
   experimental: undefined,
