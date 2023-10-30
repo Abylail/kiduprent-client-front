@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   nitro: {
     routeRules: {
       '/api-client/**': {
-        proxy: process.env.BACKEND_URL + "/**"
+        proxy: process.env.BACKEND_URL_PROXY + "/**"
       }
     }
   },
