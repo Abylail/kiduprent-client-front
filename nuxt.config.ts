@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: undefined,
+  nitro: {
+    routeRules: {
+      '/api-client/**': {
+        proxy: process.env.BACKEND_URL + "/**"
+      }
+    }
+  },
+
   experimental: undefined,
   app: {
     head: {
@@ -32,5 +39,15 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/device',
     '@pinia/nuxt',
+    'nuxt-delay-hydration'
   ],
+
+  delayHydration: {
+    debug: process.env.NODE_ENV === "development",
+    mode: "init",
+    postIdleTimeout: {
+      mobile: 1000,
+      desktop: 1000
+    }
+  }
 })
