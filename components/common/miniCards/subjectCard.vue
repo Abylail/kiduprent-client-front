@@ -131,19 +131,27 @@ const addresses = computed(() => {
 
   &__head {
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: space-between;
     padding: 0 $side-space-mobile;
+    * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &__name {
+    flex: 2;
     font-size: $fs--default;
     font-weight: bold;
   }
 
   &__center {
+    flex: 1;
     color: $color--blue;
     font-size: $fs--mini;
+    text-align: right;
   }
 
   &__content {
@@ -167,6 +175,8 @@ const addresses = computed(() => {
   &__description {
     color: $color--gray-dark;
     padding: 8px $side-space-mobile;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__info-item {

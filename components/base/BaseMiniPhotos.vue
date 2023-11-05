@@ -1,7 +1,7 @@
 <template>
   <div class="base-mini-photos">
     <div class="base-mini-photos__slides" :class="[{'base-mini-photos__slides--rounded': props.rounded}]">
-      <nuxt-image
+      <nuxt-img
           class="base-mini-photos__slide"
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
