@@ -1,9 +1,9 @@
 <template>
-  <div class="base-backdrop__background" :class="{active: props.active}" v-show="loaded" @click.self.stop="closeSelf">
-    <div class="base-backdrop__window" :class="{active: props.active}" :ref="el => {dragWrapper = el}" :style="dragStyle" @touchmove="dragging" @touchstart="startDrag" @touchend="stopDrag">
-      <button class="base-backdrop__holder" @touchstart.stop="startDrag($event, true)"/>
-      <div class="base-backdrop__title" v-if="title">{{ title }}</div>
-      <div class="base-backdrop__content" :class="{'base-backdrop__content--block-scroll': isDragging}" :ref="el => {contentElement = el}" @touchmove.stop="dragging($event, true)"><slot/></div>
+  <div :class="[{'base-backdrop--mobile': !$device.isDesktop}, {'base-backdrop--desktop': $device.isDesktop}, {active: props.active}]" v-show="loaded" @click.self.stop="closeSelf">
+    <div class="window" :class="{active: props.active}" :ref="el => {dragWrapper = el}" :style="dragStyle" @touchmove="dragging" @touchstart="startDrag" @touchend="stopDrag">
+      <button class="holder" @touchstart.stop="startDrag($event, true)"/>
+      <div class="title" v-if="title">{{ title }}</div>
+      <div class="content" :class="{'content--block-scroll': isDragging}" :ref="el => {contentElement = el}" @touchmove.stop="dragging($event, true)"><slot/></div>
     </div>
   </div>
 </template>
@@ -22,6 +22,8 @@ const props = defineProps({
     default: false
   }
 })
+
+const { $device } = useNuxtApp();
 
 const isDragging = ref(false);
 const startYPosition = ref(null);
@@ -118,37 +120,34 @@ const clearDragState = () => {
 </script>
 
 <style lang="scss" scoped>
-.base-backdrop {
+.base-backdrop--mobile {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(26,26,26,.4);
+  transition-property: visibility, opacity;
+  transition-duration: 0s, 0.4s;
+  transition-delay: 0.5s, 0s;
 
-  &__background {
-    opacity: 0;
-    visibility: hidden;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(26,26,26,.4);
-    transition-property: visibility, opacity;
-    transition-duration: 0s, 0.4s;
-    transition-delay: 0.5s, 0s;
-
-    &.active {
-      opacity: 1;
-      visibility: visible;
-      transition-property: visibility;
-      transition-delay: 0s;
-    }
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transition-property: visibility;
+    transition-delay: 0s;
   }
 
-  &__title {
+  .title {
     font-size: $fs--title;
     font-weight: bold;
     padding: 10px $side-space-mobile;
   }
 
-  &__window {
+  .window {
     height: auto;
     background: white;
     position: fixed;
@@ -167,7 +166,7 @@ const clearDragState = () => {
     }
   }
 
-  &__holder {
+  .holder {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,7 +183,86 @@ const clearDragState = () => {
     }
   }
 
-  &__content {
+  .content {
+    max-height: 75vh;
+    overflow: auto;
+    position: sticky;
+    top: 0;
+    padding-bottom: 20px;
+
+    &--block-scroll {
+      pointer-events: none;
+    }
+  }
+
+}
+
+.base-backdrop--desktop {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(26,26,26,.4);
+  transition-property: visibility, opacity;
+  transition-duration: 0s, 0.4s;
+  transition-delay: 0.5s, 0s;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transition-property: visibility;
+    transition-delay: 0s;
+    transition: 200ms;
+  }
+
+  .title {
+    font-size: $fs--title;
+    font-weight: bold;
+    padding: 10px $side-space-mobile;
+  }
+
+  .window {
+    height: auto;
+    background: white;
+    max-width: 500px;
+    width: calc(100% - 50px);
+    position: fixed;
+    z-index: 11;
+    opacity: 1;
+    top: 50%;
+    transition: 200ms;
+    border-radius: 16px;
+
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &.active {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .holder {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 100%;
+    outline: none;
+    &:after {
+      display: inline-block;
+      content: "";
+      height: 5px;
+      width: 100px;
+      background: $color--gray;
+      border-radius: 10px;
+    }
+  }
+
+  .content {
     max-height: 75vh;
     overflow: auto;
     position: sticky;

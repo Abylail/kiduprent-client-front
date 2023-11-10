@@ -1,11 +1,11 @@
 <template>
-  <div class="search-list">
-    <h1 class="search-list__title container" v-if="props.title">{{ props.title }}</h1>
+  <div :class="[{'search-list--mobile': !$device.isDesktop}, {'search-list--desktop': $device.isDesktop}]">
+    <h1 class="title container" v-if="props.title">{{ props.title }}</h1>
 
     <!-- Уроки -->
-    <div class="search-list__result" v-if="type === 'lessons'">
+    <div class="result" v-if="type === 'lessons'">
       <subject-card
-          class="search-list__result-item"
+          class="result-item"
           v-for="lesson in props.list" :key="lesson.id"
           :info="lesson"
           full
@@ -13,9 +13,9 @@
     </div>
 
     <!-- Центры -->
-    <div class="search-list__result" v-else-if="type === 'centers'">
+    <div class="result" v-else-if="type === 'centers'">
       <center-card
-          class="search-list__result-item"
+          class="result-item"
           v-for="center in props.list" :key="center.id"
           :info="center"
           full
@@ -24,7 +24,7 @@
 
     <base-loader center-horizontal v-if="props.loading"/>
 
-    <div class="search-list__more" v-if="pagination && haveData && !props.loading">
+    <div class="more" v-if="pagination && haveData && !props.loading">
       <base-button type="naked" @click="loadMoreHandle()">Загрузить еще</base-button>
     </div>
   </div>
@@ -56,6 +56,8 @@ const props = defineProps({
   }
 })
 
+const { $device } = useNuxtApp();
+
 const haveData = computed(() => !!props.list?.length)
 
 // Загрузить еще
@@ -66,10 +68,10 @@ const loadMoreHandle = () => {
 </script>
 
 <style lang="scss" scoped>
-.search-list {
+.search-list--mobile {
   margin-top: 16px;
 
-  &__title {
+  .title {
     display: table-cell;
     vertical-align: bottom;
     font-size: $fs--default;
@@ -80,15 +82,45 @@ const loadMoreHandle = () => {
     margin-bottom: 8px;
   }
 
-  &__result {
+  .result {
     margin-top: 8px;
   }
 
-  &__result-item {
+  .result-item {
     margin-bottom: 16px;
   }
 
-  &__more {
+  .more {
+    text-align: center;
+  }
+
+}
+.search-list--desktop {
+  margin-top: 16px;
+
+  .title {
+    display: table-cell;
+    vertical-align: bottom;
+    font-size: $fs--default;
+    line-height: $fs--default;
+    font-weight: normal;
+    height: 24px;
+    padding: 0 $side-space-mobile;
+    margin-bottom: 8px;
+  }
+
+  .result {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 24px;
+  }
+
+  .result-item {
+    margin-bottom: 16px;
+  }
+
+  .more {
     text-align: center;
   }
 

@@ -29,7 +29,7 @@ useSeoMeta({
 
 <style lang="scss" scoped>
 .main-desktop {
-  width: $max-width;
+  max-width: $max-width;
   margin: 0 auto;
   padding: $header-height $side-space-desktop 0;
 }

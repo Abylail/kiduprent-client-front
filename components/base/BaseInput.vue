@@ -147,7 +147,7 @@ $input-height: 32px;
 
     &--top {
       font-size: $fs--nano;
-      line-height: $fs--nano + 2px;
+      line-height: calc(#{$fs--nano} + 2px);
       top: 4px;
     }
 

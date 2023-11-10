@@ -44,7 +44,6 @@ const props = defineProps({
 
   &__content {
     display: flex;
-    width: auto;
     white-space:nowrap;
     overflow-x: auto;
     padding-top: 15px;

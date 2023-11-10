@@ -67,6 +67,7 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
   color: $color--black;
   padding: $side-space-mobile 0;
   border: 1px solid $color--gray-light;
+  max-width: 500px;
 
   &--full {
     display: flex;
