@@ -44,7 +44,7 @@ const actions = {
             else this.lessons = [...JSON.parse(JSON.stringify(this.lessons)), ...body];
 
             this.lastSearchOptions = getSearchOptions(arguments[0]);
-            this.haveMore = body.length === pageCount;
+            this.haveMore = body?.length === pageCount;
         }
     },
 }

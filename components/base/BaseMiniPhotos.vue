@@ -6,6 +6,7 @@
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
           :alt="`slide-${index}`"
+          loading="lazy"
       />
     </div>
 

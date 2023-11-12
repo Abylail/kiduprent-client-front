@@ -1,7 +1,7 @@
 <template>
   <mobile-header>
     <div class="main-page__mobile-header-title">
-      <NuxtImg class="main-page__mini-logo" src="/logo.svg" alt="logo"/>
+      <nuxt-img class="main-page__mini-logo" src="/logo.svg" alt="logo"/>
     </div>
   </mobile-header>
   <div class="main-page">
