@@ -3,7 +3,7 @@
 
     <div class="center-card__head">
       <div>
-        <nuxt-img class="center-card__logo" v-if="logoUrl" :src="logoUrl" alt="logo" quality="70" loading="lazy"/>
+        <img class="center-card__logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
         <div class="center-card__name">{{ info.name }}</div>
       </div>
       <div>

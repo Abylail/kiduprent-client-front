@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-delay-hydration',
     '@nuxt/image',
+    'nuxt-lazy-load',
   ],
 
   image: {
