@@ -5,7 +5,7 @@
           class="base-mini-photos__slide"
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
-          :alt="`slide-${index}`"
+          alt=""
       />
     </div>
 
