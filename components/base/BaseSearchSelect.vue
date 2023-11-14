@@ -20,6 +20,7 @@
     </mobile-header>
 
     <!-- Список предметов -->
+    <div class="search-select__modal-content">
     <div class="search-select__modal-list">
       <button
           class="search-select__modal-item"
@@ -33,6 +34,7 @@
         <base-icon v-if="props.iconField" :name="item[props.iconField]" color="blue"></base-icon>
         <span>{{ item[props.nameField] }}</span>
       </button>
+    </div>
     </div>
   </div>
 </template>
@@ -127,6 +129,8 @@ const selectHandle = subject => {
   }
 
   &__modal {
+    display: grid;
+    grid-template-rows: auto 1fr;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -135,6 +139,10 @@ const selectHandle = subject => {
     background-color: white;
     z-index: 1;
     color: $color--black;
+  }
+
+  &__modal-content {
+    overflow: auto;
   }
 
   &__modal-item {

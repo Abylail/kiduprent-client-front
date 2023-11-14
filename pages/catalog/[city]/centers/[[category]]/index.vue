@@ -1,5 +1,6 @@
 <template>
-  <mobile-header title="Детские центры" go-back="/catalog/almaty"/>
+  <mobile-header title="Детские центры" go-back="/main"/>
+  <switch-type/>
   <base-search-select
       title="Категория"
       modal-title="Выбор категории"
@@ -27,6 +28,7 @@ import {useRoute, useRouter} from "nuxt/app";
 import {computed, onMounted} from "vue";
 import SearchList from "../../../../../components/common/search/searchList";
 import {useSearchCentersStore} from "../../../../../store/search/centers";
+import SwitchType from "../../../../../components/common/catalog/switchType";
 
 const categoryStore = useCategoriesStore();
 await categoryStore.fetchList();
@@ -45,8 +47,8 @@ useSeoMeta({
 
 const router = useRouter();
 const selectCategory = categoryCode => {
-  if (categoryCode) router.push(`/catalog/almaty/centers/${categoryCode}`);
-  else router.push(`/catalog/almaty/centers`)
+  if (categoryCode) router.replace(`/catalog/almaty/centers/${categoryCode}`);
+  else router.replace(`/catalog/almaty/centers`)
 }
 
 // Поиск центров

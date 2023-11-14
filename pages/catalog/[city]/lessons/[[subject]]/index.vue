@@ -1,5 +1,6 @@
 <template>
-  <mobile-header title="Уроки и курсы" go-back="/catalog/almaty"/>
+  <mobile-header title="Уроки и курсы" go-back="/main"/>
+  <switch-type/>
   <base-search-select
       title="Предмет"
       modal-title="Выбор предмета"
@@ -26,6 +27,7 @@ import {useSubjectsStore} from "../../../../../store/subjects";
 import SearchList from "../../../../../components/common/search/searchList";
 import {useSearchLessonsStore} from "../../../../../store/search/lessons";
 import BaseSearchSelect from "../../../../../components/base/BaseSearchSelect";
+import SwitchType from "../../../../../components/common/catalog/switchType";
 
 const subjectStore = useSubjectsStore();
 await subjectStore.fetchList();
@@ -44,8 +46,8 @@ useSeoMeta({
 // Перейти ы поиск по предметку
 const router = useRouter();
 const selectSubject = subjectCode => {
-  if (subjectCode) router.push(`/catalog/almaty/lessons/${subjectCode}`);
-  else router.push(`/catalog/almaty/lessons`)
+  if (subjectCode) router.replace(`/catalog/almaty/lessons/${subjectCode}`);
+  else router.replace(`/catalog/almaty/lessons`)
 }
 
 // Поиск уроков

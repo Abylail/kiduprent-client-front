@@ -20,7 +20,7 @@
     </div>
 
     <div class="auth__content" v-if="step === 2">
-      <otp-input v-model="otp" :error="!!error"/>
+      <otp-input v-model="otp" :error="!!error" @submit="submitOtp()"/>
       <div class="auth__hint">Введите полученный смс код</div>
       <div class="auth__error" v-if="error">{{ error }}</div>
       <base-button

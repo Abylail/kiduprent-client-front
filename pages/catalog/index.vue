@@ -1,5 +1,5 @@
 <script setup>
-import {navigateTo} from "nuxt/app";
-
-navigateTo("/catalog/almaty", {redirectCode: 301});
+import {useRouter} from "nuxt/app";
+const router = useRouter();
+await router.replace("/catalog/almaty/lessons");
 </script>

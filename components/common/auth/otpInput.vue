@@ -1,21 +1,27 @@
 <template>
-  <div class="otp-input" :class="{'otp-input--error': error}" :ref="el => otpContainer = el">
-    <input
+  <div class="otp-input" @click="clickHandle()">
+    <div
         class="otp-input__digit"
         v-for="(_, index) in props.digitCount" :key="index"
-        :value="digits[index]"
-        type="text"
-        inputmode="numeric"
-        maxlength="1"
-        @keydown="keyDownHandle($event, index)"
-        @focus="onFocusHandle(index)"
-    />
+    >{{ digits[index] }}</div>
   </div>
+  <input
+      class="otp-input__real-input"
+      :ref="el => realInput = el"
+      type="text"
+      :value="props.modelValue"
+      autocomplete="one-time-code"
+      inputmode="numeric"
+      autofocus
+      :maxlength="props.digitCount"
+      :pattern="`\d{${props.digitCount}}`"
+      @input="inputHandle($event)"
+  />
 </template>
 
 <script setup>
-import {computed, ref} from "vue";
-const emit = defineEmits(["update:modelValue"])
+import {computed, onMounted, ref} from "vue";
+const emit = defineEmits(["update:modelValue", "submit"]);
 const props = defineProps({
   modelValue: String,
   error: {
@@ -28,47 +34,27 @@ const props = defineProps({
   }
 })
 
-const digits = computed(() => props.modelValue?.split("") || [])
-
-const otpContainer = ref(null);
-const digitRegex = new RegExp('^([0-9]$)')
-const keyDownHandle = (event, index) => {
-  let newDigits = digits.value.slice();
-
-  // Если удаление
-  if (event.key === "Backspace") {
-    newDigits[index] = null;
-    if (index !== 0) {
-      setTimeout(() => otpContainer.value.children[index - 1].focus());
-    }
-    // Если удаляют какой то среднюю цифру
-    if (index !== props.digitCount - 1 &&  newDigits[index + 1]) {
-      newDigits = [];
-    }
-  }
-
-  // Если ввод числа
-  else if (digitRegex.test(event.key)) {
-    newDigits[index] = event.key;
-    if (index !== props.digitCount - 1) {
-      setTimeout(() => otpContainer.value.children[index + 1].focus());
-    }
-  }
-
-  emit("update:modelValue", newDigits.join(""))
+const realInput = ref(null);
+const clickHandle = () => {
+  setTimeout(() => realInput.value?.focus(), 0);
 }
 
-const onFocusHandle = index => {
-  // Фокус на пустой ячейке
-  if (!digits.value[index]) {
-    if (index !== 0 && !digits.value[index - 1]) {
-      for (let i = index; i >= 0; i--) {
-        if (i === 0) return otpContainer.value.children[0].focus()
-        else if (digits.value[i - 1]) return otpContainer.value.children[i].focus()
-      }
-    }
+const digits = computed(() => props.modelValue?.split("") || []);
+const inputHandle = (event) => {
+  if (event.target.value && isNaN(event.target.value)) {
+    realInput.value.value = parseInt(event.target.value);
+    return;
   }
+  emit("update:modelValue", event.target.value)
+  if (event.target.value?.length === props.digitCount) emit("submit");
 }
+
+onMounted(() => {
+  navigator.credentials.get({
+    otp: {transport:['sms']}
+  })
+      .then(otp => realInput.value.value = otp.code);
+})
 </script>
 
 <style lang="scss" scoped>
@@ -76,26 +62,23 @@ const onFocusHandle = index => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: 8px auto;
+  max-width: 290px;
 
   &__digit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    vertical-align: center;
     border: 2px solid $color--gray-dark;
-    padding: 8px 20px;
-    height: 40px;
+    padding: 16px 20px;
+    height: 24px;
     width: 16px;
-    font-size: $fs--big-title;
+    font-size: 24px;
+    line-height: 24px;
     border-radius: 5px;
-
-    &:focus {
-      border: 2px solid $color--black;
-    }
   }
 
-  &--error &__digit{
-    border-color: $color--red;
+  &__real-input {
+    width: 0;
+    height: 0;
   }
 
 }
