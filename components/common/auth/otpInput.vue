@@ -1,5 +1,5 @@
 <template>
-  <div class="otp-input" @click="clickHandle()">
+  <div class="otp-input" @click.prevent="clickHandle()">
     <div
         class="otp-input__digit"
         v-for="(_, index) in props.digitCount" :key="index"

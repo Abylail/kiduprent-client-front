@@ -39,6 +39,7 @@ const goCenters = () => {
 .switch-type--mobile {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: $side-space-mobile;
   width: calc(100% - 2*#{$side-space-mobile});
   padding: 6px $side-space-mobile;
   background-color: white;
@@ -48,6 +49,7 @@ const goCenters = () => {
     font-size: $fs--mini;
     padding: 6px 0;
     border-radius: 5px;
+    color: $color--black;
 
     &--active {
       background-color: $color--gray;
