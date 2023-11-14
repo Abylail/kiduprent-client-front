@@ -1,22 +1,18 @@
 <template>
-  <div class="otp-input" @click.prevent="clickHandle()">
-    <div
-        class="otp-input__digit"
-        v-for="(_, index) in props.digitCount" :key="index"
-    >{{ digits[index] }}</div>
-  </div>
-  <input
+  <div class="otp-input">
+    <input
       class="otp-input__real-input"
-      :ref="el => realInput = el"
       type="text"
       :value="props.modelValue"
       autocomplete="one-time-code"
       inputmode="numeric"
       autofocus
+      placeholder="____"
       :maxlength="props.digitCount"
       :pattern="`\d{${props.digitCount}}`"
       @input="inputHandle($event)"
-  />
+    />
+  </div>
 </template>
 
 <script setup>
@@ -36,7 +32,10 @@ const props = defineProps({
 
 const realInput = ref(null);
 const clickHandle = () => {
-  setTimeout(() => realInput.value?.focus(), 0);
+  setTimeout(() => {
+    realInput.value?.click();
+    // realInput.value?.focus();
+  }, 0);
 }
 
 const digits = computed(() => props.modelValue?.split("") || []);
@@ -63,23 +62,21 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   margin: 8px auto;
-  max-width: 290px;
+  width: 200px;
 
-  &__digit {
+  &__real-input {
     vertical-align: center;
     border: 2px solid $color--gray-dark;
     padding: 16px 20px;
     height: 24px;
-    width: 16px;
     font-size: 24px;
     line-height: 24px;
     border-radius: 5px;
+    width: 100%;
+    letter-spacing: 35px;
   }
 
-  &__real-input {
-    width: 0;
-    height: 0;
-  }
+
 
 }
 </style>

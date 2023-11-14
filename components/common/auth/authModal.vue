@@ -107,7 +107,7 @@ const step = ref(1);
 
 const title = computed(() => {
   if (step.value === 1) return "Введите номер";
-  if (step.value === 2) return "Введите смс";
+  if (step.value === 2) return "Введите смс код";
   return null;
 })
 
