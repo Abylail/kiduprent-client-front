@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="registrations__empty">У вас нет активных записей</div>
+    <div class="registrations__empty" v-if="!registrations.length && !isLoading">У вас нет активных записей</div>
 
   </div>
 </template>
