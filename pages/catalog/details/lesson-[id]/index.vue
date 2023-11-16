@@ -16,9 +16,9 @@
       <div class="main container--white">
         <h1 class="title">{{ lessonName }}</h1>
 
+        <div class="lesson-price" v-if="price.short">{{ price.short }} ₸/мес</div>
+
         <p class="description">
-          <span v-if="price.short">{{ price.short }}₸</span>
-          <span class="description-divider" v-if="price.short && age.range"/>
           <span v-if="age.range">{{ age.range }}</span>
           <span class="description-divider" v-if="language.ru"/>
           <span v-if="language.ru">Рус</span>
@@ -173,6 +173,12 @@ onMounted(() => {
 
   .title {
     font-size: $fs--title;
+    margin-bottom: 4px;
+  }
+
+  .lesson-price {
+    font-size: $fs--title;
+    font-weight: bold;
     margin-bottom: 12px;
   }
 

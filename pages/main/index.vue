@@ -6,9 +6,6 @@
   </mobile-header>
   <div class="main-page">
 
-    <!-- Фото -->
-<!--    <base-slider class="container&#45;&#45;white"/>-->
-
     <!-- Поиск -->
     <search-select-type/>
 
@@ -20,7 +17,6 @@
         <div class="main-page__step"><span class="main-page__step-count">3</span>Запишитесь на пробный</div>
       </div>
     </div>
-
 <!--    <categories class="container&#45;&#45;white main-page__block"/>-->
 
     <!-- Список предметов -->

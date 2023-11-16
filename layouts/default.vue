@@ -35,8 +35,8 @@ useSeoMeta({
 }
 
 .main-mobile {
-  padding-bottom: 70px;
+  padding-bottom: 100px;
   background-color: $color--gray-light;
-  min-height: calc(#{100vh} - 70px);
+  min-height: calc(#{100vh} - 100px);
 }
 </style>

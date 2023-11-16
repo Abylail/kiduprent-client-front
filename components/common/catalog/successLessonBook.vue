@@ -12,6 +12,7 @@
       <div class="success-lesson-book__info">
         <strong>{{ day }}</strong>
       </div>
+      <base-notice text="Пожалуйста скажите что вы от kidup.kz"/>
       <base-button
           class="success-lesson-book__my-registrations"
           type="outline"
@@ -28,6 +29,7 @@ import BaseIcon from "../../base/BaseIcon";
 import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import {useRouter} from "nuxt/app";
+import BaseNotice from "../../base/BaseNotice";
 
 const emit = defineEmits(["update:open", "onClose"])
 const props = defineProps({

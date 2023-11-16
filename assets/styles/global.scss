@@ -53,6 +53,7 @@ h1, h2, h3, h4, p {
 
 // Чипс
 .chip {
+  white-space: nowrap;
   color: $color--blue;
   background: $color--gray-light;
   padding: 6px 10px;
@@ -63,14 +64,18 @@ h1, h2, h3, h4, p {
 
   &--blue {
     color: white;
+    white-space: nowrap;
     background: $color--blue;
   }
 
   &--outlined {
+    display: inline;
+    white-space: nowrap;
     color: $color--blue;
     border: 1px solid $color--blue;
     padding: 2px 8px;
-    margin-right: 8px;
+    &:not(:first-child) {margin-left: 4px;}
+    margin-bottom: 4px;
     border-radius: 16px;
     font-size: $fs--mini;
     transition: $transition;

@@ -12,19 +12,23 @@
     <div class="subject-card__content">
       <base-mini-photos class="subject-card__photos" v-if="info?.photos?.length" :list="info.photos"/>
       <div class="subject-card__info">
-        <div class="subject-card__info-item">{{ priceRange }}</div>
-        <div class="subject-card__info-item">{{ ageRange }}</div>
-        <div class="subject-card__info-item">
-          <div class="chip--outlined" v-if="langRu">Рус</div>
-          <div class="chip--outlined" v-if="langKz">Каз</div>
+        <div class="subject-card__info-item" v-if="priceRange">
+          <base-icon class="subject-card__icon" name="mdi-cash" size="24"/>
+          <span>{{ priceRange }}</span>
+        </div>
+        <div class="subject-card__info-item" v-if="ageRange">
+          <base-icon class="subject-card__icon" name="mdi-baby-face-outline" size="24"/>
+          <span>{{ ageRange }}</span>
+        </div>
+        <div class="subject-card__info-item" v-if="addresses">
+          <base-icon class="subject-card__icon" name="mdi-map-marker-outline" size="24"/>
+          <span>{{ addresses }}</span>
+        </div>
+        <div class="subject-card__info-language">
+          <div class="chip--outlined" v-if="langRu">Русский</div>
+          <div class="chip--outlined" v-if="langKz">Казахский</div>
         </div>
       </div>
-    </div>
-
-    <!-- Адреса -->
-    <div class="subject-card__address" v-if="addresses">
-      <base-icon class="subject-card__address-icon" name="mdi-map-marker" size="24"/>
-      <span>{{ addresses }}</span>
     </div>
 
     <!-- Группы -->
@@ -73,7 +77,7 @@ const priceRange = computed(() => {
       if (!maxPrice || group.price > maxPrice) maxPrice = group.price;
     }
   })
-  return (minPrice === maxPrice ? (minPrice || "") : `${minPrice} - ${maxPrice}`) + ((minPrice || maxPrice) ? " ₸" : "");
+  return (minPrice === maxPrice ? (minPrice || "") : `${minPrice} - ${maxPrice}`) + ((minPrice || maxPrice) ? " ₸/мес" : "");
 })
 
 // Возраст
@@ -184,13 +188,23 @@ const addresses = computed(() => {
 
   &__info-item {
     display: flex;
+    align-items: center;
     font-size: $fs--mini;
     line-height: 1;
 
     &:not(:last-child) {
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
   }
+
+  &__info-language {
+    display: flex;
+    align-items: center;
+    font-size: $fs--mini;
+    line-height: 1;
+    margin-top: 8px;
+  }
+
 
   &__address {
     display: flex;
@@ -199,8 +213,9 @@ const addresses = computed(() => {
     padding: 0 $side-space-mobile;
   }
 
-  &__address-icon {
+  &__icon {
     color: $color--orange;
+    margin-right: 4px;
   }
 
   &__bottom-block {

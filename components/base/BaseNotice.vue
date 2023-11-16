@@ -17,17 +17,18 @@ const props = defineProps({
 .base-notice {
   display: flex;
   align-items: center;
-  background-color: $color--gray-light;
+  background-color: $color--blue-light;
   padding: 12px;
-  border-radius: 6px;
+  border-radius: 12px;
 
   &__icon {
-    color: $color--blue-light;
+    color: $color--blue;
     margin-right: 12px;
   }
 
   &__text {
-    color: $color--blue-light;
+    text-align: left;
+    color: $color--blue;
   }
 }
 </style>

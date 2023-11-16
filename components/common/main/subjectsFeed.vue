@@ -51,6 +51,7 @@ const fetchMore = async () => {
 
   &__more {
     text-align: center;
+    * {font-weight: bold !important;}
   }
 
 }
