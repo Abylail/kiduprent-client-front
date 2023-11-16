@@ -6,13 +6,13 @@
         <img class="center-card__logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
         <div class="center-card__name">{{ info.name }}</div>
       </div>
-      <div>
-        <span class="center-card__rating-text">{{ info.rating }}</span>
-        <base-icon class="center-card__rating-icon" name="mdi-star"/>
-      </div>
+<!--      <div>-->
+<!--        <span class="center-card__rating-text">{{ info.rating }}</span>-->
+<!--        <base-icon class="center-card__rating-icon" name="mdi-star"/>-->
+<!--      </div>-->
     </div>
 
-    <div class="center-card__description">{{ info.description }}</div>
+    <div class="center-card__description"><base-cut-text :text="info.description"/></div>
 
     <!-- Время работы -->
     <div class="center-card__info" v-if="workTime">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="center-card__subjects">
-      <span class="center-card__subject" v-for="(subjectName, index) in subjectNames" :key="index">{{ subjectName }}</span>
+      <base-cut-text :text="subjectNames"/>
     </div>
 
   </nuxt-link>
@@ -31,6 +31,7 @@
 import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
 import {useRuntimeConfig} from "nuxt/app";
+import BaseCutText from "../../base/BaseCutText";
 
 const config = useRuntimeConfig();
 
@@ -50,7 +51,7 @@ const logoUrl = computed(() => props.info?.logo && (config.public.CDN_URL + prop
 
 // Список предметов
 const subjects = computed(() => (props.info?.institutionSubjects || []));
-const subjectNames = computed(() => subjects.value.map(({name}, index) => name + (index + 1 < subjects.value.length ? ", " : "")));
+const subjectNames = computed(() => subjects.value.map(({name}) => name).join(", "));
 
 // Время работы
 const workTime = computed(() => props.info.end_time && props.info.start_time && `${props.info.start_time}-${props.info.end_time}` || null)
@@ -100,6 +101,7 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
 
   &__name {
     font-weight: bold;
+    white-space: normal;
   }
 
   &__rating-text {
@@ -114,6 +116,8 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
     color: $color--gray-dark;
     margin: 8px 0;
     padding: 0 $side-space-mobile;
+    white-space: normal;
+    font-size: $fs--mini;
   }
 
   &__subjects {
@@ -122,10 +126,7 @@ const workTime = computed(() => props.info.end_time && props.info.start_time && 
     margin: 8px 0;
     padding: 0 $side-space-mobile;
     font-size: $fs--mini;
-
-    & > * {
-      white-space: nowrap;
-    }
+    white-space: normal;
   }
 
   &__info {

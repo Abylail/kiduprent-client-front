@@ -17,13 +17,13 @@
         <h1 class="title">{{ lessonName }}</h1>
 
         <p class="description">
-          <span>{{ price.short }}</span>
-          <span class="description-divider"/>
-          <span>{{ age.range }}</span>
-          <span class="description-divider"/>
+          <span v-if="price.short">{{ price.short }}₸</span>
+          <span class="description-divider" v-if="price.short && age.range"/>
+          <span v-if="age.range">{{ age.range }}</span>
+          <span class="description-divider" v-if="language.ru"/>
           <span v-if="language.ru">Рус</span>
-          <span class="description-divider"/>
-          <span v-if="language.ru">Каз</span>
+          <span class="description-divider" v-if="language.kz"/>
+          <span v-if="language.kz">Каз</span>
         </p>
 
         <p class="description">{{ lessonDescription }}</p>
@@ -32,7 +32,8 @@
 
     <div class="timetable container--white">
       <h3 class="title">Расписание групп</h3>
-      <div class="groups">
+      <p v-if="!groups.length" class="description">Уточните расписание у центра</p>
+      <div class="groups" v-else>
         <lesson-group
           v-for="group in groups"
           :info="group"
@@ -126,7 +127,7 @@ const price = computed(() => {
   return {
     max: maxPrice,
     min: minPrice,
-    short: (minPrice === maxPrice ? minPrice : `от ${minPrice}`) +"₸",
+    short: (minPrice === maxPrice ? (minPrice || "") : `от ${minPrice}`),
     range: (minPrice === maxPrice ? (minPrice || "") : `${minPrice} - ${maxPrice}`) + ((minPrice || maxPrice) ? " ₸" : "")
   };
 })

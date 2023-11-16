@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 const feedStore = useSubjectFeedStore();
-feedStore.fetchSubjectsInit();
+await feedStore.fetchSubjectsInit();
 
 const isLoading = ref(false);
 const fetchMore = async () => {

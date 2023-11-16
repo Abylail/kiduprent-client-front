@@ -19,7 +19,7 @@ export const actions = {
     async fetchSubjectsInit() {
         if (this.feed) return;
         const { body, err } = await api("/institutionSubject/feed", {params: {limit: pageCount, offset: 0}});
-        this.feed = body;
+        if (!err) this.feed = body;
     },
 
     async fetchSubjectsMore() {

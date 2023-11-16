@@ -13,11 +13,11 @@
     <search-select-type/>
 
     <div class="main-page__info container--white main-page__block">
-      <h1 class="main-page__title"><strong>Kidup</strong> - платформа для развития ребенка</h1>
+      <h1 class="main-page__title"><strong>Kidup</strong> - Все центры и кружки для ребенка, в одном месте.</h1>
       <div class="main-page__steps">
-        <div class="main-page__step"><span class="main-page__step-count">1</span>Найдите занятия и выберите группу</div>
-        <div class="main-page__step"><span class="main-page__step-count">2</span>Запишитесь на пробный</div>
-        <div class="main-page__step"><span class="main-page__step-count">3</span>Приходите на занятие</div>
+        <div class="main-page__step"><span class="main-page__step-count">1</span>Найдите занятие</div>
+        <div class="main-page__step"><span class="main-page__step-count">2</span>Выберите удобное расписание</div>
+        <div class="main-page__step"><span class="main-page__step-count">3</span>Запишитесь на пробный</div>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
 
     <!-- Топ центры -->
     <div class="main-page__block">
-      <card-list title="Топ центры" to="/catalog">
+      <card-list title="Топ центры" to="/catalog" :loading="topCentersLoading">
         <center-card
             v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
             :info="lesson"
@@ -38,7 +38,7 @@
 
     <!-- Популярные уроки -->
     <div class="main-page__block">
-      <card-list title="Популярные уроки" to="/catalog">
+      <card-list title="Популярные уроки" to="/catalog" :loading="interestingSubjectsLLoading">
         <subject-card
             v-for="(lesson, index) in mainStore.getInterestingSubjects" :key="index"
             :info="lesson"
@@ -64,18 +64,39 @@ import SubjectList from "../../components/common/main/subjectList";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import SearchSelectType from "../../components/common/search/searchSelectType";
 import StillQuestions from "../../components/common/main/stillQuestions";
+import {onMounted} from "vue";
 
 const mainStore = useMainStore();
 
 // Запрашиваю инетересные уроки
-mainStore.fetchMainLists();
 mainStore.fetchCategories();
-mainStore.fetchTopCenters();
 
 definePageMeta({
   key: (route) => route.fullPath,
   keepalive: true
 })
+
+// Топ центры
+const topCentersLoading = ref(true);
+const fetchTopCenters = async () => {
+  topCentersLoading.value = true;
+  await mainStore.fetchTopCenters();
+  topCentersLoading.value = false;
+}
+
+// Топ центры
+const interestingSubjectsLLoading = ref(true);
+const fetchInterestingSubjects = async () => {
+  interestingSubjectsLLoading.value = true;
+  await mainStore.fetchInterestingSubjects();
+  interestingSubjectsLLoading.value = false;
+}
+
+onMounted(() => {
+  fetchTopCenters();
+  fetchInterestingSubjects();
+})
+
 </script>
 
 <style lang="scss" scoped>

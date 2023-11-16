@@ -5,7 +5,13 @@
       <nuxt-link class="card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
     </div>
 
-    <div class="card-list__content container--white">
+    <!-- Лоудер -->
+    <div class="card-list__content container--white" v-if="loading">
+      <div class="card-list__card-loading skeleton-loading" v-for="(_, index) in loadingCount" :key="index"/>
+    </div>
+
+    <!-- Карточки -->
+    <div class="card-list__content container--white" v-else>
       <slot/>
     </div>
   </div>
@@ -23,6 +29,14 @@ const props = defineProps({
   to: {
     type: String,
     default: null
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  },
+  loadingCount: {
+    type: Number,
+    default: 4
   }
 })
 </script>
@@ -40,6 +54,13 @@ const props = defineProps({
     color: $color--blue;
     font-weight: bold;
     font-size: $fs--mini;
+  }
+
+  &__card-loading {
+    width: 300px;
+    min-width: 300px;
+    height: 200px;
+    border-radius: 5px;
   }
 
   &__content {

@@ -6,7 +6,7 @@
       <div class="subject-card__center">{{ centerName }}</div>
     </div>
 
-    <div class="subject-card__description">{{ props.info?.description }}</div>
+    <div class="subject-card__description"><base-cut-text :text="props.info?.description"/></div>
 
     <!-- Фото + контент -->
     <div class="subject-card__content">
@@ -42,6 +42,7 @@ import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 import BaseMiniPhotos from "../../base/BaseMiniPhotos";
 import BaseIcon from "../../base/BaseIcon";
+import BaseCutText from "../../base/BaseCutText";
 
 const props = defineProps({
   info: Object,
@@ -124,7 +125,7 @@ const addresses = computed(() => {
     width: 100%;
     max-width: none;
     border: none;
-    box-shadow: 1px 0px 4px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
     border-radius: 0;
     background: white;
   }
@@ -142,7 +143,7 @@ const addresses = computed(() => {
   }
 
   &__name {
-    flex: 2;
+    flex: 1;
     font-size: $fs--default;
     font-weight: bold;
   }
@@ -175,14 +176,16 @@ const addresses = computed(() => {
   &__description {
     color: $color--gray-dark;
     padding: 8px $side-space-mobile;
+    font-size: $fs--mini;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: normal;
   }
 
   &__info-item {
     display: flex;
-    font-size: $fs--default;
-    line-height: $fs--default;
+    font-size: $fs--mini;
+    line-height: 1;
 
     &:not(:last-child) {
       margin-bottom: 6px;
