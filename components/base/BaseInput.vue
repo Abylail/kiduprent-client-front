@@ -15,6 +15,7 @@
           :ref="el => inputElement = el"
           :value="valueLabel"
           v-maska :data-maska="dataMaska"
+          :placeholder="placeholder"
           :inputmode="inputmode"
           :autofocus="autofocus"
           @focus="onFocus()"
@@ -69,6 +70,10 @@ const props = defineProps({
     type: String,
     default: "default",
     validator: value => ["default", "naked-gray"].includes(value),
+  },
+  placeholder: {
+    type: String,
+    default: ""
   }
 })
 
@@ -81,7 +86,7 @@ const inputmode = computed(() => {
 })
 
 // Поднять тайтл
-const titleTop = computed(() => active.value || props.modelValue)
+const titleTop = computed(() => active.value || props.modelValue || props.placeholder)
 
 // Активен ли инпун
 const active = ref(false);

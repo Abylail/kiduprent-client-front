@@ -95,6 +95,7 @@ const props = defineProps({
   &--loading {
     opacity: .6;
     pointer-events: none;
+    position: relative;
     &::after {
       content: '';
       display: block;

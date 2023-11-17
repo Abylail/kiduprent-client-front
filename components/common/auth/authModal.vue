@@ -7,6 +7,7 @@
           v-model="phone"
           title="Сотовый номер"
           type="naked-gray"
+          placeholder="+7 (000) 000-00-00"
           prev-icon="mdi-phone-outline"
           phone
       />
@@ -16,12 +17,12 @@
           :loading="isLoading"
           full-width
           @click="sendSmsHandle()"
-      >Отправить смс</base-button>
+      >Отправить код</base-button>
     </div>
 
     <div class="auth__content" v-if="step === 2">
       <otp-input v-model="otp" :error="!!error" @submit="submitOtp()"/>
-      <div class="auth__hint">Введите полученный смс код</div>
+      <div class="auth__hint">Введите полученный код из WhatsApp</div>
       <div class="auth__error" v-if="error">{{ error }}</div>
       <base-button
           class="auth__submit"

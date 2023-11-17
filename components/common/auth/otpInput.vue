@@ -4,6 +4,7 @@
       class="otp-input__real-input"
       type="text"
       :value="props.modelValue"
+      :ref="el => realInput = el"
       autocomplete="one-time-code"
       inputmode="numeric"
       autofocus
@@ -16,7 +17,7 @@
 </template>
 
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 const emit = defineEmits(["update:modelValue", "submit"]);
 const props = defineProps({
   modelValue: String,
@@ -31,14 +32,7 @@ const props = defineProps({
 })
 
 const realInput = ref(null);
-const clickHandle = () => {
-  setTimeout(() => {
-    realInput.value?.click();
-    // realInput.value?.focus();
-  }, 0);
-}
 
-const digits = computed(() => props.modelValue?.split("") || []);
 const inputHandle = (event) => {
   if (event.target.value && isNaN(event.target.value)) {
     realInput.value.value = parseInt(event.target.value);
@@ -49,10 +43,12 @@ const inputHandle = (event) => {
 }
 
 onMounted(() => {
-  navigator.credentials.get({
-    otp: {transport:['sms']}
-  })
-      .then(otp => realInput.value.value = otp.code);
+  try {
+    navigator.credentials.get({
+      otp: {transport:["sms", "whatsapp"]}
+    })
+        .then(otp => realInput.value.value = otp.code);
+  } catch (e) {}
 })
 </script>
 
@@ -67,13 +63,13 @@ onMounted(() => {
   &__real-input {
     vertical-align: center;
     border: 2px solid $color--gray-dark;
-    padding: 16px 20px;
+    padding: 16px 0 16px 20px;
     height: 24px;
     font-size: 24px;
     line-height: 24px;
     border-radius: 5px;
     width: 100%;
-    letter-spacing: 35px;
+    letter-spacing: 30px;
   }
 
 

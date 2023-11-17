@@ -51,12 +51,13 @@ const activeModuleName = computed(() => route.name.split("-")[0])
     overflow-x: hidden;
     transition: $transition;
     transition-timing-function: ease-out;
+    font-size: $fs--mini;
   }
 
   &__link--active {
     color: $color--blue !important;
     .mobile-footer__link-text {
-      max-width: 80px;
+      max-width: 90px;
     }
   }
 

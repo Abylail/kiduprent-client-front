@@ -156,6 +156,9 @@ const addresses = computed(() => {
     flex: 1;
     color: $color--blue;
     font-size: $fs--mini;
+    line-height: $fs--mini;
+    max-height: 2*$fs--mini;
+    text-overflow: ellipsis;
     text-align: right;
   }
 
@@ -167,12 +170,13 @@ const addresses = computed(() => {
   &__photos {
     height: 120px;
     width: 150px;
-    margin-right: 8px;
+    min-width: 150px;
+    padding-right: 8px;
     background-color: white;
   }
 
   &__info {
-    flex:1;
+    flex-grow: 1;
     font-size: $fs--mini;
     white-space: normal;
   }
@@ -199,6 +203,7 @@ const addresses = computed(() => {
 
   &__info-language {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     font-size: $fs--mini;
     line-height: 1;

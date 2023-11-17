@@ -24,7 +24,7 @@
 
     <!-- Топ центры -->
     <div class="main-page__block">
-      <card-list title="Топ центры" to="/catalog" :loading="topCentersLoading">
+      <card-list title="Топ центры" to="/catalog/almaty/centers" :loading="topCentersLoading">
         <center-card
             v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
             :info="lesson"
@@ -34,7 +34,7 @@
 
     <!-- Популярные уроки -->
     <div class="main-page__block">
-      <card-list title="Популярные уроки" to="/catalog" :loading="interestingSubjectsLLoading">
+      <card-list title="Популярные уроки" to="/catalog/almaty/lessons" :loading="interestingSubjectsLLoading">
         <subject-card
             v-for="(lesson, index) in mainStore.getInterestingSubjects" :key="index"
             :info="lesson"
