@@ -43,7 +43,12 @@ export default defineNuxtConfig({
     'nuxt-delay-hydration',
     '@nuxt/image',
     'nuxt-lazy-load',
+    'nuxt-gtag'
   ],
+
+  gtag: {
+    id: "GTM-NLZNMJP4"
+  },
 
   image: {
     dir: 'assets/images',
