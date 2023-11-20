@@ -7,12 +7,22 @@
     <h2 class="banner-subtitle">
       Лучшие места и занятия для развития ваших детей
     </h2>
-    <button class="banner-action">Поиск уроков</button>
+    <nuxt-link
+        class="banner-action"
+        to="/catalog/almaty/lessons"
+    >Поиск уроков</nuxt-link>
   </div>
 </template>
 
 <script setup>
+import {useRouter} from "nuxt/app";
+
 const { $device } = useNuxtApp();
+
+const router = useRouter();
+const goLessons = () => {
+  router.push("/catalog/almaty/lessons")
+}
 </script>
 
 <style lang="scss" scoped>
@@ -40,6 +50,7 @@ const { $device } = useNuxtApp();
   }
 
   .banner-action {
+    display: inline-block;
     margin-top: 7vw;
     background-color: #F9705A;
     color: white;
@@ -76,6 +87,7 @@ const { $device } = useNuxtApp();
   }
 
   .banner-action {
+    display: inline-block;
     margin-top: 20px;
     background-color: #F9705A;
     color: white;
