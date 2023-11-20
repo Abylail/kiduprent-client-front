@@ -47,7 +47,7 @@ export default defineNuxtConfig({
   ],
 
   gtag: {
-    id: "GTM-NLZNMJP4"
+    id: "GTM-NTQJ684F"
   },
 
   image: {
