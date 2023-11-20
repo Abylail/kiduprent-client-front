@@ -43,7 +43,7 @@
 
     <div class="center-info__contacts container--white">
       <h3 class="center-info__title">Местоположение</h3>
-      <base-yandex-map
+      <base-yandex-mini-map
           :branches="branches"
           height="150px"
       />
@@ -73,7 +73,7 @@ import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import BaseIcon from "../../../../components/base/BaseIcon";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 import SubjectCard from "../../../../components/common/miniCards/subjectCard";
-import BaseYandexMap from "../../../../components/base/BaseYandexMap";
+import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
 
 const route = useRoute();
 const centerId = computed(() => +route.params.id);

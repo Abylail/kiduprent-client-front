@@ -45,7 +45,7 @@
 
     <div class="location container--white">
       <h3 class="title">Местоположение</h3>
-      <base-yandex-map
+      <base-yandex-mini-map
           :branches="branches"
           height="150px"
       />
@@ -79,7 +79,7 @@ import CenterCard from "../../../../components/common/miniCards/centerCard";
 import {useCenterDetailsStore} from "../../../../store/details/center";
 import LessonGroup from "../../../../components/common/lesson/lessonGroup";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
-import BaseYandexMap from "../../../../components/base/BaseYandexMap";
+import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
 
 const { $device } = useNuxtApp();
 

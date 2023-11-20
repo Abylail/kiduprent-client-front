@@ -36,7 +36,7 @@
         <div class="registration-details__info__title">Адрес:</div>
         <div class="registration-details__info__value">{{ address }}</div>
       </div>
-      <base-yandex-map
+      <base-yandex-mini-map
           v-if="subjectBranch"
           class="registration-details__info"
           :branches="[subjectBranch]"
@@ -51,7 +51,7 @@ import MobileHeader from "../../../components/common/layoutComponents/mobileHead
 import {useParentRegistration} from "../../../store/client/parent/registration";
 import {computed, onMounted} from "vue";
 import {useRoute} from "nuxt/app";
-import BaseYandexMap from "../../../components/base/BaseYandexMap";
+import BaseYandexMiniMap from "../../../components/base/BaseYandexMiniMap";
 import BaseLoader from "../../../components/base/BaseLoader";
 import BaseIcon from "../../../components/base/BaseIcon";
 import {weekdayList} from "../../../config/weekdays";
