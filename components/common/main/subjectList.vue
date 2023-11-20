@@ -1,21 +1,33 @@
 <template>
-  <div class="subject-list">
-    <h2 class="subject-list__title title">Предметы</h2>
+  <div :class="[{'subject-list--mobile': !$device.isDesktop}, {'subject-list--desktop': $device.isDesktop}]">
+    <h2 class="subject-list-title title">Предметы</h2>
 
     <!-- Список предметов -->
-    <div class="subject-list__list">
+    <div class="subject-list-list">
       <nuxt-link
-          class="subject-list__item"
+          class="subject-list-item"
           v-for="(subject, index) in subjectList" :key="index"
           :to="`/catalog/almaty/lessons/${subject.code}`"
       >
-        <span class="subject-list__item-name">{{ subject.name }}</span>
-        <base-icon class="subject-list__item-arrow" size="16" name="mdi-arrow-right"/>
+        <span class="subject-list-item-name">{{ subject.name }}</span>
+        <base-icon class="subject-list-item-arrow" size="16" name="mdi-arrow-right"/>
       </nuxt-link>
+
+      <base-button
+          v-if="showMoreButton && $device.isDesktop"
+          type="naked"
+          :loading="isLoading"
+          @click="showMore()"
+      >Еще предметы +</base-button>
     </div>
 
-    <div class="subject-list__more" v-if="showMoreButton">
-      <base-button type="naked" :loading="isLoading" @click="showMore()">Смотреть еще</base-button>
+    <div class="subject-list-more" v-if="showMoreButton">
+      <base-button
+          v-if="!$device.isDesktop"
+          type="naked"
+          :loading="isLoading"
+          @click="showMore()"
+      >Смотреть еще</base-button>
     </div>
   </div>
 </template>
@@ -26,6 +38,7 @@ import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import {useSubjectsStore} from "../../../store/subjects";
 
+const { $device } = useNuxtApp();
 const subjectStore = useSubjectsStore();
 await subjectStore.fetchList();
 
@@ -42,14 +55,14 @@ const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1
 </script>
 
 <style lang="scss" scoped>
-.subject-list {
+.subject-list--mobile {
   margin: 16px 0;
 
-  &__list {
+  .subject-list-list {
     padding-top: 12px;
   }
 
-  &__item {
+  .subject-list-item {
     display: grid;
     grid-template-columns: 1fr 20px;
     align-items: center;
@@ -58,11 +71,42 @@ const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1
     color: $color--black;
   }
 
-  &__item-arrow {
+  .subject-list-item-arrow {
     color: $color--gray-dark;
   }
 
-  &__more {
+  .subject-list-more {
+    text-align: center;
+  }
+
+}
+.subject-list--desktop {
+
+  .subject-list-title {
+    display: none;
+  }
+
+  .subject-list-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .subject-list-item {
+    padding: 8px 12px;
+    border: 1px solid $color--blue;
+    color: $color--blue;
+    border-radius: 16px;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    font-size: $fs--default;
+  }
+
+  .subject-list-item-arrow {
+    display: none;
+    color: $color--blue;
+  }
+
+  .subject-list-more {
     text-align: center;
   }
 

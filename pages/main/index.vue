@@ -1,42 +1,21 @@
 <template>
   <mobile-header>
-    <div class="main-page__mobile-header-title">
-      <nuxt-img class="main-page__mini-logo" src="/logo.svg" alt="logo"/>
+    <div class="main-page-mobile-header-title">
+      <nuxt-img class="main-page-mini-logo" src="/logo.svg" alt="logo"/>
     </div>
   </mobile-header>
-  <div class="main-page">
+  <div :class="[{'main-page--mobile': !$device.isDesktop}, {'main-page--desktop': $device.isDesktop}]">
 
-    <!-- Поиск -->
-    <search-select-type/>
-
-    <div class="main-page__info container--white main-page__block">
-      <h1 class="main-page__title"><strong>Kidup</strong> - Все центры и кружки для ребенка, в одном месте.</h1>
-      <div class="main-page__steps">
-        <div class="main-page__step"><span class="main-page__step-count">1</span>Найдите занятие</div>
-        <div class="main-page__step"><span class="main-page__step-count">2</span>Выберите удобное расписание</div>
-        <div class="main-page__step"><span class="main-page__step-count">3</span>Запишитесь на пробный</div>
-      </div>
+    <div class="main-page-top">
+      <banner/>
+      <subject-list class="container--white main-page-block"/>
     </div>
-<!--    <categories class="container&#45;&#45;white main-page__block"/>-->
-
-    <!-- Список предметов -->
-    <subject-list class="container--white main-page__block"/>
 
     <!-- Топ центры -->
-    <div class="main-page__block">
+    <div class="main-page-block">
       <card-list title="Топ центры" to="/catalog/almaty/centers" :loading="topCentersLoading">
         <center-card
             v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
-            :info="lesson"
-        />
-      </card-list>
-    </div>
-
-    <!-- Популярные уроки -->
-    <div class="main-page__block">
-      <card-list title="Популярные уроки" to="/catalog/almaty/lessons" :loading="interestingSubjectsLLoading">
-        <subject-card
-            v-for="(lesson, index) in mainStore.getInterestingSubjects" :key="index"
             :info="lesson"
         />
       </card-list>
@@ -61,6 +40,8 @@ import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import SearchSelectType from "../../components/common/search/searchSelectType";
 import StillQuestions from "../../components/common/main/stillQuestions";
 import {onMounted} from "vue";
+import Banner from "../../components/common/main/banner";
+const { $device } = useNuxtApp();
 
 const mainStore = useMainStore();
 
@@ -96,44 +77,109 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.main-page {
+.main-page-mobile-header-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.main-page-mini-logo {
+  height: 50px;
+}
+.main-page--mobile {
 
-  &__mobile-header-title {
+  .main-page-mobile-header-title {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
   }
 
-  &__search-wrapper {
+  .main-page-search-wrapper {
     padding: $side-space-mobile;
     background-color: white;;
   }
 
-  &__mini-logo {
+  .main-page-mini-logo {
     height: 50px;
   }
 
-  &__title {
+  .main-page-title {
     font-size: $fs--title;
     font-weight: normal;
   }
 
-  &__block {
+  .main-page-block {
     margin: 16px 0;
   }
 
-  &__steps {
+  .main-page-steps {
     margin-top: 16px;
   }
 
-  &__step {
+  .main-page-step {
     display: flex;
     align-items: center;
     margin-top: 16px;
   }
 
-  &__step-count {
+  .main-page-step-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    background-color: $color--red;
+    color: white;
+    margin-right: 8px;
+  }
+
+}
+.main-page--desktop {
+
+  .main-page-mobile-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .main-page-search-wrapper {
+    padding: $side-space-mobile;
+    background-color: white;;
+  }
+
+  .main-page-top {
+    display: grid;
+    grid-template-columns: 540px 1fr;
+    margin: 16px 0;
+  }
+
+  .main-page-mini-logo {
+    height: 50px;
+  }
+
+  .main-page-title {
+    font-size: $fs--title;
+    font-weight: normal;
+  }
+
+  .main-page-block {
+
+  }
+
+  .main-page-steps {
+    margin-top: 16px;
+  }
+
+  .main-page-step {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .main-page-step-count {
     display: inline-flex;
     align-items: center;
     justify-content: center;
