@@ -53,10 +53,9 @@ const mapInit = async () => {
 
   await scriptLoader();
 
-  console.log("create map")
   let _map = new window.ymaps.Map("base-yandex-map", {
     center: startCoords.value,
-    zoom: 15,
+    zoom: 14,
     markers: [],
     controls: [],
   });

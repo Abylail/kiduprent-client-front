@@ -45,7 +45,7 @@ const inputHandle = (event) => {
 onMounted(() => {
   try {
     navigator.credentials.get({
-      otp: {transport:["sms", "whatsapp"]}
+      otp: {transport:["sms"]}
     })
         .then(otp => realInput.value.value = otp.code);
   } catch (e) {}
