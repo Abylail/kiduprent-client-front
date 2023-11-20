@@ -7,16 +7,15 @@
     <h2 class="banner-subtitle">
       Лучшие места и занятия для развития ваших детей
     </h2>
-    <nuxt-link
+    <button
         class="banner-action"
-        to="/catalog/almaty/lessons"
-    >Поиск уроков</nuxt-link>
+        @click="goLessons()"
+    >Поиск уроков</button>
   </div>
 </template>
 
 <script setup>
 import {useRouter} from "nuxt/app";
-
 const { $device } = useNuxtApp();
 
 const router = useRouter();
@@ -37,7 +36,7 @@ const goLessons = () => {
   padding-top: $side-space-mobile;
 
   .banner-title {
-    font-size: 5.5vw;
+    font-size: 5vw;
     line-height: 1.5;
     text-transform: uppercase;
   }
