@@ -11,7 +11,7 @@
   <div class="trial container--white">
     <h3 class="trial__title">Выберите дату пробного</h3>
     <div class="trial__select">
-      <div
+      <button
           class="trial__select-item"
           :class="[{'trial__select-item--disabled': !weekDay.time}, {'trial__select-item--selected': weekDay.code === selectedDay?.code}]"
           v-for="(weekDay, index) in week" :key="index"
@@ -20,7 +20,7 @@
         <span class="trial__select-item__name">{{ weekDay.info.shortName }}</span>
         <span class="trial__select-item__date">{{ weekDay.dateNumber }}</span>
         <span class="trial__select-item__time">{{ weekDay.time }}</span>
-      </div>
+      </button>
     </div>
   </div>
 
@@ -136,6 +136,8 @@ const submitHandle = () => {
     align-items: center;
     padding: 4px;
     border-radius: 5px;
+    border: 1px solid $color--gray-light;
+    margin: 0 4px;
     //&:not(:last-child) {border-right: 1px solid $color--gray;}
 
     &__name {
@@ -155,6 +157,7 @@ const submitHandle = () => {
     &--disabled {
       opacity: .6;
       pointer-events: none;
+      border-color: transparent;
       * {color: $color--gray !important;}
     }
 

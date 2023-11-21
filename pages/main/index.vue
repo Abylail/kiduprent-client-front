@@ -34,10 +34,8 @@ import MobileHeader from "../../components/common/layoutComponents/mobileHeader"
 import CardList from "../../components/common/cardList";
 import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
-import SubjectCard from "../../components/common/miniCards/subjectCard";
 import SubjectList from "../../components/common/main/subjectList";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
-import SearchSelectType from "../../components/common/search/searchSelectType";
 import StillQuestions from "../../components/common/main/stillQuestions";
 import {onMounted} from "vue";
 import Banner from "../../components/common/main/banner";
@@ -60,18 +58,8 @@ const fetchTopCenters = async () => {
   await mainStore.fetchTopCenters();
   topCentersLoading.value = false;
 }
-
-// Топ центры
-const interestingSubjectsLLoading = ref(true);
-const fetchInterestingSubjects = async () => {
-  interestingSubjectsLLoading.value = true;
-  await mainStore.fetchInterestingSubjects();
-  interestingSubjectsLLoading.value = false;
-}
-
 onMounted(() => {
   fetchTopCenters();
-  fetchInterestingSubjects();
 })
 
 </script>
