@@ -24,7 +24,6 @@
     "axios": "^1.4.0",
     "maska": "^2.1.10",
     "nuxt-delay-hydration": "^1.2.3",
-    "nuxt-gtag": "^1.1.1",
     "nuxt-lazy-load": "^3.0.4",
     "pinia": "^2.1.4",
     "vue3-carousel": "^0.3.1"

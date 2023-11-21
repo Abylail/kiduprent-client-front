@@ -4,14 +4,14 @@
 
     <!-- Список предметов -->
     <div class="subject-list-list">
-      <nuxt-link
+      <button
           class="subject-list-item"
           v-for="(subject, index) in subjectList" :key="index"
-          :to="`/catalog/almaty/lessons/${subject.code}`"
+          @click="goLessons(subject.code)"
       >
         <span class="subject-list-item-name">{{ subject.name }}</span>
         <base-icon class="subject-list-item-arrow" size="16" name="mdi-arrow-right"/>
-      </nuxt-link>
+      </button>
 
       <base-button
           v-if="showMoreButton && $device.isDesktop"
@@ -37,7 +37,9 @@ import BaseIcon from "../../base/BaseIcon";
 import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import {useSubjectsStore} from "../../../store/subjects";
+import {useRouter} from "nuxt/app";
 
+const router = useRouter();
 const { $device } = useNuxtApp();
 const subjectStore = useSubjectsStore();
 await subjectStore.fetchList();
@@ -52,6 +54,10 @@ const page = ref(0);
 const showMore = () => page.value++;
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*5));
 
+// Перейти в уроки
+const goLessons = (subjectCode) => {
+  router.push(`/catalog/almaty/lessons/${subjectCode}`);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -69,6 +75,8 @@ const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1
     padding: 12px 8px;
     border-top: 1px solid $color--gray-light;
     color: $color--black;
+    width: 100%;
+    text-align: left;
   }
 
   .subject-list-item-arrow {

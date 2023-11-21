@@ -42,13 +42,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'nuxt-delay-hydration',
     '@nuxt/image',
-    'nuxt-lazy-load',
-    'nuxt-gtag'
+    'nuxt-lazy-load'
   ],
-
-  gtag: {
-    id: "GTM-NTQJ684F"
-  },
 
   image: {
     dir: 'assets/images',
