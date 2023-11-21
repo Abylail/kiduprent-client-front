@@ -127,6 +127,8 @@ const submitHandle = () => {
 
   &__select {
     display: flex;
+    overflow: auto;
+    padding-bottom: 4px;
   }
 
   &__select-item {
@@ -137,21 +139,22 @@ const submitHandle = () => {
     padding: 4px;
     border-radius: 5px;
     border: 1px solid $color--gray-light;
-    margin: 0 4px;
-    //&:not(:last-child) {border-right: 1px solid $color--gray;}
+    &:not(:last-child) {margin-right: 2px}
 
     &__name {
       font-weight: bold;
       color: $color--red;
+      font-size: $fs--default;
     }
 
     &__date {
-      font-size: $fs--title;
+      font-size: $fs--default;
+      color: $color--black;
     }
 
     &__time {
-      font-weight: bold;
       font-size: $fs--mini;
+      color: $color--black;
     }
 
     &--disabled {
