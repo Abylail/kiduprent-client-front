@@ -40,7 +40,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/device',
     '@pinia/nuxt',
-    'nuxt-delay-hydration',
+    // 'nuxt-delay-hydration',
     '@nuxt/image',
     'nuxt-lazy-load'
   ],

@@ -4,14 +4,14 @@
 
     <!-- Список предметов -->
     <div class="subject-list-list">
-      <button
+      <nuxt-link
           class="subject-list-item"
           v-for="(subject, index) in subjectList" :key="index"
-          @click="goLessons(subject.code)"
+          :to="`/catalog/almaty/lessons/${subject.code}`"
       >
         <span class="subject-list-item-name">{{ subject.name }}</span>
         <base-icon class="subject-list-item-arrow" size="16" name="mdi-arrow-right"/>
-      </button>
+      </nuxt-link>
 
       <base-button
           v-if="showMoreButton && $device.isDesktop"
@@ -53,11 +53,6 @@ const showMoreButton = computed(() => subjectStore.getList.length !== subjectLis
 const page = ref(0);
 const showMore = () => page.value++;
 const subjectList = computed(() => subjectStore.getList.slice(0, (page.value + 1)*5));
-
-// Перейти в уроки
-const goLessons = (subjectCode) => {
-  router.push(`/catalog/almaty/lessons/${subjectCode}`);
-}
 </script>
 
 <style lang="scss" scoped>
