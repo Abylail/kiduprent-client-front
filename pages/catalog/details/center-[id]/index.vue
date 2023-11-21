@@ -13,7 +13,10 @@
     />
 
     <div class="center-info__main container--white">
-      <h1 class="center-info__title">{{ centerInfo.name }}</h1>
+      <h1 class="center-info__title">
+        <img class="center-info__logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
+        <span>{{ centerInfo.name }}</span>
+      </h1>
 
       <p class="center-info__description">
         <span>
@@ -67,13 +70,15 @@
 <script setup>
 import MobileHeader from "../../../../components/common/layoutComponents/mobileHeader";
 import {useCenterDetailsStore} from "../../../../store/details/center";
-import {useRoute} from "nuxt/app";2
+import {useRoute, useRuntimeConfig} from "nuxt/app";
 import {computed, onMounted} from "vue";
 import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import BaseIcon from "../../../../components/base/BaseIcon";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 import SubjectCard from "../../../../components/common/miniCards/subjectCard";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
+
+const config = useRuntimeConfig();
 
 const route = useRoute();
 const centerId = computed(() => +route.params.id);
@@ -90,6 +95,7 @@ const groups = computed(() => centerInfo.value.institutionGroups || []);
 const branches = computed(() => centerInfo.value.institutionBranches || []);
 const photos = computed(() => centerInfo.value.photos);
 const workTime = computed(() => `${centerInfo.value.start_time} - ${centerInfo.value.end_time}`)
+const logoUrl = computed(() => centerInfo.value?.logo && (config.public.CDN_URL + centerInfo.value?.logo) || null);
 
 const isSubjectsLoading = ref(true);
 const subjects = computed(() => centerStore.getSubjects || []);
@@ -114,8 +120,21 @@ onMounted(() => {
   }
 
   &__title {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
     font-size: $fs--title;
     margin-bottom: 8px;
+  }
+
+  &__logo {
+    width: 32px;
+    height: 32px;
+    background: white;
+    padding: 4px;
+    border-right: 60px;
+    margin-right: 8px;
+    border-radius: 32px;
   }
 
   &__description {
