@@ -77,6 +77,7 @@ const goLessons = (subjectCode) => {
     color: $color--black;
     width: 100%;
     text-align: left;
+    font-size: $fs--default;
   }
 
   .subject-list-item-arrow {
