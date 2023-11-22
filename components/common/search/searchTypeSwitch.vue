@@ -44,7 +44,7 @@ const clickHandle = () => emits("change")
   &__content {
     display: flex;
     align-items: center;
-
+    color: $color--black;
   }
 }
 </style>

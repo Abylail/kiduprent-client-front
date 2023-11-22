@@ -189,7 +189,7 @@ const clearDragState = () => {
   }
 
   .content {
-    max-height: 75vh;
+    max-height: calc(70vh - 50px);
     overflow: auto;
     position: sticky;
     top: 0;
