@@ -10,7 +10,6 @@
 
   <div v-else>
     <div class="lessons-info__loading skeleton-loading"/>
-    <div class="lessons-info__loading skeleton-loading"/>
   </div>
 </template>
 
@@ -23,14 +22,21 @@ const props = defineProps({
   branch: {
     type: Object,
     default: () => ({})
-  }
+  },
+  subjectId: {
+    type: Number,
+    default: null
+  },
 })
 
 const institutionId = computed(() => props.branch.institution.id);
 const isLoading = ref(true);
 
 const centerStore = useCenterDetailsStore();
-const subjects = computed(() => centerStore.getSubjects || []);
+const subjects = computed(() => {
+  if (!props.subjectId) return centerStore.getSubjects || []
+  return centerStore.getSubjects?.filter(s => s.subject_id === props.subjectId) || [];
+});
 
 const fetchSubjects = async () => {
   isLoading.value = true;

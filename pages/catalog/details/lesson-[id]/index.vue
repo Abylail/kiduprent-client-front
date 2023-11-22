@@ -26,7 +26,7 @@
           <span v-if="language.kz">Каз</span>
         </p>
 
-        <p class="description">{{ lessonDescription }}</p>
+        <pre class="description-text">{{ lessonDescription }}</pre>
       </div>
     </div>
 
@@ -189,6 +189,11 @@ onMounted(() => {
     font-size: $fs--default;
     font-weight: normal;
     margin-top: 8px;
+  }
+
+  .description-text {
+    white-space: pre-wrap;
+    font-size: $fs--mini;
   }
 
   .description-divider {

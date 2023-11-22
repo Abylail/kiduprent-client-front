@@ -1,7 +1,7 @@
 <template>
   <div class="search-map" id="search-map"/>
   <base-backdrop :title="currentBranch?.institution?.name" :active="!!currentBranch" @update:active="setActiveInfo($event)">
-    <branch-lessons-info v-if="!!currentBranch?.institution" :branch="currentBranch"/>
+    <branch-lessons-info v-if="!!currentBranch?.institution" :branch="currentBranch" :subject-id="props.subjectId"/>
   </base-backdrop>
 </template>
 
@@ -16,6 +16,10 @@ const props = defineProps({
   list: {
     type: Array,
     default: () => []
+  },
+  subjectId: {
+    type: Number,
+    default: null
   },
   loading: {
     type: Boolean,

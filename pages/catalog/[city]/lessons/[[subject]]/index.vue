@@ -12,6 +12,7 @@
   <search-map
       v-if="isSearchMap"
       :list="searchLessonStore.getBranches"
+      :subject-id="activeSubjectId"
       :loading="isLoading"
   />
   <search-list
