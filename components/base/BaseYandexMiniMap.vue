@@ -28,6 +28,7 @@
 import {computed, onMounted} from "vue";
 import BaseIcon from "./BaseIcon";
 import MobileHeader from "../common/layoutComponents/mobileHeader";
+import {AlmatyCenterCoords} from "../../config/map";
 
 const props = defineProps({
   height: {
@@ -43,8 +44,6 @@ const props = defineProps({
     default: () => []
   }
 });
-
-const AlmatyCenterCoords = [43.23974123877094, 76.90200964930152];
 
 // Стартовые координаты
 const startCoords = computed(() => props.branches[0]?.coordinates || AlmatyCenterCoords);
@@ -80,9 +79,7 @@ const mapInit = async () => {
 
   // Добавляю маркеры
   markers.value.forEach(marker => {
-    Map.geoObjects.add(new ymaps.Placemark([...marker.coordinates], {
-      balloonContent: "test"
-    }, MarkerOptions))
+    Map.geoObjects.add(new ymaps.Placemark([...marker.coordinates], {}, MarkerOptions))
   })
 
   return Map;

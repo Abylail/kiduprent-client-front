@@ -1,12 +1,12 @@
 <template>
-  <p class="base-cut-text" v-show="props.text">
+  <span class="base-cut-text" v-show="props.text">
     {{ preparedText }}
-    <span
-        class="base-cut-text__show-all"
-        v-if="needCut"
-        @click.prevent="showAll = true"
-    >показать все</span>
-  </p>
+  </span>
+  <span
+      class="base-cut-text__show-all"
+      v-if="needCut"
+      @click.prevent="showAll = true"
+  >показать все</span>
 </template>
 
 <script setup>

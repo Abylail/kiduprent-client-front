@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import api from "~/composables/api";
-import {log} from "util";
 
 const pageCount = 5;
 

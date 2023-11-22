@@ -33,7 +33,7 @@
         </span>
       </p>
 
-      <p class="center-info__description">{{ centerInfo.description }}</p>
+      <pre class="center-info__description-text"><base-cut-text :text="centerInfo.description" :max-symbols="300"/></pre>
     </div>
 
     <div class="center-info__contacts container--white">
@@ -77,6 +77,7 @@ import BaseIcon from "../../../../components/base/BaseIcon";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 import SubjectCard from "../../../../components/common/miniCards/subjectCard";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
+import BaseCutText from "../../../../components/base/BaseCutText";
 
 const config = useRuntimeConfig();
 
@@ -150,6 +151,11 @@ onMounted(() => {
       display: flex;
       align-items: center;
     }
+  }
+
+  &__description-text {
+    white-space: pre-wrap;
+    font-size: $fs--mini;
   }
 
   &__description-icon {

@@ -137,7 +137,7 @@ const selectHandle = subject => {
     left: 0;
     right: 0;
     background-color: white;
-    z-index: 1;
+    z-index: 10;
     color: $color--black;
   }
 

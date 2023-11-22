@@ -145,6 +145,11 @@ const clearDragState = () => {
     font-size: $fs--title;
     font-weight: bold;
     padding: 10px $side-space-mobile;
+    white-space: nowrap;
+    line-height: $fs--title;
+    max-height: $fs--title;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .window {
