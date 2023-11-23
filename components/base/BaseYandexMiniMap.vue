@@ -74,7 +74,7 @@ const mapInit = async () => {
     center: startCoords.value,
     zoom: 14,
     markers: [],
-    controls: [],
+    controls: ["geolocationControl"],
   });
 
   // Добавляю маркеры

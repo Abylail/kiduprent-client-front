@@ -8,6 +8,7 @@
           class="subject-list-item"
           v-for="(subject, index) in subjectList" :key="index"
           :to="`/catalog/almaty/lessons/${subject.code}`"
+          @click="mainPageSubjectClick(subject.code)"
       >
         <span class="subject-list-item-name">{{ subject.name }}</span>
         <base-icon class="subject-list-item-arrow" size="16" name="mdi-arrow-right"/>
@@ -38,6 +39,8 @@ import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import {useSubjectsStore} from "../../../store/subjects";
 import {useRouter} from "nuxt/app";
+
+import {mainPageSubjectClick} from "../../../utlis/analitics";
 
 const router = useRouter();
 const { $device } = useNuxtApp();

@@ -25,7 +25,7 @@
     <base-loader center-horizontal v-if="props.loading"/>
 
     <div class="more" v-if="pagination && haveData && !props.loading">
-      <base-button type="naked" @click="loadMoreHandle()">Загрузить еще</base-button>
+      <base-button type="naked" @click="loadMoreHandle()">Смотреть еще</base-button>
     </div>
   </div>
 </template>
@@ -92,6 +92,7 @@ const loadMoreHandle = () => {
 
   .more {
     text-align: center;
+    * {font-weight: bold !important;}
   }
 
 }

@@ -30,6 +30,11 @@ import SearchList from "../../../../../components/common/search/searchList";
 import {useSearchCentersStore} from "../../../../../store/search/centers";
 import SwitchType from "../../../../../components/common/catalog/switchType";
 
+import {
+  categoryCenterCatalogClick,
+  paginationCatalogCenters,
+} from "../../../../../utlis/analitics";
+
 const categoryStore = useCategoriesStore();
 await categoryStore.fetchList();
 
@@ -47,6 +52,7 @@ useSeoMeta({
 
 const router = useRouter();
 const selectCategory = categoryCode => {
+  categoryCenterCatalogClick(categoryCode)
   if (categoryCode) router.replace(`/catalog/almaty/centers/${categoryCode}`);
   else router.replace(`/catalog/almaty/centers`)
 }
@@ -60,6 +66,7 @@ const search = async (page = 1) => {
     categoryId: activeCategoryId.value,
     page
   });
+  if (page > 1) paginationCatalogCenters()
   isLoading.value = false;
 }
 

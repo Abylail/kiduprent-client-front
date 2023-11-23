@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="subject-card" :class="{'subject-card--full': full}" :to="`/catalog/details/lesson-${subjectId}`">
+  <nuxt-link class="subject-card" :class="{'subject-card--full': full}" :to="`/catalog/details/lesson-${subjectId}`" @click="lessonCard(info?.subject)">
 
     <div class="subject-card__head">
       <div class="subject-card__name">{{ props.info?.name }}</div>
@@ -53,6 +53,8 @@ import BaseIcon from "../../base/BaseIcon";
 import BaseCutText from "../../base/BaseCutText";
 import BaseButton from "../../base/BaseButton";
 import {useRouter} from "nuxt/app";
+
+import {lessonCard, lessonCardButton} from "../../../utlis/analitics";
 
 const props = defineProps({
   info: Object,
@@ -122,6 +124,7 @@ const addresses = computed(() => {
 
 const goTimetable = () => {
   router.push({path: `/catalog/details/lesson-${subjectId.value}`, hash: "#timetable"})
+  lessonCardButton(props.info?.subject)
 }
 </script>
 

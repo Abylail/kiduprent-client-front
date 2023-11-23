@@ -21,6 +21,7 @@
 import {useSubjectFeedStore} from "../../../store/main/subjectFeed";
 import SubjectCard from "../miniCards/subjectCard";
 import BaseButton from "../../base/BaseButton";
+import {paginationMainPage} from "../../../utlis/analitics";
 
 const props = defineProps({
   title: String
@@ -31,6 +32,7 @@ await feedStore.fetchSubjectsInit();
 
 const isLoading = ref(false);
 const fetchMore = async () => {
+  paginationMainPage()
   isLoading.value = true;
   await feedStore.fetchSubjectsMore();
   isLoading.value = false;
@@ -50,6 +52,7 @@ const fetchMore = async () => {
   }
 
   &__more {
+    font-weight: bold !important;
     text-align: center;
     * {font-weight: bold !important;}
   }

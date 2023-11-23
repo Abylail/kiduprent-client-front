@@ -13,6 +13,7 @@
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
+import {mapViewLessons} from "../../../utlis/analitics";
 
 const emits = defineEmits(["change"])
 const props = defineProps({
@@ -26,7 +27,10 @@ const props = defineProps({
   },
 })
 
-const clickHandle = () => emits("change")
+const clickHandle = () => {
+  if (props.isMap) mapViewLessons()
+  emits("change")
+}
 </script>
 
 <style lang="scss" scoped>

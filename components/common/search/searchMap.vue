@@ -8,6 +8,7 @@
 <script setup>
 import {onMounted, watch} from "vue";
 import {AlmatyCenterCoords} from "../../../config/map";
+import {mapPoint} from "../../../utlis/analitics";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BranchLessonsInfo from "./branchLessonsInfo";
 
@@ -58,7 +59,7 @@ const mapInit = async () => {
     center: AlmatyCenterCoords,
     zoom: 12,
     markers: [],
-    controls: ["zoomControl"],
+    controls: ["zoomControl", "geolocationControl"],
   });
 
   initBranches()
@@ -78,7 +79,8 @@ const initBranches = () => {
 }
 
 const branchClick = event => {
-  event.stopPropagation()
+  event.stopPropagation();
+  mapPoint();
   const target = event.get('target');
   const branchId = target?.properties?.get("branch_id");
   if (!branchId) return;

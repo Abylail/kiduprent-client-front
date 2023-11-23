@@ -43,6 +43,7 @@ import {computed, watch} from "vue";
 import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";
 import {phonePreparing} from "../../../helpers/phone";
+import {sendCode, successLogin as analSuccessLogin, errorLogin} from "../../../utlis/analitics";
 
 const emit = defineEmits(["update:open", "final"])
 const props = defineProps({
@@ -82,6 +83,8 @@ const error = ref(null);
 const phone = ref(null);
 const phoneValid = computed(() => !!phone.value)
 const sendSmsHandle = async () => {
+  sendCode();
+
   isLoading.value = true;
   const isSuccess = await authStore.sendOtp(phonePreparing(phone.value));
   isLoading.value = false;
@@ -97,8 +100,12 @@ const submitOtp = async () => {
   const isSuccess = await authStore.login(phonePreparing(phone.value), otp.value);
   isLoading.value = false;
 
-  if (isSuccess) successLogin();
+  if (isSuccess) {
+    analSuccessLogin()
+    successLogin();
+  }
   else {
+    errorLogin()
     otp.value = "";
     error.value = "Неправильный пароль";
   }

@@ -29,6 +29,7 @@
 import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 import BaseButton from "../../base/BaseButton";
+import {selectGroupLesson} from "../../../utlis/analitics";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
@@ -70,7 +71,10 @@ const languages = computed(() => {
 
 const maxChildrenCount = computed(() => props.info?.max_children_count);
 
-const selectHandle = () => emit("select");
+const selectHandle = () => {
+  selectGroupLesson()
+  emit("select");
+}
 </script>
 
 <style lang="scss" scoped>

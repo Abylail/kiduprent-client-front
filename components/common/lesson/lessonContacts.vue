@@ -5,13 +5,19 @@
     <p class="lesson-contacts__item" v-if="contact?.call_phone">
       <base-icon name="mdi-cellphone"/>
       <span>Сотовый номер:</span>
-      <a class="lesson-contacts__link" :href="getPhoneLink(contact?.call_phone)">{{ contact?.call_phone }}</a>
+      <span class="lesson-contacts__link">
+        <a class="lesson-contacts__link" v-if="authStore.isAuth" :href="getPhoneLink(contact?.call_phone)" @click="phoneClick()">{{ contact?.call_phone }}</a>
+        <button class="lesson-contacts__link" v-else @click="showAuth()">показать телефон</button>
+      </span>
     </p>
 
     <p class="lesson-contacts__item" v-if="contact.whatsapp_phone">
       <base-icon name="mdi-whatsapp" color="green"/>
       <span>WhatsApp:</span>
-      <a class="lesson-contacts__link" :href="getWhatsappLink(contact.whatsapp_phone)">Написать</a>
+      <span class="lesson-contacts__link">
+        <a class="lesson-contacts__link" v-if="authStore.isAuth" :href="getWhatsappLink(contact.whatsapp_phone)" @click="whatsappClick()">Написать</a>
+        <button class="lesson-contacts__link" v-else @click="showAuth()">показать whatsapp</button>
+      </span>
     </p>
 
     <p class="lesson-contacts__item" v-if="contact.email">
@@ -20,11 +26,17 @@
       <span class="lesson-contacts__link">{{ contact.email }}</span>
     </p>
   </div>
+
+  <auth-modal v-model:open="openAuth"/>
 </template>
 
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
+import {whatsappClick, phoneClick} from "../../../utlis/analitics";
+import AuthModal from "../auth/authModal";
+import {useAuthStore} from "../../../store/client/parent/auth";
+
 
 const props = defineProps({
   groups: Array
@@ -53,6 +65,12 @@ const getPhoneLink = (phone) => {
 // Получить ссылку whatsapp
 const getWhatsappLink = (phone) => {
   return `https://wa.me/${phone}?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9F%D0%B8%D1%88%D1%83%20%D0%B2%D0%B0%D0%BC%20%D0%B8%D0%B7%20%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F%20kidup.kz%20%D0%BF%D0%BE%20%D0%BF%D0%BE%D0%B2%D0%BE%D0%B4%D1%83%20%D0%B7%D0%B0%D0%BD%D1%8F%D1%82%D0%B8%D0%B9%20...`
+}
+
+const authStore = useAuthStore();
+const openAuth = ref(false);
+const showAuth = () => {
+  openAuth.value = true;
 }
 </script>
 

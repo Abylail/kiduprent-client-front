@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link class="center-card" :class="{'center-card--full': props.full}" :to="`/catalog/details/center-${info.id}`">
+  <nuxt-link class="center-card" :class="{'center-card--full': props.full}" :to="`/catalog/details/center-${info.id}`" @click="centerCard(info)">
 
     <div class="center-card__head">
       <div>
@@ -35,6 +35,9 @@ import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
 import {useRuntimeConfig} from "nuxt/app";
 import BaseCutText from "../../base/BaseCutText";
+
+import {centerCard} from "../../../utlis/analitics";
+
 
 const config = useRuntimeConfig();
 

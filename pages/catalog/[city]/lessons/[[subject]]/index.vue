@@ -40,8 +40,8 @@ import {useSearchLessonsStore} from "../../../../../store/search/lessons";
 import BaseSearchSelect from "../../../../../components/base/BaseSearchSelect";
 import SwitchType from "../../../../../components/common/catalog/switchType";
 import SearchMap from "../../../../../components/common/search/searchMap";
-import Search from "../../../../../components/common/main/search";
 import SearchTypeSwitch from "../../../../../components/common/search/searchTypeSwitch";
+import {lessonSubjectCatalogClick, paginationCatalogLessons} from "../../../../../utlis/analitics";
 
 const router = useRouter();
 const route = useRoute();
@@ -66,6 +66,7 @@ useSeoMeta({
 
 // Перейти ы поиск по предметку
 const selectSubject = subjectCode => {
+  lessonSubjectCatalogClick(subjectCode)
   if (subjectCode) router.replace({params: {subject: subjectCode}, query: route.query});
   else router.replace({path: `/catalog/almaty/lessons`, query: route.query})
 }
@@ -86,6 +87,7 @@ const search = async (page = 1) => {
       page
     });
   }
+  if (page > 1) paginationCatalogLessons()
   isLoading.value = false;
 }
 

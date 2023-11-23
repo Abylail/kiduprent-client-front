@@ -55,6 +55,7 @@ import BaseButton from "../../../../../components/base/BaseButton";
 import SelectChildModal from "../../../../../components/common/catalog/selectChildModal";
 import SuccessLessonBook from "../../../../../components/common/catalog/successLessonBook";
 import {useParentRegistration} from "../../../../../store/client/parent/registration";
+import {registrationTrial, selectTrialDateLesson} from "../../../../../utlis/analitics";
 const { $goBack } = useNuxtApp();
 
 const route = useRoute();
@@ -98,6 +99,7 @@ const openSuccessModal = ref(false);
 let selectedChild = null;
 const selectChild = async child => {
   selectedChild = child;
+  registrationTrial()
   await parentRegistrationStore.registrationOnTrial({
     date: selectedDay.value.date,
     child_id: selectedChild.id,
@@ -113,6 +115,7 @@ const successModalClose = () => {
 
 // Записаться (кнопка)
 const submitHandle = () => {
+  selectTrialDateLesson()
   openSelectChild.value = true;
 }
 </script>
