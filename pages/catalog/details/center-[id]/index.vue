@@ -36,6 +36,10 @@
       <pre class="center-info__description-text"><base-cut-text :text="centerInfo.description" :max-symbols="300"/></pre>
     </div>
 
+    <div class="center-info__go-subjects container">
+      <base-button type="outline" full-width @click="goSubjects()">Выбрать урок</base-button>
+    </div>
+
     <div class="center-info__contacts container--white">
       <h3 class="center-info__title">Контакты</h3>
       <lesson-contacts
@@ -52,7 +56,7 @@
       />
     </div>
 
-    <div class="center-info__subjects" v-if="subjects.length">
+    <div class="center-info__subjects" id="subjects">
       <h3 class="center-info__title container">Уроки в центре</h3>
       <subject-card
         class="center-info__subject"
@@ -70,7 +74,7 @@
 <script setup>
 import MobileHeader from "../../../../components/common/layoutComponents/mobileHeader";
 import {useCenterDetailsStore} from "../../../../store/details/center";
-import {useRoute, useRuntimeConfig} from "nuxt/app";
+import {useRoute, useRouter, useRuntimeConfig} from "nuxt/app";
 import {computed, onMounted} from "vue";
 import BaseMiniPhotos from "../../../../components/base/BaseMiniPhotos";
 import BaseIcon from "../../../../components/base/BaseIcon";
@@ -78,6 +82,7 @@ import LessonContacts from "../../../../components/common/lesson/lessonContacts"
 import SubjectCard from "../../../../components/common/miniCards/subjectCard";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
 import BaseCutText from "../../../../components/base/BaseCutText";
+import BaseButton from "../../../../components/base/BaseButton";
 
 const config = useRuntimeConfig();
 
@@ -104,6 +109,11 @@ const fetchSubjects = async () => {
   isSubjectsLoading.value = true;
   await centerStore.fetchCenterSubjects({id: centerId.value})
   isSubjectsLoading.value = false;
+}
+
+const router = useRouter()
+const goSubjects = () => {
+  router.replace({hash: "#subjects"})
 }
 
 onMounted(() => {
@@ -163,12 +173,17 @@ onMounted(() => {
     margin-right: 4px;
   }
 
+  &__go-subjects {
+    margin: 16px 0;
+  }
+
   &__contacts {
     margin: 16px 0;
   }
 
   &__subjects {
     margin-top: 16px;
+    padding-top: 8px;
   }
 
   &__subject {

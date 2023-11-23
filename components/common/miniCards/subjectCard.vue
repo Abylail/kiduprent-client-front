@@ -25,10 +25,14 @@
           <span>{{ addresses }}</span>
         </div>
         <div class="subject-card__info-language">
-          <div class="chip--outlined" v-if="langRu">Русский</div>
-          <div class="chip--outlined" v-if="langKz">Казахский</div>
+          <div class="chip" v-if="langRu">Русский</div>
+          <div class="chip" v-if="langKz">Казахский</div>
         </div>
       </div>
+    </div>
+
+    <div class="subject-card__action">
+      <base-button size="mini" @click.prevent="goTimetable()">Записаться</base-button>
     </div>
 
     <!-- Группы -->
@@ -47,6 +51,8 @@ import {weekdayList} from "../../../config/weekdays";
 import BaseMiniPhotos from "../../base/BaseMiniPhotos";
 import BaseIcon from "../../base/BaseIcon";
 import BaseCutText from "../../base/BaseCutText";
+import BaseButton from "../../base/BaseButton";
+import {useRouter} from "nuxt/app";
 
 const props = defineProps({
   info: Object,
@@ -55,6 +61,8 @@ const props = defineProps({
     default: false
   }
 })
+
+const router = useRouter()
 
 const subjectId = computed(() => props.info?.id)
 
@@ -111,6 +119,10 @@ const addresses = computed(() => {
   const isAddressesSame = groups.value?.every(g => g.institutionBranch?.id === groups.value[0]?.institutionBranch?.id);
   return isAddressesSame ? groups.value[0]?.institutionBranch?.address : groups.value?.map(g => g.value?.institutionBranch?.address).join(", ")
 })
+
+const goTimetable = () => {
+  router.push({path: `/catalog/details/lesson-${subjectId.value}`, hash: "#timetable"})
+}
 </script>
 
 <style lang="scss" scoped>
@@ -165,6 +177,12 @@ const addresses = computed(() => {
   &__content {
     display: flex;
     padding: 0 $side-space-mobile;
+  }
+
+  &__action {
+    text-align: right;
+    margin-top: 16px;
+    padding-right: $side-space-mobile;
   }
 
   &__photos {

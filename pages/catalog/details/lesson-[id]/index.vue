@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="timetable container--white">
+    <div class="timetable container--white" id="timetable">
       <h3 class="title">Расписание групп</h3>
       <p v-if="!groups.length" class="description">Уточните расписание у центра</p>
       <div class="groups" v-else>
@@ -218,6 +218,10 @@ onMounted(() => {
     margin: 16px 0;
   }
 
+  .groups {
+    margin-top: 16px;
+  }
+
 }
 
 .lesson-info--desktop {
@@ -272,6 +276,7 @@ onMounted(() => {
   }
 
   .groups {
+    margin-top: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }

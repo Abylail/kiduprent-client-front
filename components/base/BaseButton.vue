@@ -70,12 +70,12 @@ const props = defineProps({
 
   &--size-mini {
     font-size: $fs--mini;
-    padding: 8px 12px;
+    padding: 6px 12px;
   }
 
   &--size-default {
     font-size: $fs--default;
-    padding: 10px 14px;
+    padding: 8px 14px;
   }
 
   &--size-big {

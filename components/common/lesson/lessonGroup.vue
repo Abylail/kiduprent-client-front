@@ -20,7 +20,7 @@
       </p>
     </div>
     <div class="lesson-group__action" v-if="props.selectable">
-      <base-button size="mini" @click="selectHandle()">Выбрать группу</base-button>
+      <base-button size="mini" @click="selectHandle()">Записаться на пробный</base-button>
     </div>
   </div>
 </template>

@@ -42,7 +42,7 @@ const actions = {
             params: {
                 subjectId: subjectId,
                 offset: (page-1) * pageCount,
-                limit: page * pageCount
+                limit: pageCount
             },
         });
         if (!err) {

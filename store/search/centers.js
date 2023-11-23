@@ -37,7 +37,7 @@ const actions = {
             params: {
                 categoryId: categoryId,
                 offset: (page-1) * pageCount,
-                limit: page * pageCount
+                limit: pageCount
             },
         });
         if (!err) {

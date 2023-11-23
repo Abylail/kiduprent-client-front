@@ -52,6 +52,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .lessons-info {
 
+  &__subject {
+    margin-top: 16px;
+  }
+
   &__loading {
     display: block;
     height: 230px;
