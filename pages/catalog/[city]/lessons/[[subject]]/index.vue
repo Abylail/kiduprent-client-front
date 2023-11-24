@@ -14,6 +14,7 @@
       :list="searchLessonStore.getBranches"
       :subject-id="activeSubjectId"
       :loading="isLoading"
+      type="lessons"
   />
   <search-list
       v-else

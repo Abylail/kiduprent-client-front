@@ -1,16 +1,20 @@
 <template>
   <div class="search-map" id="search-map"/>
-  <base-backdrop :title="currentBranch?.institution?.name" :active="!!currentBranch" @update:active="setActiveInfo($event)">
-    <branch-lessons-info v-if="!!currentBranch?.institution" :branch="currentBranch" :subject-id="props.subjectId"/>
+  <base-backdrop :title="currentTitle" :active="!!currentBranch" @update:active="setActiveInfo($event)">
+    <div v-if="!!currentBranch?.institution">
+      <branch-lessons-info v-if="props.type === 'lessons'" :branch="currentBranch" :subject-id="props.subjectId"/>
+      <center-card v-else :info="currentInstitution" full/>
+    </div>
   </base-backdrop>
 </template>
 
 <script setup>
-import {onMounted, watch} from "vue";
+import {computed, onMounted, watch} from "vue";
 import {AlmatyCenterCoords} from "../../../config/map";
 import {mapPoint} from "../../../utlis/analitics";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import BranchLessonsInfo from "./branchLessonsInfo";
+import CenterCard from "../miniCards/centerCard";
 
 
 const props = defineProps({
@@ -25,7 +29,12 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
-  }
+  },
+  type: {
+    type: String,
+    default: "lessons",
+    validator: t => ["lessons", "centers"].includes(t)
+  },
 })
 
 // Выбранный филиал
@@ -33,6 +42,15 @@ const currentBranch = ref(null);
 const setActiveInfo = (val) => {
   if (!val) currentBranch.value = null;
 }
+
+// Выбранный центр
+const currentInstitution = computed(() => ({...currentBranch.value?.institution, institutionBranches: [currentBranch.value]}))
+
+// Тайтл
+const currentTitle = computed(() => {
+  if (props.type === "lessons") return currentBranch.value?.institution?.name
+  else if (props.type === "centers") return currentBranch.value?.address || currentBranch.value?.institution?.name
+})
 
 const MarkerOptions = {preset: 'islands#circleIcon', iconColor: '#004BFF'};
 

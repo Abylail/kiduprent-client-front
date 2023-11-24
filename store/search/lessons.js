@@ -11,12 +11,14 @@ const state = () => ({
     lessons: null,
     lastSearchOptions: null,
 
+    // Есть ли еще страницы
+    haveMore: true,
+
+
     // Список филиалов (адресов)
     branches: null,
     bLastSearchOptions: null,
 
-    // Есть ли еще страницы
-    haveMore: true,
 })
 
 const getters = {

@@ -22,7 +22,7 @@
 
     <div class="auth__content" v-if="step === 2">
       <otp-input v-model="otp" :error="!!error" @submit="submitOtp()"/>
-      <div class="auth__hint">Введите полученный код из WhatsApp</div>
+      <div class="auth__hint">Введите полученный смс код</div>
       <div class="auth__error" v-if="error">{{ error }}</div>
       <base-button
           class="auth__submit"
