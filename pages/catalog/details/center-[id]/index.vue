@@ -42,6 +42,7 @@
 
     <div class="center-info__contacts container--white">
       <h3 class="center-info__title">Контакты</h3>
+      <div class="center-info__description-text">Оставьте заявку, что бы администратор центра вам позвонил</div>
       <call-request :center="centerInfo"/>
     </div>
 
@@ -164,6 +165,7 @@ onMounted(() => {
   &__description-text {
     white-space: pre-wrap;
     font-size: $fs--mini;
+    margin: 8px 0;
   }
 
   &__description-icon {
