@@ -42,10 +42,7 @@
 
     <div class="center-info__contacts container--white">
       <h3 class="center-info__title">Контакты</h3>
-      <lesson-contacts
-          :groups="groups"
-          :info="centerInfo"
-      />
+      <call-request :center="centerInfo"/>
     </div>
 
     <div class="center-info__contacts container--white">
@@ -83,6 +80,7 @@ import SubjectCard from "../../../../components/common/miniCards/subjectCard";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
 import BaseCutText from "../../../../components/base/BaseCutText";
 import BaseButton from "../../../../components/base/BaseButton";
+import CallRequest from "../../../../components/common/lesson/callRequest";
 
 const config = useRuntimeConfig();
 

@@ -54,10 +54,8 @@
     <!-- Контакты -->
     <div class="contacts container--white">
       <h3 class="title">Контакты</h3>
-      <lesson-contacts
-          :groups="groups"
-          :institution-info="institutionInfo"
-      />
+      <div class="description-text">Оставьте заявку, что бы администратор центра вам позвонил</div>
+      <call-request :center="institutionInfo"/>
     </div>
 
     <center-card
@@ -80,6 +78,7 @@ import {useCenterDetailsStore} from "../../../../store/details/center";
 import LessonGroup from "../../../../components/common/lesson/lessonGroup";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
+import CallRequest from "../../../../components/common/lesson/callRequest";
 
 const { $device } = useNuxtApp();
 
@@ -194,6 +193,7 @@ onMounted(() => {
   .description-text {
     white-space: pre-wrap;
     font-size: $fs--mini;
+    margin: 8px 0;
   }
 
   .description-divider {

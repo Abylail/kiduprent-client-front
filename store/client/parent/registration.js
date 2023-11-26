@@ -44,6 +44,14 @@ const actions = {
         const { err } = await api.post("/parent/register/trial", trialProperties)
         return !err;
     },
+
+    /**
+     * Запрос на звонок от центра
+     * */
+    async callRequest(institutionId) {
+        const { err } = await api.get(`/parent/callRequest/${institutionId}`);
+        return !err;
+    }
 }
 
 export const useParentRegistration = defineStore("parentRegistration", {
