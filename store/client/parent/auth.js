@@ -6,6 +6,9 @@ import {phoneValidation} from "~/helpers/phone";
 const state = () => ({
     // Информация клиента
     clientData: null,
+
+    // Координаты пользователя
+    clientCoords: null,
 })
 
 const getters = {
@@ -14,6 +17,9 @@ const getters = {
 
     // Авторизован ли
     isAuth: state => !!state.clientData,
+
+    // Координаты пользователя
+    getClientCoords: state => state.clientCoords,
 }
 
 const actions = {
@@ -62,6 +68,12 @@ const actions = {
         const { err, body } = await api.put("/parent/data/update", parentInfo)
         if (!err && body) this.clientData = body;
     },
+
+    // Записать координаты пользователя
+    setUserCoords(coords) {
+        console.log(coords)
+        this.clientCoords = JSON.parse(JSON.stringify(coords));
+    }
 }
 
 export const useAuthStore = defineStore("auth", {

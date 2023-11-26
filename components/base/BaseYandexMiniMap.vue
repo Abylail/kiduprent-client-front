@@ -14,12 +14,22 @@
         :style="{height: mapHeight}"
     />
 
+    <div
+      class="base-yandex-map__map-touch"
+      v-if="!fullScreen"
+      @click="setFullScreen(true)"
+    />
+
     <button v-if="!fullScreen" class="base-yandex-map__show-full" @click="setFullScreen(true)">
       <base-icon size="30" color="white" name="mdi-fullscreen"/>
     </button>
 
     <button v-else class="base-yandex-map__show-full" @click="setFullScreen(false)">
       <base-icon size="30" color="white" name="mdi-fullscreen-exit"/>
+    </button>
+
+    <button v-if="fullScreen" class="base-yandex-map__user-location" @click="getUserLocation()">
+      <base-icon size="24" color="white" name="mdi-navigation-variant-outline"/>
     </button>
   </div>
 </template>
@@ -29,6 +39,7 @@ import {computed, onMounted} from "vue";
 import BaseIcon from "./BaseIcon";
 import MobileHeader from "../common/layoutComponents/mobileHeader";
 import {AlmatyCenterCoords} from "../../config/map";
+import {useAuthStore} from "../../store/client/parent/auth";
 
 const props = defineProps({
   height: {
@@ -45,11 +56,14 @@ const props = defineProps({
   }
 });
 
+const authStore = useAuthStore();
+
 // Стартовые координаты
 const startCoords = computed(() => props.branches[0]?.coordinates || AlmatyCenterCoords);
 const markers = computed(() => props.branches.map(({coordinates}) => ({coordinates})));
 
 const MarkerOptions = {preset: 'islands#circleIcon', iconColor: '#004BFF'};
+const UserLocationOptions = {preset: 'islands#circleIcon', iconColor: '#df3030'};
 
 // Ожидает загрузки скрипта
 const scriptLoader = (count = 0, maxCount = 10) => new Promise(resolve => {
@@ -74,13 +88,15 @@ const mapInit = async () => {
     center: startCoords.value,
     zoom: 14,
     markers: [],
-    controls: ["geolocationControl"],
+    controls: [],
   });
 
   // Добавляю маркеры
   markers.value.forEach(marker => {
     Map.geoObjects.add(new ymaps.Placemark([...marker.coordinates], {}, MarkerOptions))
   })
+
+  if (authStore.getClientCoords) Map.geoObjects.add(new ymaps.Placemark([...authStore.getClientCoords], {}, UserLocationOptions))
 
   return Map;
 }
@@ -93,6 +109,22 @@ const setFullScreen = (full = false) => {
     Map?.container?.fitToViewport()
     Map?.setCenter(startCoords.value)
   });
+}
+
+const getUserLocation = () => {
+  if (!authStore.getClientCoords) {
+    navigator.geolocation.getCurrentPosition(info => {
+      const clientCoords = [info?.coords.latitude, info?.coords.longitude];
+      Map.geoObjects.add(new ymaps.Placemark([...clientCoords], {}, UserLocationOptions))
+      Map?.setCenter(clientCoords)
+      authStore.setUserCoords(clientCoords);
+    }, (e) => {
+      console.log(e)
+    }, {maximumAge: 10000, timeout: 5000, enableHighAccuracy: true})
+  }
+  else {
+    Map?.setCenter(authStore.getClientCoords);
+  }
 }
 
 onMounted(() => {
@@ -119,6 +151,7 @@ onMounted(() => {
   }
 
   &__map {
+    position: relative;
     height: 300px;
     width: 100%;
     background-color: gray;
@@ -131,13 +164,34 @@ onMounted(() => {
     }
   }
 
+  &__map-touch {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
   &__show-full {
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
-    right: 5px;
-    bottom: 5px;
+    right: $side-space-mobile;
+    bottom: $side-space-mobile;
+    height: 35px;
+    width: 35px;
+    background: rgba(0, 0, 0, .4);
+    border-radius: 5px;
+  }
+
+  &__user-location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: $side-space-mobile;
+    top: calc(60px + #{$side-space-mobile});
     height: 35px;
     width: 35px;
     background: rgba(0, 0, 0, .4);

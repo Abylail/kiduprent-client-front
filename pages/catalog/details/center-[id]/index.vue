@@ -37,7 +37,7 @@
     </div>
 
     <div class="center-info__go-subjects container">
-      <base-button type="outline" full-width @click="goSubjects()">Выбрать урок</base-button>
+      <base-button type="outline" full-width @click="goSubjects()">Записаться</base-button>
     </div>
 
     <div class="center-info__contacts container--white">
