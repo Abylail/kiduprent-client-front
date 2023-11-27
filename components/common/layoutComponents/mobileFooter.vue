@@ -34,7 +34,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   right: 0;
   height: 60px;
   padding: 0 $side-space-mobile;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(3px);
   border-top: 1px solid $color--gray;
 

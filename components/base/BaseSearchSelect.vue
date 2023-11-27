@@ -24,16 +24,21 @@
     <div class="search-select__modal-list">
       <button
           class="search-select__modal-item"
+          :class="{'search-select__modal-item--selected': !props.modelValue}"
           @click="selectHandle(null)"
       >Все предметы</button>
-      <button
-          class="search-select__modal-item"
-          v-for="item in list" :key="item[props.valueField]"
-          @click="selectHandle(item)"
-      >
-        <base-icon v-if="props.iconField" :name="item[props.iconField]" color="blue"></base-icon>
-        <span>{{ item[props.nameField] }}</span>
-      </button>
+      <div class="search-select__modal-group" v-for="(list, letter) in groupedList" :key="letter">
+        <div class="search-select__modal-group-letter container">{{ letter }}</div>
+        <button
+            class="search-select__modal-item"
+            :class="{'search-select__modal-item--selected': props.modelValue === item[props.valueField]}"
+            v-for="item in list" :key="item[props.valueField]"
+            @click="selectHandle(item)"
+        >
+          <base-icon v-if="props.iconField" :name="item[props.iconField]" color="blue"></base-icon>
+          <span>{{ item[props.nameField] }}</span>
+        </button>
+      </div>
     </div>
     </div>
   </div>
@@ -84,7 +89,17 @@ const setShowModal = (val = false) => {
 const subjectStore = useSubjectsStore();
 subjectStore.fetchList();
 
-const list = computed(() => props.items || []);
+const list = computed(() => props.items?.sort((a, b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1) || []);
+const groupedList = computed(() => {
+  let groups = {};
+  list.value.forEach(item => {
+    if (item?.[props.nameField]) {
+      if (!groups[item[props.nameField][0]]) groups[item[props.nameField][0]] = [item]
+      else groups[item[props.nameField][0]].push(item)
+    }
+  })
+  return groups;
+})
 
 const route = useRoute();
 const activeSubjectCode = computed(() => props.modelValue || null);
@@ -145,6 +160,19 @@ const selectHandle = subject => {
     overflow: auto;
   }
 
+  &__modal-group {
+    background: $color--gray-light;
+    &:last-child {
+      padding-bottom: 32px;
+    }
+  }
+
+  &__modal-group-letter {
+    padding: 8px 0 4px;
+    color: $color--gray-dark;
+    font-size: $fs--mini;
+  }
+
   &__modal-item {
     display: flex;
     align-items: center;
@@ -155,6 +183,11 @@ const selectHandle = subject => {
     padding: 12px $side-space-mobile;
     font-size: $fs--default;
     color: $color--black;
+    background: white;
+
+    &--selected {
+      font-weight: bolder;
+    }
   }
 
 }
