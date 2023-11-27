@@ -177,7 +177,6 @@ onMounted(() => {
 
   .lesson-price {
     font-size: $fs--title;
-    font-weight: bold;
     margin-bottom: 12px;
   }
 

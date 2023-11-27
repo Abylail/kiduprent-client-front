@@ -9,7 +9,10 @@
       <p class="lesson-group__content-item">
         Адрес: <span class="lesson-group__content-value">{{ address }}</span>
       </p>
-      <p class="lesson-group__content-item">
+      <p class="lesson-group__content-item" v-if="props.info.price">
+        Цена: <span class="lesson-group__content-value">{{ props.info.price }} тг</span>
+      </p>
+      <p class="lesson-group__content-item" v-if="age">
         Возраст: <span class="lesson-group__content-value">{{ age }}</span>
       </p>
       <p class="lesson-group__content-item">
@@ -20,7 +23,7 @@
       </p>
     </div>
     <div class="lesson-group__action" v-if="props.selectable">
-      <base-button size="mini" @click="selectHandle()">Записаться на пробный</base-button>
+      <base-button full-width @click="selectHandle()">Записаться на пробный</base-button>
     </div>
   </div>
 </template>
@@ -59,7 +62,10 @@ const address = computed(() => props.info?.institutionBranch?.address)
 const age = computed(() => {
   const max = props.info?.max_age;
   const min = props.info?.min_age;
-  return `${min || ""} - ${max || ""} лет`
+  if (!min && !max) return ""
+  if (!max && min) return `от ${min}`
+  if (max && !min) return `до ${max}`
+  return `${min} - ${max} лет`
 })
 
 const languages = computed(() => {
@@ -70,6 +76,12 @@ const languages = computed(() => {
 })
 
 const maxChildrenCount = computed(() => props.info?.max_children_count);
+
+const price = computed(() => {
+  console.log(props.info)
+  return null;
+  const isPricesSame = list.every(t => t.price === list[0]?.price);
+})
 
 const selectHandle = () => {
   selectGroupLesson()
@@ -115,7 +127,7 @@ const selectHandle = () => {
   }
 
   &__action {
-    margin-top: 8px;
+    margin-top: 16px;
     text-align: right;
   }
 

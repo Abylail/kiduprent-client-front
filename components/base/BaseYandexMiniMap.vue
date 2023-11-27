@@ -121,6 +121,9 @@ const setFullScreen = (full = false) => {
     Map?.container?.fitToViewport()
     Map?.setCenter(startCoords.value)
   });
+
+  if (fullScreen.value) Map?.controls?.add("zoomControl")
+  else Map?.controls?.remove("zoomControl")
 }
 
 // Выбор филиала

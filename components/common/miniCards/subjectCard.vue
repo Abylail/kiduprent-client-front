@@ -31,15 +31,14 @@
       </div>
     </div>
 
-    <div class="subject-card__action">
-      <base-button size="mini" @click.prevent="goTimetable()">Записаться</base-button>
-    </div>
-
     <!-- Группы -->
     <div class="subject-card__bottom-block" v-if="props.full && subjectWeekdays.length">
       <div class="subject-card__weekdays-title">В какие дни есть уроки:</div>
-      <div class="subject-card__weekdays">
-        <div class="subject-card__weekday" v-for="(weekday, windex) in subjectWeekdays" :key="windex">{{ weekday.shortName }}</div>
+      <div class="subject-card__bottom-block-content">
+        <div class="subject-card__weekdays">
+          <div class="subject-card__weekday" v-for="(weekday, windex) in subjectWeekdays" :key="windex">{{ weekday.shortName }}</div>
+        </div>
+        <base-button size="mini" @click.prevent="goTimetable()">Записаться</base-button>
       </div>
     </div>
   </nuxt-link>
@@ -231,6 +230,11 @@ const goTimetable = () => {
     margin-top: 8px;
   }
 
+  &__bottom-block-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
   &__address {
     display: flex;
@@ -256,10 +260,6 @@ const goTimetable = () => {
     align-items: center;
     flex-wrap: nowrap;
     overflow: auto;
-
-    &:not(:last-child) {
-      margin-bottom: 5px;
-    }
   }
 
   &__weekday {

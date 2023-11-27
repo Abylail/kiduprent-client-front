@@ -2,6 +2,7 @@
   <mobile-header>
     <div class="main-page-mobile-header-title">
       <nuxt-img class="main-page-mini-logo" src="/logo.svg" alt="logo"/>
+      <span>Kidup.kz</span>
     </div>
   </mobile-header>
   <div :class="[{'main-page--mobile': !$device.isDesktop}, {'main-page--desktop': $device.isDesktop}]">
@@ -70,6 +71,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-size: $fs--title;
+  color: $color--blue-dark;
 }
 .main-page-mini-logo {
   height: 50px;

@@ -89,7 +89,7 @@ const props = defineProps({
 
   &--disabled {
     pointer-events: none;
-    opacity: .7;
+    opacity: .5;
   }
 
   &--loading {
