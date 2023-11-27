@@ -1,6 +1,6 @@
 <template>
   <div class="call-request">
-    <base-button :loading="isLoading" full-width @click="requestHandle()">Оставить заявку</base-button>
+    <base-button :loading="isLoading" full-width @click="requestHandle()">Связаться с центром</base-button>
   </div>
   <auth-modal
       v-model:open="showAuth"

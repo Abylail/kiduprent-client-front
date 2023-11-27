@@ -32,14 +32,15 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  padding: 0 40px;
+  height: 70px;
+  padding: 0 $side-space-mobile;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(3px);
   border-top: 1px solid $color--gray;
 
   &__link {
     display: flex;
+    flex-direction: column;
     align-items: center;
     font-weight: bold;
     line-height: 56px !important;
@@ -47,18 +48,16 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   }
 
   &__link-text {
-    max-width: 0;
     overflow-x: hidden;
     transition: $transition;
     transition-timing-function: ease-out;
     font-size: $fs--mini;
+    line-height: $fs--mini;
+    margin-top: 3px;
   }
 
   &__link--active {
     color: $color--blue !important;
-    .mobile-footer__link-text {
-      max-width: 90px;
-    }
   }
 
   &__icon {

@@ -1,4 +1,16 @@
 <template>
+  <div class="base-yandex-map__branches" v-if="props.branches?.length > 1">
+    <button
+        class="base-yandex-map__branch"
+        :class="{'base-yandex-map__branch--selected': selectedBranch?.id === branch.id}"
+        v-for="branch in props.branches" :key="branches.id"
+        @click="selectBranch(branch)"
+    >
+      <base-icon size="20" name="mdi-map-marker-outline"/>
+      <span>{{ branch.address }}</span>
+    </button>
+  </div>
+
   <div class="base-yandex-map" :class="{'base-yandex-map--full-screen': fullScreen}">
 
     <mobile-header
@@ -111,6 +123,13 @@ const setFullScreen = (full = false) => {
   });
 }
 
+// Выбор филиала
+const selectedBranch = ref(props.branches[0]);
+const selectBranch = (branch) => {
+  selectedBranch.value = branch;
+  if (!!branch?.coordinates?.length) Map?.setCenter(branch.coordinates)
+}
+
 const getUserLocation = () => {
   if (!authStore.getClientCoords) {
     navigator.geolocation.getCurrentPosition(info => {
@@ -148,6 +167,24 @@ onMounted(() => {
     background: $color--gray-light;
     margin: 0;
     border-radius: 0;
+  }
+
+  &__branches {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+  }
+
+  &__branch {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: $color--gray-dark;
+    margin: 2px;
+
+    &--selected {
+      color: $color--blue;
+    }
   }
 
   &__map {
