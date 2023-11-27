@@ -234,6 +234,7 @@ const goTimetable = () => {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    row-gap: 8px;
   }
 
   &__address {
