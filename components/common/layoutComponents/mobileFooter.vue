@@ -32,7 +32,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
   bottom: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 60px;
   padding: 0 $side-space-mobile;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(3px);
@@ -40,6 +40,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
 
   &__link {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
     font-weight: bold;

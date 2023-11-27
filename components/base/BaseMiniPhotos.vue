@@ -2,7 +2,7 @@
   <div class="base-mini-photos">
     <div class="base-mini-photos__slides" :class="[{'base-mini-photos__slides--rounded': props.rounded}]">
       <img
-          class="base-mini-photos__slide skeleton-loading"
+          class="base-mini-photos__slide"
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
           alt=""

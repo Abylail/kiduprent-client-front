@@ -50,7 +50,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     // 'nuxt-delay-hydration',
     '@nuxt/image',
-    'nuxt-lazy-load'
+    ['nuxt-lazy-load', {
+      loadingClass: "skeleton-loading"
+    }]
   ],
 
   image: {
