@@ -51,7 +51,7 @@ const activeModuleName = computed(() => route.name.split("-")[0])
     overflow-x: hidden;
     transition: $transition;
     transition-timing-function: ease-out;
-    font-size: $fs--mini;
+    font-size: $fs--nano;
     line-height: $fs--mini;
     margin-top: 3px;
   }

@@ -2,7 +2,7 @@
   <div class="base-mini-photos">
     <div class="base-mini-photos__slides" :class="[{'base-mini-photos__slides--rounded': props.rounded}]">
       <img
-          class="base-mini-photos__slide"
+          class="base-mini-photos__slide skeleton-loading"
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
           alt=""
@@ -61,6 +61,7 @@ const getImageUrl = url => config.public.CDN_URL + url;
     margin: 0 4px;
     box-sizing: content-box;
     object-fit: cover;
+    border-radius: 0;
     &:first-child {margin-left: 0}
     &:last-child {margin-right: 0}
   }
