@@ -3,7 +3,7 @@
 
     <div class="registrations__item" v-for="(registration, index) in registrations" :key="index" @click="registrationSelect(registration)">
       <div class="registrations__item-info">{{ getRegistrationMainInfo(registration) }}</div>
-      <div class="registrations__item-child">
+      <div class="registrations__item-child" v-if="registration.child">
         <base-icon class="registrations__item-icon" name="mdi-human-child" size="18"/>
         <span>{{ registration.child?.name || registration.child_name }}</span>
       </div>
@@ -37,8 +37,8 @@ const fetchActiveRegistrations = async () => {
 const isEmpty = computed(() => !isLoading.value && !registrations.value.length)
 
 const getRegistrationDate = (registration) => `${registration.time} ${new Date(registration.date).toLocaleString('ru', { day: 'numeric', month: 'long', weekday: 'long' })}`
-const getRegistrationMainInfo = (registration) => `${registration.institutionGroup?.institutionSubject?.name} (${getRegistrationDate(registration)})`
-const getAddress = (registration) => `${registration.institutionGroup?.institution?.name}, ${registration.institutionGroup?.institutionBranch?.address}`
+const getRegistrationMainInfo = (registration) => `${registration.institutionGroup?.institutionSubject?.name || ""} (${getRegistrationDate(registration)})`
+const getAddress = (registration) => `${registration?.institution?.name}, ${registration.institutionGroup?.institutionBranch?.address || ""}`
 
 const registrationSelect = registration => {
   emit("select", registration);

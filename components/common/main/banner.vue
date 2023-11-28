@@ -56,6 +56,7 @@ const goLessons = () => {
     font-size: 4.5vw;
     padding: 8px 12px;
     border-radius: 10px;
+    box-shadow: 0px 0px 8px 3px rgba(34, 60, 80, 0.25);
   }
 
   .banner-hidden {
