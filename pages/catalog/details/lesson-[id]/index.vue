@@ -4,7 +4,7 @@
       go-back="/catalog/almaty/lessons"
   />
 
-  <div :class="[{'lesson-info--mobile': !$device.isDesktop}, {'lesson-info--desktop': $device.isDesktop}]">
+  <div :class="{'lesson-info--mobile': !$device.isDesktop, 'lesson-info--desktop': $device.isDesktop}">
     <div class="base-info">
       <base-mini-photos
         class="photos"
@@ -252,6 +252,12 @@ onMounted(() => {
     margin-top: 8px;
   }
 
+  .description-text {
+    white-space: pre-wrap;
+    font-size: $fs--mini;
+    margin: 8px 0;
+  }
+
   .description-divider {
     display: inline-block;
     height: 5px;
@@ -278,6 +284,7 @@ onMounted(() => {
     margin-top: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 16px;
   }
 
 }

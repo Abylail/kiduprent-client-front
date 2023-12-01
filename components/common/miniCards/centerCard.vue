@@ -82,6 +82,8 @@ const addresses = computed(() =>  props.info?.institutionBranches.map(({address}
     display: flex;
     width: 100%;
     max-width: none;
+    border-right: none;
+    border-left: none;
     background-color: white;
   }
 

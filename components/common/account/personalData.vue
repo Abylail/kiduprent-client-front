@@ -10,7 +10,7 @@
     <div class="personal-data__editor">
       <base-input title="Фамилия" v-model="editorPersonalData.last_name" type="naked-gray"/>
       <base-input title="Имя" v-model="editorPersonalData.first_name" type="naked-gray"/>
-      <base-input title="Номер" v-model="editorPersonalData.phone" phone type="naked-gray"/>
+      <base-input class="disabled" title="Номер" v-model="editorPersonalData.phone" phone type="naked-gray"/>
       <div class="personal-data__editor-actions">
         <base-button type="outline" full-width @click="cancelHandle()">Отмена</base-button>
         <base-button :loading="isLoading" full-width @click="saveHandle()">Сохранить</base-button>

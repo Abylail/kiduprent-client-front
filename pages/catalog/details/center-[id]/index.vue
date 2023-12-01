@@ -4,60 +4,62 @@
       go-back="/catalog/almaty/centers"
   />
 
-  <div class="center-info">
+  <div :class="{'center-info--mobile': !$device.isDesktop, 'center-info--desktop': $device.isDesktop}">
+    <div class="center-info-head">
     <base-mini-photos
-        class="center-info__photos"
+        class="center-info-photos"
         v-if="photos"
         :list="photos"
         :rounded="false"
     />
 
-    <div class="center-info__main container--white">
-      <h1 class="center-info__title">
-        <img class="center-info__logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
+    <div class="center-info-main container--white">
+      <h1 class="center-info-title">
+        <img class="center-info-logo" v-if="logoUrl" :src="logoUrl" alt="logo"/>
         <span>{{ centerInfo.name }}</span>
       </h1>
 
-      <p class="center-info__description">
+      <p class="center-info-description">
         <span>
-          <base-icon class="center-info__description-icon" name="mdi-star" color="#dbdb2f"/>
+          <base-icon class="center-info-description-icon" name="mdi-star" color="#dbdb2f"/>
           <span>{{ centerInfo.rating }}</span>
         </span>
         <span>
-          <base-icon class="center-info__description-icon" name="mdi-clock-time-eight-outline"/>
+          <base-icon class="center-info-description-icon" name="mdi-clock-time-eight-outline"/>
           <span>{{ workTime }}</span>
         </span>
         <span>
-          <base-icon class="center-info__description-icon" name="mdi-account-group"/>
+          <base-icon class="center-info-description-icon" name="mdi-account-group"/>
           <span>{{ groups.length }} групп</span>
         </span>
       </p>
 
-      <pre class="center-info__description-text"><base-cut-text :text="centerInfo.description" :max-symbols="300"/></pre>
+      <pre class="center-info-description-text"><base-cut-text :text="centerInfo.description" :max-symbols="300"/></pre>
+    </div>
     </div>
 
-    <div class="center-info__go-subjects container">
+    <div class="center-info-go-subjects container" v-if="!$device.isDesktop">
       <base-button type="outline" full-width @click="goSubjects()">Записаться</base-button>
     </div>
 
-    <div class="center-info__contacts container--white">
-      <h3 class="center-info__title">Контакты</h3>
-      <div class="center-info__description-text">Оставьте заявку, что бы администратор центра вам позвонил</div>
+    <div class="center-info-contacts container--white">
+      <h3 class="center-info-title">Контакты</h3>
+      <div class="center-info-description-text">Оставьте заявку, что бы администратор центра вам позвонил</div>
       <call-request :center="centerInfo"/>
     </div>
 
-    <div class="center-info__contacts container--white">
-      <h3 class="center-info__title">Местоположение</h3>
+    <div class="center-info-map container--white">
+      <h3 class="center-info-title">Местоположение</h3>
       <base-yandex-mini-map
           :branches="branches"
-          height="150px"
+          :height="mapHeight"
       />
     </div>
 
-    <div class="center-info__subjects" id="subjects">
-      <h3 class="center-info__title container">Уроки в центре</h3>
+    <div class="center-info-subjects" id="subjects">
+      <h3 class="center-info-title container">Уроки в центре</h3>
       <subject-card
-        class="center-info__subject"
+        class="center-info-subject"
         v-for="subject in subjects" :key="subject.id"
         :info="subject"
         full
@@ -84,6 +86,7 @@ import BaseButton from "../../../../components/base/BaseButton";
 import CallRequest from "../../../../components/common/lesson/callRequest";
 
 const config = useRuntimeConfig();
+const { $device } = useNuxtApp();
 
 const route = useRoute();
 const centerId = computed(() => +route.params.id);
@@ -101,6 +104,8 @@ const branches = computed(() => centerInfo.value.institutionBranches || []);
 const photos = computed(() => centerInfo.value.photos);
 const workTime = computed(() => `${centerInfo.value.start_time} - ${centerInfo.value.end_time}`)
 const logoUrl = computed(() => centerInfo.value?.logo && (config.public.CDN_URL + centerInfo.value?.logo) || null);
+
+const mapHeight = computed(() => $device.isDesktop ? "300px" : "150px")
 
 const isSubjectsLoading = ref(true);
 const subjects = computed(() => centerStore.getSubjects || []);
@@ -121,15 +126,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.center-info {
+.center-info--mobile {
 
-  &__photos {
+  .center-info-photos {
     height: 80vw;
     max-height: 400px;
     background-color: white;
   }
 
-  &__title {
+  .center-info-title {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -137,7 +142,7 @@ onMounted(() => {
     margin-bottom: 8px;
   }
 
-  &__logo {
+  .center-info-logo {
     width: 32px;
     height: 32px;
     background: white;
@@ -147,7 +152,7 @@ onMounted(() => {
     border-radius: 32px;
   }
 
-  &__description {
+  .center-info-description {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,31 +167,118 @@ onMounted(() => {
     }
   }
 
-  &__description-text {
+  .center-info-description-text {
     white-space: pre-wrap;
     font-size: $fs--mini;
     margin: 8px 0;
   }
 
-  &__description-icon {
+  .center-info-description-icon {
     color: $color--blue;
     margin-right: 4px;
   }
 
-  &__go-subjects {
+  .center-info-go-subjects {
     margin: 16px 0;
   }
 
-  &__contacts {
+  .center-info-contacts {
     margin: 16px 0;
   }
 
-  &__subjects {
+  .center-info-map {
+    margin: 16px 0;
+  }
+
+  .center-info-subjects {
     margin-top: 16px;
     padding-top: 8px;
   }
 
-  &__subject {
+  .center-info-subject {
+    margin: 8px 0;
+  }
+
+}
+
+.center-info--desktop {
+  margin-top: 25px;
+
+  .center-info-head {
+    grid-column-gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .center-info-photos {
+    height: 80vw;
+    max-height: 400px;
+    background-color: white;
+  }
+
+  .center-info-title {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    font-size: $fs--title;
+    margin-bottom: 8px;
+  }
+
+  .center-info-logo {
+    width: 32px;
+    height: 32px;
+    background: white;
+    padding: 4px;
+    border-right: 60px;
+    margin-right: 8px;
+    border-radius: 32px;
+  }
+
+  .center-info-description {
+    display: flex;
+    flex-direction: column;
+    color: $color--black;
+    font-weight: normal;
+    margin-top: 8px;
+    font-size: $fs--default;
+
+    & > * {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .center-info-extra-info {
+    grid-column-gap: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .center-info-description-text {
+    white-space: pre-wrap;
+    font-size: $fs--mini;
+    margin: 8px 0;
+  }
+
+  .center-info-description-icon {
+    color: $color--blue;
+    margin-right: 4px;
+  }
+
+  .center-info-go-subjects {
+    margin: 16px 0;
+  }
+
+  .center-info-contacts {
+    max-width: 300px;
+  }
+
+  .center-info-subjects {
+    margin-top: 16px;
+    padding-top: 8px;
+  }
+
+  .center-info-subject {
     margin: 8px 0;
   }
 

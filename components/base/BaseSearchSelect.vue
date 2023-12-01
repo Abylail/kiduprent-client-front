@@ -89,7 +89,7 @@ const setShowModal = (val = false) => {
 const subjectStore = useSubjectsStore();
 subjectStore.fetchList();
 
-const list = computed(() => props.items?.sort((a, b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1) || []);
+const list = computed(() => [...props.items]?.sort((a, b) => a.name === b.name ? 0 : a.name < b.name ? -1 : 1) || []);
 const groupedList = computed(() => {
   let groups = {};
   list.value.forEach(item => {

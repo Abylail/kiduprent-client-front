@@ -9,6 +9,7 @@
       <div class="desktop-header__right">
         <nuxt-link
           class="desktop-header__module-link"
+          :class="{'desktop-header__module-link--active': activeModule === module.code}"
           v-for="module in modules" :key="module.code"
           :to="`/${module.code}`"
         >
@@ -21,6 +22,11 @@
 
 <script setup>
 import modules from "../../../config/modules";
+import {computed} from "vue";
+import {useRoute} from "nuxt/app";
+
+const route = useRoute();
+const activeModule = computed(() => route.path.split("/")[1] || "main")
 </script>
 
 <style lang="scss" scoped>
@@ -53,6 +59,10 @@ import modules from "../../../config/modules";
     margin-left: 20px;
     transition: $transition;
     font-weight: bold;
+
+    &--active {
+      color: $color--blue;
+    }
   }
 
   &__content {

@@ -1,28 +1,28 @@
 <template>
-  <div class="lesson-group">
-    <h4 class="lesson-group__title">{{ title }}</h4>
-    <div v-show="!props.info" class="lesson-group__content-loading skeleton-loading"/>
-    <div class="lesson-group__content" v-show="props.info">
-      <p class="lesson-group__content-item" @click="selectHandle()">
-        Время: <span class="lesson-group__content-value chip--outlined" v-for="time in times">{{ time }}</span>
+  <div :class="{'lesson-group--desktop': $device.isDesktop, 'lesson-group--mobile': !$device.isDesktop}">
+    <h4 class="lesson-group-title">{{ title }}</h4>
+    <div v-show="!props.info" class="lesson-group-content-loading skeleton-loading"/>
+    <div class="lesson-group-content" v-show="props.info">
+      <p class="lesson-group-content-item" @click="selectHandle()">
+        Время: <span class="lesson-group-content-value chip--outlined" v-for="time in times">{{ time }}</span>
       </p>
-      <p class="lesson-group__content-item">
-        Адрес: <span class="lesson-group__content-value">{{ address }}</span>
+      <p class="lesson-group-content-item">
+        Адрес: <span class="lesson-group-content-value">{{ address }}</span>
       </p>
-      <p class="lesson-group__content-item" v-if="props.info.price">
-        Цена: <span class="lesson-group__content-value">{{ props.info.price }} тг</span>
+      <p class="lesson-group-content-item" v-if="props.info.price">
+        Цена: <span class="lesson-group-content-value">{{ props.info.price }} тг</span>
       </p>
-      <p class="lesson-group__content-item" v-if="age">
-        Возраст: <span class="lesson-group__content-value">{{ age }}</span>
+      <p class="lesson-group-content-item" v-if="age">
+        Возраст: <span class="lesson-group-content-value">{{ age }}</span>
       </p>
-      <p class="lesson-group__content-item">
-        Язык: <span class="lesson-group__content-value">{{ languages }}</span>
+      <p class="lesson-group-content-item">
+        Язык: <span class="lesson-group-content-value">{{ languages }}</span>
       </p>
-      <p class="lesson-group__content-item" v-if="maxChildrenCount">
-        Детей в группе: <span class="lesson-group__content-value">{{ maxChildrenCount }}</span>
+      <p class="lesson-group-content-item" v-if="maxChildrenCount">
+        Детей в группе: <span class="lesson-group-content-value">{{ maxChildrenCount }}</span>
       </p>
     </div>
-    <div class="lesson-group__action" v-if="props.selectable">
+    <div class="lesson-group-action" v-if="props.selectable">
       <base-button full-width @click="selectHandle()">Записаться на пробный</base-button>
     </div>
   </div>
@@ -42,6 +42,8 @@ const props = defineProps({
     default: false
   }
 })
+
+const { $device } = useNuxtApp();
 
 const title = computed(() => weekdayList
     .filter(weekday => props.info?.[`${weekday.code}_start`])
@@ -77,12 +79,6 @@ const languages = computed(() => {
 
 const maxChildrenCount = computed(() => props.info?.max_children_count);
 
-const price = computed(() => {
-  console.log(props.info)
-  return null;
-  const isPricesSame = list.every(t => t.price === list[0]?.price);
-})
-
 const selectHandle = () => {
   selectGroupLesson()
   emit("select");
@@ -90,7 +86,7 @@ const selectHandle = () => {
 </script>
 
 <style lang="scss" scoped>
-.lesson-group {
+.lesson-group--mobile {
   &:not(:first-child) {
     padding-top: 16px;
   }
@@ -99,20 +95,20 @@ const selectHandle = () => {
     padding-bottom: 16px;
   }
 
-  &__title {
+  .lesson-group-title {
     font-weight: bold;
     font-size: $fs--mini;
   }
 
-  &__content {
+  .lesson-group-content {
     margin-top: 12px;
   }
 
-  &__content-loading {
+  .lesson-group-content-loading {
     height: 160px;
   }
 
-  &__content-item {
+  .lesson-group-content-item {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -121,12 +117,53 @@ const selectHandle = () => {
     font-size: $fs--mini;
   }
 
-  &__content-value {
+  .lesson-group-content-value {
     font-weight: bolder;
     margin-left: 4px;
   }
 
-  &__action {
+  .lesson-group-action {
+    margin-top: 16px;
+    text-align: right;
+  }
+
+}
+
+.lesson-group--desktop {
+  display: grid;
+  grid-template-rows: 20px 1fr 55px;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 0 8px 3px rgba(34, 60, 80, 0.2);
+
+  .lesson-group-title {
+    font-weight: bold;
+    font-size: $fs--mini;
+  }
+
+  .lesson-group-content {
+    margin-top: 12px;
+  }
+
+  .lesson-group-content-loading {
+    height: 160px;
+  }
+
+  .lesson-group-content-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 8px 0;
+    line-height: 20px;
+    font-size: $fs--mini;
+  }
+
+  .lesson-group-content-value {
+    font-weight: bolder;
+    margin-left: 4px;
+  }
+
+  .lesson-group-action {
     margin-top: 16px;
     text-align: right;
   }
