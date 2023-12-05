@@ -23,7 +23,7 @@
       </p>
     </div>
     <div class="lesson-group-action" v-if="props.selectable">
-      <base-button full-width @click="selectHandle()">Записаться на пробный</base-button>
+      <base-button full-width @click="selectHandle()">Записаться на пробный {{ priceTrial }}</base-button>
     </div>
   </div>
 </template>
@@ -78,6 +78,11 @@ const languages = computed(() => {
 })
 
 const maxChildrenCount = computed(() => props.info?.max_children_count);
+
+const priceTrial = computed(() => {
+  if (props.info?.price_trial) return `( ${props.info?.price_trial}₸ )`
+  return "(бесплатно)"
+});
 
 const selectHandle = () => {
   selectGroupLesson()

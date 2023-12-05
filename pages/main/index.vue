@@ -14,7 +14,7 @@
 
     <!-- Топ центры -->
     <div class="main-page-block">
-      <card-list title="Топ центры" to="/catalog/almaty/centers" :loading="topCentersLoading">
+      <card-list title="Топ центры" to="/catalog/almaty/centers">
         <center-card
             v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
             :info="lesson"
@@ -25,7 +25,7 @@
     <!-- Напишите нам -->
     <still-questions/>
 
-    <subjects-feed title="Интереные занятия"/>
+    <subjects-feed title="Интересные занятия"/>
 
   </div>
 </template>
@@ -46,21 +46,11 @@ const mainStore = useMainStore();
 
 // Запрашиваю инетересные уроки
 mainStore.fetchCategories();
+mainStore.fetchTopCenters();
 
 definePageMeta({
   key: (route) => route.fullPath,
   keepalive: true
-})
-
-// Топ центры
-const topCentersLoading = ref(true);
-const fetchTopCenters = async () => {
-  topCentersLoading.value = true;
-  await mainStore.fetchTopCenters();
-  topCentersLoading.value = false;
-}
-onMounted(() => {
-  fetchTopCenters();
 })
 
 </script>

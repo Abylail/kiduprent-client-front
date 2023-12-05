@@ -48,7 +48,7 @@ const actions = {
     // Запросить центры с высоким рейтингом
     async fetchTopCenters() {
         if (this.topCenters) return;
-        const { body, err } = await api("/institution/top");
+        const { body, err } = await api("/institution/top?limit=10");
         if (!err) this.topCenters = body;
     },
 }
