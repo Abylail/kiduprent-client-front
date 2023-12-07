@@ -18,7 +18,24 @@
           :options="reasons"
       />
 
+      <!-- Для подключения центра -->
+      <div v-if="form.reason === 'Хочу добавить центр'">
+        <base-input
+            title="Название центра"
+            v-model="centerForm.centerName"
+        />
+        <base-input
+            title="Ваше имя"
+            v-model="centerForm.directorName"
+        />
+        <base-input
+            title="Город"
+            v-model="centerForm.city"
+        />
+      </div>
+
       <textarea
+          v-else
           class="still-questions__input-text"
           v-model="form.text"
           placeholder="Ваш вопрос"
@@ -54,10 +71,24 @@ import {useAuthStore} from "../../../store/client/parent/auth";
 import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
 import {useParentRequest} from "../../../store/client/parent/request";
+import BaseInput from "../../base/BaseInput";
 
 const openAuthModal = ref(false);
 const showFormModal = ref(false);
 const successSendModal = ref(false);
+
+// Форма для подключения центра
+const centerForm = ref({
+  centerName: "",
+  directorName: "",
+  city: "Алматы",
+})
+const centerFormText = computed(() => {
+  return `Название центра: ${centerForm.value.centerName} \n Имя директора: ${centerForm.value.directorName} \n Город: ${centerForm.value.city}`
+})
+
+// Можно ли отправить форму центра
+const centerFormCanSubmit = computed(() => centerForm.value.centerName && centerForm.value.directorName && centerForm.value.city)
 
 const authStore = useAuthStore();
 const parentRequest = useParentRequest();
@@ -73,9 +104,8 @@ const authFinal = (successAuth) => {
 }
 
 const reasons = [
-  { key: "Нашел ошибку", name: "Нашел ошибку" },
-  { key: "У меня вопрос", name: "У меня вопрос" },
   { key: "Хочу добавить центр", name: "Хочу добавить центр" },
+  { key: "У меня вопрос", name: "У меня вопрос" },
   { key: "Другое", name: "Другое" },
 ]
 
@@ -84,10 +114,18 @@ const form = ref({text: "", reason: null});
 const clearForm = () => {
   form.value.text = "";
   form.value.reason = null;
+  centerForm.value = {
+    centerName: "",
+    directorName: "",
+    city: "Алматы",
+  }
 }
 const sendForm = async () => {
   formLoading.value = true;
-  const successSend = await parentRequest.sendRequest(form.value)
+  const successSend = await parentRequest.sendRequest({
+    reason: form.value.reason,
+    text: form.value.reason === "Хочу добавить центр" ? centerFormText.value : form.value.text,
+  })
   if (successSend) {
     showFormModal.value = false;
     successSendModal.value = true;
@@ -96,7 +134,11 @@ const sendForm = async () => {
   formLoading.value = false;
 }
 
-const canSendForm = computed(() => form.value.text && form.value.reason)
+// Можно ли отправить форму
+const canSendForm = computed(() => {
+  if (form.value.reason === 'Хочу добавить центр') return centerFormCanSubmit.value;
+  return form.value.text && form.value.reason
+})
 const connectPhone = computed(() => authStore.getClientData?.phone)
 </script>
 

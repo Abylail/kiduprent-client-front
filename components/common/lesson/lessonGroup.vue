@@ -117,7 +117,7 @@ const selectHandle = () => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 8px 0;
+    margin: 12px 0;
     line-height: 20px;
     font-size: $fs--mini;
   }
@@ -158,7 +158,7 @@ const selectHandle = () => {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 8px 0;
+    margin: 12px 0;
     line-height: 20px;
     font-size: $fs--mini;
   }
