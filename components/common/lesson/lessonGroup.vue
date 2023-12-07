@@ -15,12 +15,30 @@
       <p class="lesson-group-content-item" v-if="age">
         Возраст: <span class="lesson-group-content-value">{{ age }}</span>
       </p>
-      <p class="lesson-group-content-item">
+      <p class="lesson-group-content-item" v-if="languages">
         Язык: <span class="lesson-group-content-value">{{ languages }}</span>
       </p>
       <p class="lesson-group-content-item" v-if="maxChildrenCount">
         Детей в группе: <span class="lesson-group-content-value">{{ maxChildrenCount }}</span>
       </p>
+      <div class="lesson-group-content-item-teacher" v-if="props.info.institutionTeacher">
+        <img
+            v-if="props.info.institutionTeacher.photo"
+            :src="getPhotoUrl(props.info.institutionTeacher.photo)"
+            height="60" width="60"
+        />
+        <div>
+          <div class="lesson-group-content-item">
+            Учитель: <span class="lesson-group-content-value">{{ props.info.institutionTeacher.full_name }}</span>
+          </div>
+          <div class="lesson-group-content-item" v-if="props.info.institutionTeacher.experience">
+            Стаж: <span class="lesson-group-content-value">{{ props.info.institutionTeacher.experience }} года</span>
+          </div>
+          <div class="lesson-group-content-item" v-if="props.info.institutionTeacher.description">
+            {{ props.info.institutionTeacher.description }}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="lesson-group-action" v-if="props.selectable">
       <base-button full-width @click="selectHandle()">Записаться на пробный {{ priceTrial }}</base-button>
@@ -33,6 +51,7 @@ import {computed} from "vue";
 import {weekdayList} from "../../../config/weekdays";
 import BaseButton from "../../base/BaseButton";
 import {selectGroupLesson} from "../../../utlis/analitics";
+import {useRuntimeConfig} from "nuxt/app";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
@@ -43,6 +62,7 @@ const props = defineProps({
   }
 })
 
+const config = useRuntimeConfig();
 const { $device } = useNuxtApp();
 
 const title = computed(() => weekdayList
@@ -84,6 +104,14 @@ const priceTrial = computed(() => {
   return "(бесплатно)"
 });
 
+const teacherGenderText = computed(() => {
+  if (props.info.institutionTeacher.gender === "M") return "Мужской"
+  if (props.info.institutionTeacher.gender === "W") return "Женский"
+  return ""
+})
+
+const getPhotoUrl = (url) => config.public.CDN_URL + url;
+
 const selectHandle = () => {
   selectGroupLesson()
   emit("select");
@@ -120,6 +148,28 @@ const selectHandle = () => {
     margin: 12px 0;
     line-height: 20px;
     font-size: $fs--mini;
+  }
+
+  .lesson-group-content-item-teacher {
+    display: flex;
+    flex-direction: row;
+    margin: 12px 0;
+
+    img {
+      border-radius: 100px;
+      object-fit: cover;
+      margin-right: 8px;
+    }
+
+    .lesson-group-content-item {
+      display: block;
+      line-height: $fs--default;
+      margin: 2px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
   }
 
   .lesson-group-content-value {
