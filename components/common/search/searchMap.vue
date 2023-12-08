@@ -98,9 +98,11 @@ const initBranches = () => {
   if (!Map || !props.list.length) return;
   Map.geoObjects.removeAll();
   props.list.forEach(branch => {
-    Map.geoObjects.add(new ymaps.Placemark([...branch.coordinates], {
-      branch_id: branch.id
-    }, MarkerOptions))
+    if (Array.isArray(branch.coordinates)) {
+      Map.geoObjects.add(new ymaps.Placemark([...branch.coordinates], {
+        branch_id: branch.id
+      }, MarkerOptions))
+    }
   })
   Map.geoObjects.events.add('click', branchClick)
   if (authStore.getClientCoords) Map.geoObjects.add(new ymaps.Placemark([...authStore.getClientCoords], {}, UserLocationOptions))
