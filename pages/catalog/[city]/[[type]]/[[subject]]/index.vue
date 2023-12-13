@@ -109,7 +109,8 @@ const search = async (page = 1) => {
   isLoading.value = true;
   if (isSearchMap.value) {
     await searchBranchesStore.searchBranches({
-      subjectId: activeSubjectId.value
+      subjectId: activeSubjectId.value,
+      categoryId: activeCategoryId.value,
     });
   }
   else if (activeType.value === 'centers') {
@@ -138,7 +139,6 @@ watch(() => route.query, () => {
 })
 
 onMounted(() => {
-  console.log("mounted")
   search();
 })
 </script>
