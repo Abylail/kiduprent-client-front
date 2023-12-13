@@ -26,7 +26,7 @@ const props = defineProps({
   size: {
     type: String,
     default: "default",
-    validator: s => ["mini", "default", "big"]
+    validator: s => ["mini", "default", "big", "default-light"]
   },
   fullWidth: {
     type: Boolean,
@@ -46,6 +46,11 @@ const props = defineProps({
 
   &--type-default {
     background-color: $color--blue;
+    color: white;
+  }
+
+  &--type-default-light {
+    background-color: #4973e7;
     color: white;
   }
 

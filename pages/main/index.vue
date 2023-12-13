@@ -59,10 +59,9 @@ definePageMeta({
 .main-page-mobile-header-title {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   width: 100%;
   font-size: $fs--title;
-  color: $color--blue-dark;
 }
 .main-page-mini-logo {
   height: 50px;
@@ -72,7 +71,7 @@ definePageMeta({
   .main-page-mobile-header-title {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     width: 100%;
   }
 

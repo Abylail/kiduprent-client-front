@@ -1,27 +1,48 @@
 <template>
-  <div class="base-select">
+<div class="base-select" :class="{'base-select--disabled': props.disabled}">
+  <!-- Обычный вид -->
+  <div class="base-select__hit-box" v-if="props.viewType === 'default'" @click="hitBoxHandle()">
+    <!-- Иконка -->
+    <base-icon class="base-select__prev-icon" size="28" v-if="prevIcon" :name="prevIcon"/>
 
-    <div class="base-select__hit-box" @click="hitBoxHandle()">
-      <!-- Иконка -->
-      <base-icon class="base-select__prev-icon" size="28" v-if="prevIcon" :name="prevIcon"/>
+    <div class="base-select__title" :class="[{'base-select__title--with-icon': prevIcon}, {'base-select__title--top': titleTop}]">{{ title }}</div>
 
-      <div class="base-select__title" :class="[{'base-select__title--with-icon': prevIcon}, {'base-select__title--top': titleTop}]">{{ title }}</div>
-
-      <div class="base-select__value-label">{{ valueLabel }}</div>
-    </div>
-
-    <!-- Список опций в бэкдропе -->
-    <base-backdrop v-model:active="active" title="Выберите">
-      <div class="base-select__options">
-        <div
-            class="base-select__option"
-            :class="{'base-select__option--selected': option.key === modelValue}"
-            v-for="option in options" :key="option"
-            @click="selectHandle(option)"
-        >{{ option.name }}</div>
-      </div>
-    </base-backdrop>
+    <div class="base-select__value-label">{{ valueLabel }}</div>
   </div>
+
+  <!-- Маленький вид -->
+  <div class="base-select__mini" v-else-if="props.viewType === 'mini'" @click="hitBoxHandle()">
+
+    <div class="base-select__mini-value-label">{{ valueLabel }}</div>
+
+    <div class="base-select__title" v-if="title">{{ title }}</div>
+
+    <!-- Иконка -->
+    <base-icon class="base-select__mini-icon" size="12" name="mdi-triangle-down"/>
+  </div>
+
+  <!-- Линейный вид -->
+  <div class="base-select__line container--white" v-else-if="props.viewType === 'line'" @click="hitBoxHandle()">
+
+    <div class="base-select__line-title">{{ title }}</div>
+
+    <div class="base-select__line-value">
+      <div class="base-select__line-value-label">{{ valueLabel || emptyText }}</div>
+      <base-icon class="base-select__line-icon" size="24" name="mdi-chevron-right"/>
+    </div>
+  </div>
+</div>
+  <!-- Список опций в бэкдропе -->
+  <base-backdrop v-model:active="active" :title="modalTitle">
+    <div class="base-select__options">
+      <div
+          class="base-select__option"
+          :class="{'base-select__option--selected': modelValue && (option[itemValue] === modelValue)}"
+          v-for="option in options" :key="option"
+          @click="selectHandle(option)"
+      >{{ option[itemText] }}</div>
+    </div>
+  </base-backdrop>
 </template>
 
 <script setup>
@@ -40,10 +61,35 @@ const props = defineProps({
   prevIcon: {
     type: String,
     default: null
+  },
+  viewType: {
+    type: String,
+    default: "default",
+    validator: vt => ["default", "mini", "line"].includes(vt)
+  },
+  emptyText: {
+    type: String,
+    default: null
+  },
+  itemText: {
+    type: String,
+    default: "name"
+  },
+  itemValue: {
+    type: String,
+    default: "key"
+  },
+  modalTitle: {
+    type: String,
+    default: "Выберите"
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
-const valueLabel = computed(() => props.modelValue && props.options.find(o => o.key === props.modelValue)?.name)
+const valueLabel = computed(() => props.modelValue && props.options.find(o => o[props.itemValue] === props.modelValue)?.[props.itemText])
 
 // Активен ли инпун
 const active = ref(false);
@@ -58,7 +104,7 @@ const hitBoxHandle = () => {
 
 // Выбрать
 const selectHandle = option => {
-  emit("update:modelValue", option?.key || null);
+  emit("update:modelValue", option?.[props.itemValue] || null);
   active.value = false;
 }
 </script>
@@ -66,7 +112,11 @@ const selectHandle = option => {
 <style lang="scss" scoped>
 $input-height: 28px;
 .base-select {
-  margin: 8px 0;
+
+  &--disabled {
+    pointer-events: none;
+    opacity: .7;
+  }
 
   &__hit-box {
     display: flex;
@@ -74,6 +124,34 @@ $input-height: 28px;
     padding: 8px;
     border: 1px solid $color--black;
     border-radius: 5px;
+    margin: 8px 0;
+  }
+
+  &__mini {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__line {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $color--gray-light;
+  }
+
+  &__line-value {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: $color--gray-dark;
+  }
+
+  &__line-value-labe {
+    font-size: $fs--default;
   }
 
   &__title {
@@ -86,7 +164,7 @@ $input-height: 28px;
 
     &--top {
       font-size: $fs--mini;
-      line-height: $fs--mini + 2px;
+      line-height: calc(#{$fs--mini} + 2px);
       top: 4px;
     }
 
@@ -107,16 +185,25 @@ $input-height: 28px;
     font-size: 16px;
   }
 
+  &__mini-value-label {
+    color: $color--blue-dark;
+  }
+
+  &__mini-icon {
+    margin-left: 4px;
+    color: $color--blue;
+  }
+
   &__option {
     padding: 20px $side-space-mobile;
     &:hover {background-color: $color--gray-light}
 
     &--selected {
-      background: $color--gray;
+      background: $color--gray-light;
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid $color--gray;
+      border-bottom: 1px solid $color--gray-light;
     }
   }
 

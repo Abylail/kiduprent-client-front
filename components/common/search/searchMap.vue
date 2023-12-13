@@ -147,7 +147,7 @@ onMounted(() => {
 .search-map {
   //height: 400px;
   position: fixed;
-  top: 165px;
+  top: 62px;
   bottom: 0;
   left: 0;
   right: 0;

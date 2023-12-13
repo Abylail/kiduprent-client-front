@@ -7,7 +7,7 @@
         <base-icon name="mdi-chevron-left" size="36"/>
       </button>
     </slot>
-    <div class="mobile-header__title" :class="{'mobile-header__title--big': !goBack}">
+    <div class="mobile-header__title">
       <slot>{{ title }}</slot>
     </div>
     <div class="mobile-header__right" v-if="slots.right">
@@ -52,6 +52,7 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   background-color: white;
   padding: 0 $side-space-mobile;
   grid-column-gap: 8px;
+  border-bottom: 1px solid $color--gray-light;
 
   &--two-cols--right {
     display: grid;
@@ -81,10 +82,6 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
     flex-direction: row;
     align-items: center;
     font-size: $fs--title;
-
-    &--big {
-      font-size: $fs--big-title;
-    }
   }
 
   &__right {

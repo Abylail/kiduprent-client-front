@@ -14,19 +14,11 @@ const state = () => ({
     // Есть ли еще страницы
     haveMore: true,
 
-
-    // Список филиалов (адресов)
-    branches: null,
-    bLastSearchOptions: null,
-
 })
 
 const getters = {
     // Список уроков
     getLessons: state => state.lessons || [],
-
-    // Список филиалов (адресов)
-    getBranches: state => state.branches || [],
 
     // Есть ли еще страницы
     getHaveMore: state => state.haveMore,
@@ -37,12 +29,13 @@ const actions = {
      * Поиск по урокам
      * @param {Object<subjectId<string|number|null>,page<number>>} - id урока
      * */
-    async searchLessons({subjectId = null, page = 1}) {
+    async searchLessons({subjectId = null,  categoryId = undefined, page = 1}) {
         if (page === 1 && getSearchOptions(arguments[0]) === this.lastSearchOptions) return;
         if (page === 1) this.lessons = null;
         const {body, err} = await api.get("/search/lessons", {
             params: {
-                subjectId: subjectId,
+                subjectId,
+                categoryId,
                 offset: (page-1) * pageCount,
                 limit: pageCount
             },
@@ -55,24 +48,6 @@ const actions = {
             this.haveMore = body?.length === pageCount;
         }
     },
-
-    /**
-     * Поиск по филиалам
-     * @param {Object<subjectId<string|number|null>>} - id урока
-     * */
-    async searchBranches({ subjectId = null }) {
-        if (this.branches && getSearchOptions(arguments[0]) === this.bLastSearchOptions) return;
-        this.branches = null;
-        const {body, err} = await api.get("/search/branches", {
-            params: {
-                subjectId: subjectId,
-            },
-        });
-        if (!err) {
-            this.branches = body;
-            this.bLastSearchOptions = getSearchOptions(arguments[0]);
-        }
-    }
 }
 
 export const useSearchLessonsStore = defineStore("searchLessons", {
