@@ -1,6 +1,6 @@
 <template>
   <mobile-header
-      :title="lessonName"
+      :title="subjectName"
       go-back="/catalog/almaty/lessons"
   />
 
@@ -79,6 +79,7 @@ import LessonGroup from "../../../../components/common/lesson/lessonGroup";
 import LessonContacts from "../../../../components/common/lesson/lessonContacts";
 import BaseYandexMiniMap from "../../../../components/base/BaseYandexMiniMap";
 import CallRequest from "../../../../components/common/lesson/callRequest";
+import {useSubjectsStore} from "../../../../store/subjects";
 
 const { $device } = useNuxtApp();
 
@@ -100,6 +101,7 @@ const fetchCenterInfo = async () => {
 
 // Информация центра
 const lessonName = computed(() => lessonInfo.value.name)
+const subjectName = computed(() => lessonInfo.value?.subject?.name);
 const lessonDescription = computed(() => lessonInfo.value.description)
 const photos = computed(() => lessonInfo.value.photos)
 const groups = computed(() => lessonInfo.value.institutionGroups || []);
