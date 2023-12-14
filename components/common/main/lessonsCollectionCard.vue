@@ -52,6 +52,7 @@ const props = defineProps({
     z-index: 1;
     padding: 20px 10px;
     color: white;
+    border-radius: 8px;
   }
 }
 </style>
