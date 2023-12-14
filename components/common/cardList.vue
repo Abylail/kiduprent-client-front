@@ -43,6 +43,8 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .card-list {
+  padding-top: 12px;
+  background-color: white;
 
   &__head {
     display: flex;

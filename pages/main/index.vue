@@ -9,7 +9,20 @@
 
     <div class="main-page-top">
       <banner/>
-      <subject-list class="container--white main-page-block"/>
+<!--      <subject-list class="container&#45;&#45;white main-page-block"/>-->
+    </div>
+
+    <!-- Топ центры -->
+    <div class="main-page-block">
+      <card-list title="Подборки уроков">
+        <lessons-collection-card
+            v-for="(lessonCollection, index) in lessonsCollections" :key="index"
+            :title="lessonCollection.title"
+            :image-path="lessonCollection.imagePath"
+            :path="lessonCollection.path"
+            @click="goCollection(lessonsCollections)"
+        />
+      </card-list>
     </div>
 
     <!-- Топ центры -->
@@ -38,8 +51,8 @@ import {useMainStore} from "../../store/main";
 import SubjectList from "../../components/common/main/subjectList";
 import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import StillQuestions from "../../components/common/main/stillQuestions";
-import {onMounted} from "vue";
 import Banner from "../../components/common/main/banner";
+import LessonsCollectionCard from "../../components/common/main/lessonsCollectionCard";
 const { $device } = useNuxtApp();
 
 const mainStore = useMainStore();
@@ -47,6 +60,17 @@ const mainStore = useMainStore();
 // Запрашиваю инетересные уроки
 mainStore.fetchCategories();
 mainStore.fetchTopCenters();
+
+const lessonsCollections = [
+  {title: "Творческое развитие", imagePath: "/tvorchestvo.gif.mp4", path: "/catalog/almaty/lessons/?category=tvorchestvo"},
+  {title: "Логическое мышление", imagePath: "/logic.gif.mp4", path: "/catalog/almaty/lessons/?category=razvitie"},
+  {title: "Боевой дух", imagePath: "/boevye.gif.mp4", path: "/catalog/almaty/lessons/?category=boevye_iskusstva"},
+  {title: "Раннее развитие", imagePath: "/rannee_razvitye.gif.mp4", path: "/catalog/almaty/lessons/?category=rannee_razvitie"},
+]
+
+const goCollection = (collection) => {
+  console.log(collection)
+}
 
 definePageMeta({
   key: (route) => route.fullPath,
