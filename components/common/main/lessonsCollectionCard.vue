@@ -27,7 +27,6 @@ const props = defineProps({
 <style lang="scss" scoped>
 .lessons-collection-card {
   position: relative;
-  width: 240px;
   min-width: 240px;
   height: 180px;
   background-color: gray;
@@ -53,6 +52,8 @@ const props = defineProps({
     padding: 20px;
     color: white;
     border-radius: 8px;
+    //max-width: 200px;
+    white-space: normal;
   }
 }
 </style>
