@@ -50,7 +50,7 @@ const props = defineProps({
     right: 0;
     box-shadow: 0px -68px 64px 25px rgba(0, 0, 0, 0.5) inset;
     z-index: 1;
-    padding: 20px 10px;
+    padding: 20px;
     color: white;
     border-radius: 8px;
   }
