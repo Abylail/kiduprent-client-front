@@ -1,6 +1,6 @@
 <template>
   <nuxt-link class="lessons-collection-card" :to="props.path">
-    <video class="lessons-collection-card__video" autoplay muted loop>
+    <video class="lessons-collection-card__video" autoplay muted loop playsinline>
       <source :src="imagePath" type="video/mp4">
     </video>
     <div class="lessons-collection-card__info">
@@ -37,6 +37,7 @@ const props = defineProps({
   &__video {
     width: 100%;
     height: 100%;
+    border-radius: 8px;
   }
 
   &__info {
