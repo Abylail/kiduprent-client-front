@@ -2,18 +2,16 @@
   <div class="subjects-feed">
     <h2 v-if="props.title" class="container subjects-feed__title title">{{ props.title }}</h2>
 
-    <div class="subjects-feed__list">
+    <base-scroll-pagination class="subjects-feed__list" @paginate="fetchMore()">
       <subject-card
         v-for="subject in feedStore.getFeed"
         :info="subject"
         full
       />
-    </div>
+    </base-scroll-pagination>
 
-    <!-- Кнопка загрузить еще -->
-    <div class="subjects-feed__more" v-if="feedStore.getHaveMore">
-      <base-button type="naked" :loading="isLoading" @click="fetchMore()">Смотреть еще</base-button>
-    </div>
+    <base-loader v-if="isLoading" center-horizontal/>
+
   </div>
 </template>
 
@@ -22,6 +20,8 @@ import {useSubjectFeedStore} from "../../../store/main/subjectFeed";
 import SubjectCard from "../miniCards/subjectCard";
 import BaseButton from "../../base/BaseButton";
 import {paginationMainPage} from "../../../utlis/analitics";
+import BaseScrollPagination from "../../base/BaseScrollPagination";
+import BaseLoader from "../../base/BaseLoader";
 
 const props = defineProps({
   title: String
@@ -32,6 +32,7 @@ await feedStore.fetchSubjectsInit();
 
 const isLoading = ref(false);
 const fetchMore = async () => {
+  if (isLoading.value) return;
   paginationMainPage()
   isLoading.value = true;
   await feedStore.fetchSubjectsMore();

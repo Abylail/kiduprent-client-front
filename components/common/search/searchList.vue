@@ -2,31 +2,29 @@
   <div :class="[{'search-list--mobile': !$device.isDesktop}, {'search-list--desktop': $device.isDesktop}]">
     <h1 class="title container" v-if="props.title">{{ props.title }}</h1>
 
-    <!-- Уроки -->
-    <div class="result" v-if="type === 'lessons'">
-      <subject-card
+    <base-scroll-pagination @paginate="loadMoreHandle()">
+      <!-- Уроки -->
+      <div class="result" v-if="type === 'lessons'">
+        <subject-card
           class="result-item"
           v-for="lesson in props.list" :key="lesson.id"
           :info="lesson"
           full
-      />
-    </div>
+        />
+      </div>
 
-    <!-- Центры -->
-    <div class="result" v-else-if="type === 'centers'">
-      <center-card
+      <!-- Центры -->
+      <div class="result" v-else-if="type === 'centers'">
+        <center-card
           class="result-item"
           v-for="center in props.list" :key="center.id"
           :info="center"
           full
-      />
-    </div>
+        />
+      </div>
+    </base-scroll-pagination>
 
     <base-loader center-horizontal v-if="props.loading"/>
-
-    <div class="more" v-if="pagination && haveData && !props.loading">
-      <base-button type="naked" @click="loadMoreHandle()">Смотреть еще</base-button>
-    </div>
   </div>
 </template>
 
@@ -36,6 +34,7 @@ import BaseButton from "../../base/BaseButton";
 import {computed} from "vue";
 import BaseLoader from "../../base/BaseLoader";
 import CenterCard from "../miniCards/centerCard";
+import BaseScrollPagination from "../../base/BaseScrollPagination";
 
 const emits = defineEmits(["paginate"]);
 const props = defineProps({
@@ -63,6 +62,7 @@ const haveData = computed(() => !!props.list?.length)
 // Загрузить еще
 const page = ref(1);
 const loadMoreHandle = () => {
+  if (!(props.pagination && haveData && !props.loading)) return;
   emits("paginate", ++page.value);
 }
 </script>
