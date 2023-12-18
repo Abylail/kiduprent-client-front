@@ -30,13 +30,13 @@
       </div>
     </div>
 
-    <div class="timetable container--white" id="timetable">
-      <h3 class="title">Расписание групп</h3>
+    <div class="timetable" id="timetable">
       <p v-if="!groups.length" class="description">Уточните расписание у центра</p>
       <div class="groups" v-else>
         <lesson-group
-          v-for="group in groups"
+          v-for="(group, index) in groups"
           :info="group"
+          :index="index"
           selectable
           @select="selectGroupHandle(group)"
         />

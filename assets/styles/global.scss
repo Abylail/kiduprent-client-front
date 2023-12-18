@@ -121,6 +121,16 @@ h1, h2, h3, h4, p {
   margin-bottom: 20px;
 }
 
+.dot-divider {
+  display: inline-block;
+  height: 5px;
+  width: 5px;
+  border-radius: 100%;
+  background: #222222b0;
+  content: "";
+  margin: 0 8px;
+}
+
 @keyframes skeletonAnimation {
   0% {
     background-position: 200% 0;
