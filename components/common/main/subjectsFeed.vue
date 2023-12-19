@@ -18,8 +18,6 @@
 <script setup>
 import {useSubjectFeedStore} from "../../../store/main/subjectFeed";
 import SubjectCard from "../miniCards/subjectCard";
-import BaseButton from "../../base/BaseButton";
-import {paginationMainPage} from "../../../utlis/analitics";
 import BaseScrollPagination from "../../base/BaseScrollPagination";
 import BaseLoader from "../../base/BaseLoader";
 
@@ -33,7 +31,6 @@ await feedStore.fetchSubjectsInit();
 const isLoading = ref(false);
 const fetchMore = async () => {
   if (isLoading.value) return;
-  paginationMainPage()
   isLoading.value = true;
   await feedStore.fetchSubjectsMore();
   isLoading.value = false;

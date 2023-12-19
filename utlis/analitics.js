@@ -1,56 +1,56 @@
 
 // Карточка центра
-export const centerCard= (center) => dataLayer?.push({"event": `center-card--${center?.code}`})
+export const centerCard = (center) => []?.push({"event": `center-card--${center?.code}`})
 
 // Клик по карточки
-export const lessonCard = (subject) => dataLayer?.push({"event": `lesson-card--${subject?.code}`})
+export const lessonCard = (subject) => []?.push({"event": `lesson-card--${subject?.code}`})
 
 // Клик по кнопке карточки
-export const lessonCardButton = (subject) => dataLayer?.push({"event": `lesson-card-button--${subject?.code}`})
+export const lessonCardButton = (subject) => []?.push({"event": `lesson-card-button--${subject?.code}`})
 
 // Фильтр урока
-export const lessonSubjectCatalogClick = (subjectCode) => dataLayer?.push({"event": `lesson-catalog-subject--${subjectCode}`})
+export const lessonSubjectCatalogClick = (subjectCode) => []?.push({"event": `lesson-catalog-subject--${subjectCode}`})
 
 // Фильтр центра
-export const categoryCenterCatalogClick = (categoryCode) => dataLayer?.push({"event": `center-catalog-center--${categoryCode}`})
+export const categoryCenterCatalogClick = (categoryCode) => []?.push({"event": `center-catalog-center--${categoryCode}`})
 
 // Предмет главной страницы
-export const mainPageSubjectClick = (subjectCode) => dataLayer?.push({"event": `main-page-subject--${subjectCode}`})
+export const mainPageSubjectClick = (subjectCode) => []?.push({"event": `main-page-subject--${subjectCode}`})
 
 // Вид карты
-export const mapViewLessons = () => dataLayer?.push({"event": `map-view-lessons`})
+export const mapViewLessons = () => []?.push({"event": `map-view-lessons`})
 
-export const mapPoint = () => dataLayer?.push({"event": `map-point`})
+export const mapPoint = () => []?.push({"event": `map-point`})
 
 // Отправить код
-export const sendCode = () => dataLayer?.push({"event": `send-code`})
+export const sendCode = () => []?.push({"event": `send-code`})
 
 // Войти
-export const successLogin = () => dataLayer?.push({"event": `success-login`})
+export const successLogin = () => []?.push({"event": `success-login`})
 
 // Войти
-export const errorLogin = () => dataLayer?.push({"event": `error-login`})
+export const errorLogin = () => []?.push({"event": `error-login`})
 
 // Запись
-export const registrationTrial = () => dataLayer?.push({"event": `registration-trial`})
+export const registrationTrial = () => []?.push({"event": `registration-trial`})
 
 // Клик whatsapp
-export const whatsappClick = () => dataLayer?.push({"event": `whatsapp-click`})
+export const whatsappClick = () => []?.push({"event": `whatsapp-click`})
 
 // Клик phone
-export const phoneClick = () => dataLayer?.push({"event": `phone-click`})
+export const phoneClick = () => []?.push({"event": `phone-click`})
 
 // Выбор группы
-export const selectGroupLesson = () => dataLayer?.push({"event": `select-group-lesson`})
+export const selectGroupLesson = () => []?.push({"event": `select-group-lesson`})
 
 // Выбор даты пробного
-export const selectTrialDateLesson = () => dataLayer?.push({"event": `select-trial-date-center`})
+export const selectTrialDateLesson = () => []?.push({"event": `select-trial-date-center`})
 
 // Смотреть еще главная страница
-export const paginationMainPage = () => dataLayer?.push({"event": `pagination-main-page`})
+export const paginationMainPage = () => []?.push({"event": `pagination-main-page`})
 
 // Смотреть еще каталог уроки
-export const paginationCatalogLessons = () => dataLayer?.push({"event": `pagination-catalog-lessons`})
+export const paginationCatalogLessons = () => []?.push({"event": `pagination-catalog-lessons`})
 
 // Смотреть еще каталог центры
-export const paginationCatalogCenters = () => dataLayer?.push({"event": `pagination-catalog-centers`})
+export const paginationCatalogCenters = () => []?.push({"event": `pagination-catalog-centers`})
