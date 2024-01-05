@@ -1,55 +1,13 @@
 <template>
   <div :class="{'lesson-group--desktop': $device.isDesktop, 'lesson-group--mobile container--white': !$device.isDesktop}">
-<!--    <h4 class="lesson-group-title">{{ title }}</h4>-->
-<!--    <div v-show="!props.info" class="lesson-group-content-loading skeleton-loading"/>-->
-<!--    <div class="lesson-group-content" v-show="props.info">-->
-<!--      <p class="lesson-group-content-item" @click="selectHandle()">-->
-<!--        Время: <span class="lesson-group-content-value chip&#45;&#45;outlined" v-for="time in times">{{ time }}</span>-->
-<!--      </p>-->
-<!--      <p class="lesson-group-content-item">-->
-<!--        Адрес: <span class="lesson-group-content-value">{{ address }}</span>-->
-<!--      </p>-->
-<!--      <p class="lesson-group-content-item" v-if="props.info.price">-->
-<!--        Цена: <span class="lesson-group-content-value">{{ props.info.price }} тг</span>-->
-<!--      </p>-->
-<!--      <p class="lesson-group-content-item" v-if="age">-->
-<!--        Возраст: <span class="lesson-group-content-value">{{ age }}</span>-->
-<!--      </p>-->
-<!--      <p class="lesson-group-content-item" v-if="languages">-->
-<!--        Язык: <span class="lesson-group-content-value">{{ languages }}</span>-->
-<!--      </p>-->
-<!--      <p class="lesson-group-content-item" v-if="maxChildrenCount">-->
-<!--        Детей в группе: <span class="lesson-group-content-value">{{ maxChildrenCount }}</span>-->
-<!--      </p>-->
-<!--      <div class="lesson-group-content-item-teacher" v-if="props.info.institutionTeacher">-->
-<!--        <img-->
-<!--            v-if="props.info.institutionTeacher.photo"-->
-<!--            :src="getPhotoUrl(props.info.institutionTeacher.photo)"-->
-<!--            height="60" width="60"-->
-<!--        />-->
-<!--        <div>-->
-<!--          <div class="lesson-group-content-item">-->
-<!--            Учитель: <span class="lesson-group-content-value">{{ props.info.institutionTeacher.full_name }}</span>-->
-<!--          </div>-->
-<!--          <div class="lesson-group-content-item" v-if="props.info.institutionTeacher.experience">-->
-<!--            Стаж: <span class="lesson-group-content-value">{{ props.info.institutionTeacher.experience }} года</span>-->
-<!--          </div>-->
-<!--          <div class="lesson-group-content-item" v-if="props.info.institutionTeacher.description">-->
-<!--            {{ props.info.institutionTeacher.description }}-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="lesson-group-action" v-if="props.selectable">-->
-<!--      <base-button full-width @click="selectHandle()">Записаться на пробный {{ priceTrial }}</base-button>-->
-<!--    </div>-->
 
-    <h4 class="lesson-group-title">Группа {{props.index + 1}}</h4>
+    <h4 class="lesson-group-title" v-if="showIndex">Группа {{props.index + 1}}</h4>
 
     <div class="lesson-group-times">
       <div class="lesson-group-time" v-for="(time, index) in times" :key="index">
         <div class="lesson-group-time-name">{{ time.shortName }}</div>
-        <div>{{ time.time }}</div>
+        <div class="lesson-group-time-start">{{ time.timeStart }}</div>
+        <div class="lesson-group-time-end">{{ time.timeEnd }}</div>
       </div>
     </div>
 
@@ -95,6 +53,9 @@ const props = defineProps({
   }
 })
 
+// Показать индекс группы?
+const showIndex = computed(() => typeof props.index === "number");
+
 const config = useRuntimeConfig();
 const { $device } = useNuxtApp();
 
@@ -107,7 +68,7 @@ const title = computed(() => weekdayList
 const times = computed(() => {
   return weekdayList
       .filter(weekday => props.info?.[`${weekday.code}_start`])
-      .map(weekday => ({shortName: weekday.shortName, name: weekday.name, time: `${props.info?.[`${weekday.code}_start`]}`}))
+      .map(weekday => ({shortName: weekday.shortName, name: weekday.name, timeStart: `${props.info?.[`${weekday.code}_start`]}`, timeEnd: `${props.info?.[`${weekday.code}_end`]}`}))
 })
 
 const address = computed(() => props.info?.institutionBranch?.address)
@@ -175,6 +136,11 @@ const selectHandle = () => {
 
   .lesson-group-time-name {
     font-weight: bolder;
+  }
+
+  .lesson-group-time-end {
+    font-size: $fs--nano;
+    color: $color--gray-dark;
   }
 
   .lesson-group-title {
@@ -284,6 +250,11 @@ const selectHandle = () => {
 
   .lesson-group-time-name {
     font-weight: bolder;
+  }
+
+  .lesson-group-time-end {
+    font-size: $fs--nano;
+    color: $color--gray-dark;
   }
 
   .lesson-group-title {
