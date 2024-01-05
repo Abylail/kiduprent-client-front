@@ -34,14 +34,28 @@
 </div>
   <!-- Список опций в бэкдропе -->
   <base-backdrop v-model:active="active" :title="modalTitle">
-    <div class="base-select__options">
+
+    <div class="base-select__options" v-if="sorting">
+      <div v-for="pack in optionList">
+        <div class="base-select__option-label">{{ pack.label }}</div>
+        <div
+            class="base-select__option"
+            :class="{'base-select__option--selected': modelValue && (option[itemValue] === modelValue)}"
+            v-for="option in pack.value" :key="option"
+            @click="selectHandle(option)"
+        >{{ option[itemText] }}</div>
+      </div>
+    </div>
+
+    <div class="base-select__options" v-else>
       <div
           class="base-select__option"
           :class="{'base-select__option--selected': modelValue && (option[itemValue] === modelValue)}"
-          v-for="option in options" :key="option"
+          v-for="option in optionList" :key="option"
           @click="selectHandle(option)"
       >{{ option[itemText] }}</div>
     </div>
+
   </base-backdrop>
 </template>
 
@@ -86,6 +100,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  sorting: { // Сортировать по алфавиту
+    type: Boolean,
+    default: false
   }
 })
 
@@ -93,6 +111,18 @@ const valueLabel = computed(() => props.modelValue && props.options.find(o => o[
 
 // Активен ли инпун
 const active = ref(false);
+
+// Список опций
+const optionList = computed(() => {
+  if (!props.sorting) return props.options || [];
+  let dict = {};
+  props.options?.forEach(opt => {
+    if (!dict[opt[props.itemText]?.[0]]) dict[opt[props.itemText]?.[0]] = [];
+    dict[opt[props.itemText]?.[0]].push(opt);
+  });
+  const packs = Object.keys(dict).map(dictKey => ({label: dictKey, value: dict[dictKey]})) || [];
+  return packs.sort((pack1, pack2) => pack1.label.localeCompare(pack2.label));
+})
 
 // Поднять тайтл
 const titleTop = computed(() => active.value || props.modelValue)
@@ -199,12 +229,18 @@ $input-height: 28px;
     &:hover {background-color: $color--gray-light}
 
     &--selected {
-      background: $color--gray-light;
+      font-weight: bolder;
     }
 
     &:not(:last-child) {
       border-bottom: 1px solid $color--gray-light;
     }
+  }
+
+  &__option-label {
+    padding: 4px $side-space-mobile;
+    background-color: $color--gray-light;
+    font-size: $fs--mini;
   }
 
 }

@@ -71,11 +71,20 @@ const activeSubjectCode = computed(() => route.params?.subject);
 const activeSubjectName = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.name || "Все предметы");
 const activeSubjectId = computed(() => subjectStore.getList?.find(subject => subject.code === activeSubjectCode.value)?.id || null);
 const activeCategoryCode = computed(() => route.query?.category || null);
+const activeCategoryName = computed(() => categoryStore.getList?.find(subject => subject.code === activeCategoryCode.value)?.name || "Все категории");
 const activeCategoryId = computed(() => categoryStore.getList?.find(category => category.code === activeCategoryCode.value)?.id || null);
 
 const searchTitle = computed(() => {
-  if (activeType.value === "centers") return activeSubjectCode.value ? `${activeSubjectName.value} детские центры Алматы` : "Детские центры Алматы"
-  else if (activeType.value === "lessons") return activeSubjectCode.value ? `${activeSubjectName.value} уроки и курсы Алматы` : "Уроки и курсы Алматы"
+  if (activeType.value === "centers") {
+    if (activeSubjectCode.value) return `${activeSubjectName.value} детские центры Алматы`
+    else if (activeCategoryCode.value) return `${activeCategoryName.value} детские центры Алматы`
+    return "Детские центры Алматы";
+  }
+  else if (activeType.value === "lessons") {
+    if (activeSubjectCode.value) return `${activeSubjectName.value} уроки и курсы Алматы`
+    if (activeCategoryCode.value) return `${activeCategoryName.value} уроки и курсы Алматы`
+    return "Уроки и курсы Алматы";
+  }
 })
 
 useSeoMeta({

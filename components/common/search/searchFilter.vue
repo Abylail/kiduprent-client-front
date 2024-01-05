@@ -31,6 +31,7 @@
         modal-title="Выбор категории"
         view-type="line"
         empty-text="Все категории"
+        sorting
         @update:modelValue="setCategory($event)"
     />
     <base-select
@@ -41,6 +42,7 @@
         modal-title="Выбор предмета"
         view-type="line"
         empty-text="Все предметы"
+        sorting
     />
     <base-select
         v-model="filterValue.age"
