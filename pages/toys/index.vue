@@ -11,7 +11,7 @@
   <div :class="[{'main-page--mobile': !$device.isDesktop}, {'main-page--desktop': $device.isDesktop}]">
     <div class="toy-list">
       <toy-card
-        v-for="(toy, index) in toysStore.getList" :key="toy.index"
+        v-for="(toy, index) in toysStore.getList" :key="index"
         :toy="toy"
       />
     </div>
@@ -44,6 +44,7 @@ await toysStore.fetchList();
 .toy-list {
   display: flex;
   flex-wrap: wrap;
+  column-gap: 12px;
   padding: 0 $side-space-mobile;
 }
 

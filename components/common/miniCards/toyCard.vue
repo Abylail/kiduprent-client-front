@@ -1,6 +1,6 @@
 <template>
   <div class="toy-card">
-    <base-mini-photos class="toy-card__toys" :list="props.toy.photos" :showCount="props.toy.photos.length > 1"/>
+    <base-mini-photos class="toy-card__toys" :list="props.toy.photos" :showCount="props.toy.photos && props.toy.photos.length > 1"/>
     <div class="toy-card__info">
       <h3 class="toy-card__title">{{ props.toy.name_ru }}</h3>
       <div class="toy-card__price">
@@ -34,10 +34,13 @@ const props = defineProps({
   padding: $side-space-mobile 0;
   border: 1px solid $color--gray-light;
   margin-right: 8px;
+  min-width: 150px;
+  max-width: 150px;
+  width: 150px;
 
   &__toys {
     height: 140px;
-    width: 140px;
+    width: 150px;
     min-width: 150px;
     background-color: white;
   }
