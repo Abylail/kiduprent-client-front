@@ -39,7 +39,14 @@
       <div>К оплате</div>
       <div>{{ price }}</div>
     </div>
-    <base-button class="basket__submit" type="yellow" size="big" full-width @click="submitHandle()">Оставить заявку</base-button>
+    <base-button
+        class="basket__submit"
+        type="yellow"
+        size="big"
+        :loading="isLoading"
+        full-width
+        @click="submitHandle()"
+    >Оставить заявку</base-button>
   </div>
 
   <auth-modal v-model:open="openAuth" @final="authFinal($event)"/>
@@ -67,17 +74,22 @@ const authStore = useAuthStore();
 
 const openAuth = ref(false);
 const authFinal = (successAuth) => {
-
+  if (!successAuth) return;
+  submit()
 }
 
-// Отправить заявку
-const submitHandle = async () => {
-  if (authStore.isAuth) {
-    isLoading.value = true;
-    await toysCartStore.submitRequest();
-    isLoading.value = false;
-  }
+// Отправить заявку (кнопка)
+const submitHandle = () => {
+  if (authStore.isAuth) submit()
   else openAuth.value = true;
+}
+
+// Отправить
+const submit = async () => {
+  isLoading.value = true;
+  await toysCartStore.submitRequest(selectedRate.value);
+  isLoading.value = false;
+  alert("Спасибо за заявку, менеджер свяжется с вами!");
 }
 
 onMounted(() => {
@@ -87,7 +99,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .basket {
-  padding-bottom: 200px;
+  padding-bottom: 240px;
 
   &__overall {
     position: fixed;

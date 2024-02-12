@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import api from "~/composables/api";
 
 const basketKey = "toyCart";
 
@@ -39,9 +40,16 @@ const actions = {
         this.syncStorageList();
     },
 
-    // Отправить запрос на подписку
-    async submitRequest() {
+    clear() {
+        this.list = [];
+        this.syncStorageList();
+    },
 
+    // Отправить запрос на подписку
+    async submitRequest(rate) {
+        const {err} = await api.post("/toy/subscribeRequest", {cart: this.list, rate})
+        if (!err) this.clear();
+        return !err;
     },
 }
 
