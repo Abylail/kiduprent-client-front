@@ -90,6 +90,12 @@ const removeHandle = () => {
   max-width: 180px;
   width: 100%;
 
+  &__info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
   &__photos {
     height: 140px;
     width: 100%;
