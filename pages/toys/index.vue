@@ -11,8 +11,9 @@
   <div :class="[{'main-page--mobile': !$device.isDesktop}, {'main-page--desktop': $device.isDesktop}]">
     <div class="toy-list">
       <toy-card
-        v-for="(toy, index) in toysStore.getList" :key="index"
+        v-for="(toy, index) in toysStore.getList" :key="toy.id"
         :toy="toy"
+        basket
       />
     </div>
   </div>
@@ -22,11 +23,18 @@
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import {useToysStore} from "../../store/toys";
 import ToyCard from "../../components/common/miniCards/toyCard";
+import {onMounted} from "vue";
+import {useToysCartStore} from "../../store/toys/basket";
 const { $device } = useNuxtApp();
 
 const toysStore = useToysStore();
+const toysCartStore = useToysCartStore();
 
 await toysStore.fetchList();
+
+onMounted(() => {
+  toysCartStore.fetchCart();
+})
 </script>
 
 <style lang="scss" scoped>

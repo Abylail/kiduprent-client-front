@@ -17,7 +17,7 @@ const props = defineProps({
   type: {
     type: String,
     default: "default",
-    validator: t => ["default", "outline", "danger-outline", "naked", "naked-blue"].includes(t),
+    validator: t => ["default", "outline", "outline-gray", "default-light", "danger-outline", "naked", "naked-blue"].includes(t),
   },
   disabled: {
     type: Boolean,
@@ -26,7 +26,7 @@ const props = defineProps({
   size: {
     type: String,
     default: "default",
-    validator: s => ["mini", "default", "big", "default-light"]
+    validator: s => ["mini", "default", "big"]
   },
   fullWidth: {
     type: Boolean,
@@ -52,6 +52,11 @@ const props = defineProps({
   &--type-default-light {
     background-color: #4973e7;
     color: white;
+  }
+
+  &--type-outline-gray {
+    border-color: $color--gray-dark;
+    color: $color--gray-dark;
   }
 
   &--type-outline {
