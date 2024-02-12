@@ -61,6 +61,7 @@ import BaseButton from "../../components/base/BaseButton";
 import {rates} from "../../config/toysRates";
 import AuthModal from "../../components/common/auth/authModal";
 import {useAuthStore} from "../../store/client/parent/auth";
+import {useRouter} from "nuxt/app";
 
 const toysCartStore = useToysCartStore();
 
@@ -84,12 +85,15 @@ const submitHandle = () => {
   else openAuth.value = true;
 }
 
+const router = useRouter();
+
 // Отправить
 const submit = async () => {
   isLoading.value = true;
   await toysCartStore.submitRequest(selectedRate.value);
   isLoading.value = false;
   alert("Спасибо за заявку, менеджер свяжется с вами!");
+  router.push("/main");
 }
 
 onMounted(() => {
