@@ -25,6 +25,10 @@
       </card-list>
     </div>
 
+<!--    <div class="main-page-block">-->
+<!--      <banner-toys/>-->
+<!--    </div>-->
+
     <!-- Топ центры -->
     <div class="main-page-block">
       <card-list title="Топ центры" to="/catalog/almaty/centers">
@@ -53,6 +57,7 @@ import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import StillQuestions from "../../components/common/main/stillQuestions";
 import Banner from "../../components/common/main/banner";
 import LessonsCollectionCard from "../../components/common/main/lessonsCollectionCard";
+import BannerToys from "../../components/common/main/bannerToys";
 const { $device } = useNuxtApp();
 
 const mainStore = useMainStore();

@@ -1,6 +1,6 @@
 <template>
   <div class="cart-window" :class="{'cart-window--active': !!toysCartStore.getCount}">
-    <base-button class="cart-window__button" type="yellow" size="big" full-width @click="goCart()">
+    <base-button class="cart-window__button" type="yellow" full-width @click="goCart()">
       <div class="cart-window__left">
         <base-icon class="cart-window__icon" name="mdi-currency-usd" size="14" color="white"/>
         <span class="cart-window__count">{{ toysCartStore.getCount }}</span>/<span>100</span>
@@ -36,7 +36,7 @@ const goCart = () => {
   transition: .3s;
 
   &--active {
-    bottom: 65px;
+    bottom: 70px;
   }
 
   &__button {

@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import api from "~/composables/api";
 
 const basketKey = "toyCart";
 
@@ -38,6 +37,11 @@ const actions = {
         if (index < 0) return;
         this.list.splice(index, 1);
         this.syncStorageList();
+    },
+
+    // Отправить запрос на подписку
+    async submitRequest() {
+
     },
 }
 

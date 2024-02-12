@@ -1,7 +1,7 @@
 <template>
-  <div class="toy-card">
+  <div class="toy-card" :class="{'toy-card--row': props.row}">
     <base-mini-photos
-        class="toy-card__toys"
+        class="toy-card__photos"
         :list="props.toy.photos"
         :showCount="props.toy.photos && props.toy.photos.length > 1"
         object-fit="contain"
@@ -13,25 +13,25 @@
         <base-icon class="toy-card__icon" name="mdi-currency-usd" size="14" color="white"/>
         {{ props.toy.token }} токенов
       </div>
-    </div>
 
-    <div class="toy-card__basket-connection" v-if="basket">
-      <base-button
-          v-if="!isIncluded"
-          class="toy-card__add"
-          type="outline"
-          size="mini"
-          full-width
-          @click="addHandle()"
-      >Добавить +</base-button>
-      <base-button
-          v-else
-          class="toy-card__add"
-          type="outline-gray"
-          size="mini"
-          full-width
-          @click="removeHandle()"
-      >Убрать</base-button>
+      <div class="toy-card__basket-connection" v-if="basket">
+        <base-button
+            v-if="!isIncluded"
+            class="toy-card__add"
+            type="outline"
+            size="mini"
+            full-width
+            @click="addHandle()"
+        >Добавить +</base-button>
+        <base-button
+            v-else
+            class="toy-card__add"
+            type="outline-gray"
+            size="mini"
+            full-width
+            @click="removeHandle()"
+        >Убрать</base-button>
+      </div>
     </div>
 
   </div>
@@ -52,6 +52,10 @@ const props = defineProps({
   basket: {
     type: Boolean,
     default: false
+  },
+  row: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -63,7 +67,6 @@ const isIncluded = computed(() => process.client && toysCartStore.getIdList.incl
 const addHandle = () => {
   if (process.server) return;
   toysCartStore.addToy(props.toy);
-  console.log(toysCartStore.getIdList)
 }
 
 // Добавить игрушку в корзину
@@ -87,17 +90,16 @@ const removeHandle = () => {
   max-width: 180px;
   width: 100%;
 
-  &__toys {
+  &__photos {
     height: 140px;
     width: 100%;
-    min-width: 150px;
     background-color: white;
     border-radius: 5px;
   }
 
   &__title {
     color: $color--blue-dark;
-    font-size: $fs--default;
+    font-size: $fs--mini;
     margin: 8px 0;
   }
 
@@ -119,6 +121,22 @@ const removeHandle = () => {
 
   &__add {
     margin-top: 16px;
+  }
+
+  &--row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-column-gap: 16px;
+    max-width: none;
+    padding: $side-space-mobile;
+    background-color: white;
+    margin-top: 4px;
+    width: auto;
+    margin-right: 0;
+  }
+
+  &--row .toy-card__photos {
+    height: 100px;
   }
 }
 </style>
