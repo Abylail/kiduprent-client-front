@@ -10,6 +10,7 @@ const state = () => ({
 const getters = {
     getList: state => state.list,
     getIdList: state => state.list.map(({id}) => id),
+    getCount: state => state.list.reduce((sum, {token}) => sum+token, 0)
 }
 
 const actions = {

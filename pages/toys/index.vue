@@ -17,6 +17,8 @@
       />
     </div>
   </div>
+
+  <cart-window/>
 </template>
 
 <script setup>
@@ -25,6 +27,7 @@ import {useToysStore} from "../../store/toys";
 import ToyCard from "../../components/common/miniCards/toyCard";
 import {onMounted} from "vue";
 import {useToysCartStore} from "../../store/toys/basket";
+import CartWindow from "../../components/common/toys/cartWindow";
 const { $device } = useNuxtApp();
 
 const toysStore = useToysStore();

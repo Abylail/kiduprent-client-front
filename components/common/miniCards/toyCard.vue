@@ -1,6 +1,11 @@
 <template>
   <div class="toy-card">
-    <base-mini-photos class="toy-card__toys" :list="props.toy.photos" :showCount="props.toy.photos && props.toy.photos.length > 1"/>
+    <base-mini-photos
+        class="toy-card__toys"
+        :list="props.toy.photos"
+        :showCount="props.toy.photos && props.toy.photos.length > 1"
+        object-fit="contain"
+    />
 
     <div class="toy-card__info">
       <h3 class="toy-card__title">{{ props.toy.name_ru }}</h3>
@@ -87,6 +92,7 @@ const removeHandle = () => {
     width: 100%;
     min-width: 150px;
     background-color: white;
+    border-radius: 5px;
   }
 
   &__title {

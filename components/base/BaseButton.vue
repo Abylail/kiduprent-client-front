@@ -17,7 +17,7 @@ const props = defineProps({
   type: {
     type: String,
     default: "default",
-    validator: t => ["default", "outline", "outline-gray", "default-light", "danger-outline", "naked", "naked-blue"].includes(t),
+    validator: t => ["default", "outline", "outline-gray", "default-light", "danger-outline", "naked", "naked-blue", "yellow"].includes(t),
   },
   disabled: {
     type: Boolean,
@@ -35,7 +35,7 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
-  }
+  },
 })
 </script>
 
@@ -76,6 +76,11 @@ const props = defineProps({
   &--type-naked-blue {
     color: $color--blue;
     background-color: $color--blue-light;
+  }
+
+  &--type-yellow {
+    color: $color--blue-dark;
+    background-color: $color--yellow;
   }
 
   &--size-mini {

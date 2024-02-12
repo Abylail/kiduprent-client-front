@@ -5,6 +5,7 @@
           class="base-mini-photos__slide"
           v-for="(photo, index) in props.list"
           :src="getImageUrl(photo)"
+          :style="{objectFit: props.objectFit}"
           alt=""
       />
     </div>
@@ -29,6 +30,11 @@ const props = defineProps({
   rounded: {
     type: Boolean,
     default: true
+  },
+  objectFit: {
+    type: String,
+    default: "cover",
+    validator: of => ["cover", "contain"]
   }
 })
 
