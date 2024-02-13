@@ -23,7 +23,7 @@
     >Продолжить</base-button>
   </div>
 
-  <div class="container">
+  <div class="container" v-if="!toysCartStore.getList.length">
     <div class="basket__empty">Ваша корзина пуста</div>
     <base-button full-width @click="router.push('/toys')">К игрушкам</base-button>
   </div>
