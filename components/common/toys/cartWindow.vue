@@ -32,7 +32,7 @@ const goCart = () => {
   bottom: -65px;
   left: $side-space-mobile;
   right: $side-space-mobile;
-  z-index: 10;
+  z-index: 1;
   transition: .3s;
 
   &--active {
