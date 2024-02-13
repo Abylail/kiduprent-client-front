@@ -13,7 +13,7 @@
     />
   </div>
 
-  <div class="container" v-if="!!toysCartStore.getList.length">
+  <div class="container" v-if="!!toysCartStore.getList.length && !submitWindow">
     <base-button
       class="basket__submit"
       type="yellow"
