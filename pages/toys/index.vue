@@ -9,7 +9,7 @@
   <div class="toy-filter">
     <div class="toy-filter-right">Возраст</div>
     <base-select
-        :model-value="activeAge"
+        :model-value="activeAgeKey"
         :options="ages"
         view-type="mini"
         @update:modelValue="selectAge($event)"
@@ -20,11 +20,12 @@
     <h1 class="container toy-title">Список игрушек</h1>
     <div class="toy-list">
       <toy-card
-        v-for="(toy, index) in toysStore.getList" :key="toy.id"
+        v-for="toy in toysStore.getList" :key="toy.id"
         :toy="toy"
         basket
       />
     </div>
+    <base-loader v-if="isLoading" center-horizontal/>
   </div>
 
   <cart-window/>
@@ -34,41 +35,49 @@
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import {useToysStore} from "../../store/toys";
 import ToyCard from "../../components/common/miniCards/toyCard";
-import {computed, onMounted} from "vue";
+import {computed, nextTick, onMounted} from "vue";
 import {useToysCartStore} from "../../store/toys/basket";
 import CartWindow from "../../components/common/toys/cartWindow";
 import BaseSelect from "../../components/base/BaseSelect";
 import {useRoute, useRouter} from "nuxt/app";
+import BaseLoader from "../../components/base/BaseLoader";
 const { $device } = useNuxtApp();
+
+const ages = [
+  {name: "Любой возраст", key: "0", min: null, max: null},
+  {name: "0 - 3 мес", key: "1", min: 0, max: 3},
+  {name: "3 - 6 мес", key: "2", min: 3, max: 6},
+  {name: "6 - 12 мес", key: "3", min: 6, max: 12},
+  {name: "12 - 18 мес", key: "4", min: 12, max: 18},
+  {name: "18 - 24 мес", key: "5", min: 18, max: 24},
+  {name: "2 - 3 года", key: "6", min: 24, max: 36},
+  {name: "3 - 5 лет", key: "7", min: 36, max: 60},
+  {name: "5+ лет", key: "8", min: 60, max: null},
+]
+
+const router = useRouter();
+const route = useRoute();
+const activeAgeKey = computed(() => route.query?.ageKey || "0");
+const activeAge = computed(() => ages.find(a => a.key === activeAgeKey.value) || ages[0]);
 
 const toysStore = useToysStore();
 const toysCartStore = useToysCartStore();
 
-await toysStore.fetchList();
+const isLoading = ref(false);
+const fetchList = async () => {
+  isLoading.value = true;
+  await toysStore.fetchList({maxAge: activeAge.value.max, minAge: activeAge.value.min});
+  isLoading.value = false;
+}
+await fetchList();
 
-const router = useRouter();
-const route = useRoute();
-const activeAge = computed(() => route.query?.ageKey || "0");
-
-const ages = [
-  {name: "Любой возраст", key: "0", min: null, max: null},
-  {name: "0 - 3 мес", key: "1", min: null, max: null},
-  {name: "3 - 6 мес", key: "2", min: null, max: null},
-  {name: "6 - 12 мес", key: "3", min: null, max: null},
-  {name: "12 - 18 мес", key: "4", min: null, max: null},
-  {name: "18 - 24 мес", key: "5", min: null, max: null},
-  {name: "2 - 3 года", key: "6", min: null, max: null},
-  {name: "3 - 5 лет", key: "7", min: null, max: null},
-  {name: "5 - 8 лет", key: "8", min: null, max: null},
-]
-
-const selectAge = (age) => {
-  console.log(age, activeAge.value);
-  if (age === activeAge.value) return;
-  router.replace({
+const selectAge = async (age) => {
+  if (age === activeAgeKey.value) return;
+  await router.replace({
     path: '/toys',
     query: {...route.query, ageKey: age || undefined}
   })
+  fetchList()
 }
 
 onMounted(() => {

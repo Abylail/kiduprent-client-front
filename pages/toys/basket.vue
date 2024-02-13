@@ -4,7 +4,7 @@
       go-back="/toys"
   />
 
-  <div class="basket">
+  <div class="basket" v-if="!!toysCartStore.getList.length">
     <toy-card
         v-for="toy in toysCartStore.getList" :key="toy.id"
         :toy="toy"
@@ -13,7 +13,22 @@
     />
   </div>
 
-  <div class="basket__overall">
+  <div class="container" v-if="!!toysCartStore.getList.length">
+    <base-button
+      class="basket__submit"
+      type="yellow"
+      size="big"
+      full-width
+      @click="submitWindow = true"
+    >Продолжить</base-button>
+  </div>
+
+  <div class="container">
+    <div class="basket__empty">Ваша корзина пуста</div>
+    <base-button full-width @click="router.push('/toys')">К игрушкам</base-button>
+  </div>
+
+  <div class="basket__overall" :class="{'basket__overall--active': submitWindow}">
 
     <div class="basket__rates">
       <div
@@ -66,6 +81,7 @@ import {useRouter} from "nuxt/app";
 const toysCartStore = useToysCartStore();
 
 const isLoading = ref(false);
+const submitWindow = ref(false);
 
 const selectedRate = ref(rates[0])
 const priceMonthly = computed(() => selectedRate.value.price_monthly.toLocaleString())
@@ -103,16 +119,27 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .basket {
-  padding-bottom: 240px;
 
   &__overall {
     position: fixed;
     z-index: 1;
-    bottom: 61px;
+    bottom: -100%;
     left: 0;
     right: 0;
     padding: $side-space-mobile;
     background-color: white;
+    transition: .3s;
+    box-shadow: 0px -7px 10px 0px rgba(34, 60, 80, 0.2);
+
+    &--active {
+      bottom: 61px;
+    }
+  }
+
+  &__empty {
+    color: $color--gray-dark;
+    font-size: $fs--title;
+    padding: 24px 0 8px;
   }
 
   &__submit {
