@@ -29,18 +29,31 @@
   </div>
 
   <cart-window/>
+
+  <!-- Алерт о токенах -->
+  <base-backdrop v-model:active="showTokensAlert">
+    <div class="token-alert container">
+      <base-icon class="token-alert__icon" name="mdi-information-outline" size="70"/>
+      <div class="token-alert__title">Вы собрали вещей более чем на 100 токенов</div>
+      <div class="token-alert__subtitle">Дополнительные токены  <br/> 120тг = 1 токен</div>
+      <base-button type="yellow" size="big" full-width @click="() => showTokensAlert = false">Понятно</base-button>
+    </div>
+  </base-backdrop>
 </template>
 
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import {useToysStore} from "../../store/toys";
 import ToyCard from "../../components/common/miniCards/toyCard";
-import {computed, nextTick, onMounted} from "vue";
+import {computed, nextTick, onMounted, watch} from "vue";
 import {useToysCartStore} from "../../store/toys/basket";
 import CartWindow from "../../components/common/toys/cartWindow";
 import BaseSelect from "../../components/base/BaseSelect";
 import {useRoute, useRouter} from "nuxt/app";
 import BaseLoader from "../../components/base/BaseLoader";
+import BaseBackdrop from "../../components/base/BaseBackdrop";
+import BaseIcon from "../../components/base/BaseIcon";
+import BaseButton from "../../components/base/BaseButton";
 const { $device } = useNuxtApp();
 
 const ages = [
@@ -79,6 +92,14 @@ const selectAge = async (age) => {
   })
   fetchList()
 }
+
+// Показать предупреждение по токенам
+const showTokensAlert = ref(false);
+
+// Если пользователь превышает отметку 100, показываю алерт
+watch(() => toysCartStore.getCount, (newCount, oldCount) => {
+  if (oldCount !== 0 && oldCount <= 100 && newCount > 100) showTokensAlert.value = true;
+}, {immediate: false})
 
 onMounted(() => {
   toysCartStore.fetchCart();
@@ -137,5 +158,28 @@ onMounted(() => {
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.token-alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__title {
+    text-align: center;
+    font-size: $fs--title;
+    margin: 24px 0 12px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    margin: 12px 0 32px;
+  }
+
+  &__icon {
+    padding-top: 24px;
+    color: $color--blue;
+  }
 }
 </style>

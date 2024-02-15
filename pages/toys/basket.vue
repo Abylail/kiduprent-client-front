@@ -29,6 +29,7 @@
   </div>
 
   <div class="basket__overall" :class="{'basket__overall--active': submitWindow}">
+    <button class="basket__back" @click="submitWindow = false"><base-icon name="mdi-arrow-left" size="14"/> К корзине</button>
 
     <div class="basket__rates">
       <div
@@ -44,15 +45,22 @@
 
     <div class="basket__info">
       <div>Токенов использовано</div>
-      <div>{{ toysCartStore.getCount }}/100</div>
+      <div>{{ toysCartStore.getCount }}/
+        <span v-if="toysCartStore.getCount <= 100">100</span>
+        <span v-else>{{toysCartStore.getCount}}</span>
+      </div>
     </div>
     <div class="basket__info">
       <div>Цена</div>
       <div><strong>{{ priceMonthly }} тг/мес</strong></div>
     </div>
+    <div class="basket__info" v-if="extraTokens">
+      <div>Дополнительные токены ({{ extraTokens }})</div>
+      <div><strong>{{ extraPrice }} тг/мес</strong></div>
+    </div>
     <div class="basket__info">
       <div>К оплате</div>
-      <div>{{ price }}</div>
+      <div>{{ price }} на {{ selectedRate.duration }} мес</div>
     </div>
     <base-button
         class="basket__submit"
@@ -65,6 +73,15 @@
   </div>
 
   <auth-modal v-model:open="openAuth" @final="authFinal($event)"/>
+
+  <base-backdrop v-model:active="thanksWindow">
+    <div class="thanks-window container">
+      <base-icon class="thanks-window__icon" name="mdi-party-popper" size="70"/>
+      <div class="thanks-window__title">Спасибо на заявку</div>
+      <div class="thanks-window__subtitle">Наш менеджер свяжется с вами в ближайшее время</div>
+      <base-button type="yellow" size="big" full-width @click="router.push('/main')">На главную</base-button>
+    </div>
+  </base-backdrop>
 </template>
 
 <script setup>
@@ -77,15 +94,21 @@ import {rates} from "../../config/toysRates";
 import AuthModal from "../../components/common/auth/authModal";
 import {useAuthStore} from "../../store/client/parent/auth";
 import {useRouter} from "nuxt/app";
+import BaseIcon from "../../components/base/BaseIcon";
+import BaseBackdrop from "../../components/base/BaseBackdrop";
 
 const toysCartStore = useToysCartStore();
 
 const isLoading = ref(false);
 const submitWindow = ref(false);
 
+// Цена за доп докены
+const extraTokens = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100) : 0);
+const extraPrice = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100)*120 : 0);
+
 const selectedRate = ref(rates[0])
 const priceMonthly = computed(() => selectedRate.value.price_monthly.toLocaleString())
-const price = computed(() => selectedRate.value.price.toLocaleString())
+const price = computed(() => (selectedRate.value.price + (extraPrice.value*selectedRate.value.duration)).toLocaleString())
 
 const authStore = useAuthStore();
 
@@ -103,13 +126,14 @@ const submitHandle = () => {
 
 const router = useRouter();
 
+const thanksWindow = ref(false);
+
 // Отправить
 const submit = async () => {
   isLoading.value = true;
   await toysCartStore.submitRequest(selectedRate.value);
   isLoading.value = false;
-  alert("Спасибо за заявку, менеджер свяжется с вами!");
-  router.push("/main");
+  thanksWindow.value = true;
 }
 
 onMounted(() => {
@@ -134,6 +158,11 @@ onMounted(() => {
     &--active {
       bottom: 61px;
     }
+  }
+
+  &__back {
+    font-weight: bold;
+    margin-bottom: 12px;
   }
 
   &__empty {
@@ -164,6 +193,7 @@ onMounted(() => {
     flex-wrap: nowrap;
     overflow: auto;
     padding-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   &__rate {
@@ -188,5 +218,28 @@ onMounted(() => {
     font-weight: bold;
   }
 
+}
+
+.thanks-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__title {
+    text-align: center;
+    font-size: $fs--title;
+    margin: 24px 0 12px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    margin: 12px 0 32px;
+  }
+
+  &__icon {
+    padding-top: 24px;
+    color: $color--blue;
+  }
 }
 </style>
