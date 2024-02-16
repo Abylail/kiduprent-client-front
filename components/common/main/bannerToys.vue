@@ -1,42 +1,206 @@
 <template>
   <div :class="[{'banner-toys--mobile': !$device.isDesktop}, {'banner-toys--desktop': $device.isDesktop}]">
-    <h2 class="banner-toys__title">Подписка на игрушки</h2>
+    <h2 class="banner-toys__title" v-if="props.title">Подписка на игрушки</h2>
+    <h3 class="banner-toys__subtitle" v-if="props.title">Берите любые игрушки в любое время <br/><span class="banner-toys__price">Всего за 14 999 в месяц</span></h3>
+
+    <div class="banner-toys__content">
+    <div class="banner-toys__block">
+      <video class="banner-toys__video" autoplay muted loop playsinline>
+        <source src="/bannertoys1.MOV" type="video/mp4">
+      </video>
+      <div class="banner-toys__block-into">
+        <div class="banner-toys__block-title">Выберите игрушки</div>
+        <div class="banner-toys__block-description">Выберите из нашего каталога в котором более 100 игрушек</div>
+      </div>
+    </div>
+
+    <div class="banner-toys__block reverse">
+      <video class="banner-toys__video" autoplay muted loop playsinline>
+        <source src="/bannertoys2.MOV" type="video/mp4">
+      </video>
+      <div class="banner-toys__block-into">
+        <div class="banner-toys__block-title">Получите и играйте</div>
+        <div class="banner-toys__block-description">Вы можете держать игрушки пока они вам не наскучат</div>
+      </div>
+    </div>
 
     <div class="banner-toys__block">
-
+      <video class="banner-toys__video" autoplay muted loop playsinline>
+        <source src="/bannertoys3.MOV" type="video/mp4">
+      </video>
+      <div class="banner-toys__block-into">
+        <div class="banner-toys__block-title">Меняйте когда захотите</div>
+        <div class="banner-toys__block-description">Вы можете менять игрушки когда хотите, курьер заберет старые и привезет новые</div>
+      </div>
     </div>
+    </div>
+
+    <div>
+      <h3 class="banner-toys__price">Тарифы</h3>
+      <div class="banner-toys__rates">
+        <div class="banner-toys__rate" v-for="(rate, index) in rates" :key="index">
+          <div class="banner-toys__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/мес</div>
+          <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
+        </div>
+      </div>
+    </div>
+
+    <base-button v-if="props.goCatalog" full-width size="big" @click="router.push('/toys')">Смотреть каталог</base-button>
   </div>
 </template>
 
 <script setup>
+import {rates} from "../../../config/toysRates";
+import BaseButton from "../../base/BaseButton";
+import {useRouter} from "nuxt/app";
+
 const { $device } = useNuxtApp();
+const router = useRouter();
+
+const props = defineProps({
+  title: {
+    type: Boolean,
+    default: false
+  },
+  goCatalog: {
+    type: Boolean,
+    default: false
+  },
+})
 </script>
 
 <style lang="scss" scoped>
 .banner-toys--mobile {
-  width: calc(100% - 4*#{$side-space-mobile});
-  height: 55vw;
+  width: calc(100% - 2*#{$side-space-mobile});
   background-size: cover;
   color: $color--blue-dark;
-  margin-left: $side-space-mobile;
-  margin-right: $side-space-mobile;
-  padding-left: $side-space-mobile;
-  padding-right: $side-space-mobile;
-  padding-top: $side-space-mobile;
+  padding: 24px $side-space-mobile;
   background-color: $color--yellow;
-  border-radius: 10px;
+  //border-radius: 10px;
 
   .banner-toys__title {
+    font-weight: bold;
+  }
+
+  .banner-toys__subtitle {
     font-weight: normal;
+    font-size: $fs--default;
+    padding-top: 12px;
+  }
+
+  .banner-toys__price {
+    color: $color--blue;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  .banner-toys__block {
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+    margin: 48px 0;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .banner-toys__video {
+    height: 35vw;
+    width: 50vw;
+    min-width: 50vw;
+    border-radius: 5px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  .banner-toys__block-title {
+    font-size: $fs--title;
+    font-weight: bold;
+  }
+
+  .banner-toys__block-description {
+    font-size: $fs--mini;
+    padding: 8px 0;
+    color: $color--gray-dark;
+  }
+
+  .banner-toys__rates {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .banner-toys__rate {
+    white-space: nowrap;
+    padding: 8px 8px;
+    border: 1px solid $color--blue;
+    color: $color--blue-dark;
+    border-radius: 5px;
+    margin-right: 8px;
+    font-size: $fs--mini;
+    transition: .3s;
+  }
+
+  .banner-toys__rate-title {
+    font-size: $fs--default;
+    margin-bottom: 4px;
+    font-weight: bold;
   }
 }
 .banner-toys--desktop {
-  width: 320px;
-  height: 250px;
   background-size: cover;
-  color: white;
-  padding-right: 200px;
-  padding-left: $side-space-mobile;
-  padding-top: $side-space-mobile;
+  color: $color--blue-dark;
+  padding: 24px $side-space-mobile;
+  background-color: $color--yellow;
+  text-align: center;
+
+
+  .banner-toys__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .banner-toys__title {
+    font-weight: bold;
+  }
+
+  .banner-toys__subtitle {
+    font-weight: normal;
+    font-size: $fs--default;
+  }
+
+  .banner-toys__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    column-gap: 16px;
+    margin: 48px 0;
+    width: 300px;
+  }
+
+  .banner-toys__video {
+    height: 200px;
+    width: 300px;
+    min-width: 180px;
+    border-radius: 5px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+
+  .banner-toys__block-title {
+    font-size: $fs--title;
+    font-weight: bold;
+    margin-top: 24px;
+  }
+
+  .banner-toys__block-description {
+    font-size: $fs--mini;
+    padding: 8px 0;
+    color: $color--gray-dark;
+  }
 }
 </style>

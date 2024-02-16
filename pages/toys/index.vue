@@ -17,7 +17,10 @@
   </div>
 
   <div :class="[{'toy-page--mobile': !$device.isDesktop}, {'toy-page--desktop': $device.isDesktop}]">
-    <h1 class="container toy-title">Список игрушек</h1>
+    <div class="toy-page__head">
+      <h1 class="container toy-title">Подписка на игрушки</h1>
+      <button class="toy-page__how" @click="howItWorks = true">Как это работает?</button>
+    </div>
     <div class="toy-list">
       <toy-card
         v-for="toy in toysStore.getList" :key="toy.id"
@@ -39,6 +42,10 @@
       <base-button type="yellow" size="big" full-width @click="() => showTokensAlert = false">Понятно</base-button>
     </div>
   </base-backdrop>
+
+  <base-backdrop class="how-it-works" v-model:active="howItWorks">
+    <banner-toys title/>
+  </base-backdrop>
 </template>
 
 <script setup>
@@ -54,6 +61,7 @@ import BaseLoader from "../../components/base/BaseLoader";
 import BaseBackdrop from "../../components/base/BaseBackdrop";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseButton from "../../components/base/BaseButton";
+import BannerToys from "../../components/common/main/bannerToys";
 const { $device } = useNuxtApp();
 
 const ages = [
@@ -95,6 +103,7 @@ const selectAge = async (age) => {
 
 // Показать предупреждение по токенам
 const showTokensAlert = ref(false);
+const howItWorks = ref(false);
 
 // Если пользователь превышает отметку 100, показываю алерт
 watch(() => toysCartStore.getCount, (newCount, oldCount) => {
@@ -135,15 +144,24 @@ onMounted(() => {
   font-size: 1rem;
   line-height: 1rem;
   font-weight: normal;
-  height: 24px;
-  padding: 0 16px;
-  margin-top: 24px;
-  margin-bottom: 8px;
-
 }
 
 .toy-page--mobile {
   margin-top: 24px;
+}
+
+.toy-page__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $side-space-mobile;
+  margin-top: 24px;
+}
+
+.toy-page__how {
+  white-space: nowrap;
+  height: 1rem;
+  color: $color--blue;
 }
 
 .toy-filter {
@@ -181,5 +199,9 @@ onMounted(() => {
     padding-top: 24px;
     color: $color--blue;
   }
+}
+
+.how-it-works {
+  & >.window {background-color: $color--yellow !important;}
 }
 </style>

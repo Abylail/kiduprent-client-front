@@ -26,7 +26,7 @@
     </div>
 
 <!--    <div class="main-page-block">-->
-<!--      <banner-toys/>-->
+      <banner-toys title go-catalog/>
 <!--    </div>-->
 
     <!-- Топ центры -->

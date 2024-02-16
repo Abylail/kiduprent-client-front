@@ -1,6 +1,6 @@
 <template>
   <div class="cart-window" :class="{'cart-window--active': !!toysCartStore.getCount}">
-    <base-button class="cart-window__button" size="big" type="yellow" full-width @click="goCart()">
+    <base-button class="cart-window__button" type="yellow" full-width @click="goCart()">
       <div class="cart-window__left">
         <base-icon class="cart-window__icon" name="mdi-currency-usd" size="24" color="white"/>
         <div class="cart-window__tokens">
@@ -55,6 +55,8 @@ const goCart = () => {
     justify-content: space-between;
     align-items: center;
     font-size: $fs--default !important;
+    backdrop-filter: blur(3px);
+    background: rgba(255, 218, 47, 0.8);
   }
 
   &__icon {
