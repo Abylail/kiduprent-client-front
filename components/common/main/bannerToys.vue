@@ -6,7 +6,7 @@
     <div class="banner-toys__content">
     <div class="banner-toys__block">
       <video class="banner-toys__video" autoplay muted loop playsinline>
-        <source src="/bannertoys1.MOV" type="video/mp4">
+        <source :src="'/bannertoys1.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
         <div class="banner-toys__block-title">Выберите игрушки</div>
@@ -16,7 +16,7 @@
 
     <div class="banner-toys__block reverse">
       <video class="banner-toys__video" autoplay muted loop playsinline>
-        <source src="/bannertoys2.MOV" type="video/mp4">
+        <source :src="'/bannertoys2.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
         <div class="banner-toys__block-title">Получите и играйте</div>
@@ -26,7 +26,7 @@
 
     <div class="banner-toys__block">
       <video class="banner-toys__video" autoplay muted loop playsinline>
-        <source src="/bannertoys3.MOV" type="video/mp4">
+        <source :src="'/bannertoys3.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
         <div class="banner-toys__block-title">Меняйте когда захотите</div>
@@ -156,12 +156,14 @@ const props = defineProps({
   padding: 24px $side-space-mobile;
   background-color: $color--yellow;
   text-align: center;
+  border-radius: 10px;
 
 
   .banner-toys__content {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
 
   .banner-toys__title {
@@ -178,7 +180,7 @@ const props = defineProps({
     flex-direction: column;
     align-items: center;
     column-gap: 16px;
-    margin: 48px 0;
+    margin: 24px 0;
     width: 300px;
   }
 
@@ -191,6 +193,12 @@ const props = defineProps({
     object-fit: cover;
   }
 
+  .banner-toys__price {
+    color: $color--blue;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
   .banner-toys__block-title {
     font-size: $fs--title;
     font-weight: bold;
@@ -201,6 +209,33 @@ const props = defineProps({
     font-size: $fs--mini;
     padding: 8px 0;
     color: $color--gray-dark;
+  }
+
+  .banner-toys__rates {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow: auto;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .banner-toys__rate {
+    white-space: nowrap;
+    padding: 8px 8px;
+    border: 1px solid $color--blue;
+    color: $color--blue-dark;
+    border-radius: 5px;
+    margin-right: 8px;
+    font-size: $fs--mini;
+    transition: .3s;
+  }
+
+  .banner-toys__rate-title {
+    font-size: $fs--default;
+    margin-bottom: 4px;
+    font-weight: bold;
   }
 }
 </style>

@@ -56,7 +56,7 @@ const goCart = () => {
     align-items: center;
     font-size: $fs--default !important;
     backdrop-filter: blur(3px);
-    background: rgba(255, 218, 47, 0.8);
+    background: rgba(255, 218, 47, 0.9);
   }
 
   &__icon {
