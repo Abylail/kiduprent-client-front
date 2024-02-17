@@ -107,11 +107,15 @@ const submitWindow = ref(false);
 
 // Цена за доп докены
 const extraTokens = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100) : 0);
-const extraPrice = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100)*120 : 0);
+const extraPrice = computed(() => {
+  const monthlyExtraPrice = toysCartStore.getCount > 100 ? (toysCartStore.getCount-100)*120 : 0
+  if (selectedRate.value.duration < 1) return monthlyExtraPrice * selectedRate.value.duration;
+  else return monthlyExtraPrice
+});
 
 const selectedRate = ref(rates[0])
 const priceMonthly = computed(() => selectedRate.value.price_monthly.toLocaleString())
-const price = computed(() => (selectedRate.value.price + (extraPrice.value*selectedRate.value.duration)).toLocaleString())
+const price = computed(() => parseInt(selectedRate.value.price + (extraPrice.value*selectedRate.value.duration)).toLocaleString())
 
 const authStore = useAuthStore();
 

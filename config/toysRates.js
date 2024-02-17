@@ -25,8 +25,8 @@ export const rates = [
     },
     {
         name_ru: "Неделя",
-        price: 9500,
-        price_monthly: 9500,
+        price: 8999,
+        price_monthly: 8999,
         duration: 0.25,
     },
 ]
