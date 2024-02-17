@@ -38,7 +38,7 @@
           v-for="(rate, index) in rates" :key="index"
           @click="() => selectedRate = rate"
       >
-        <div class="basket__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{durationUnit}}</div>
+        <div class="basket__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{getDurationUnit(rate.duration)}}</div>
         <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
       </div>
     </div>
@@ -144,6 +144,7 @@ const submit = async () => {
 }
 
 // Еденица длительности (нед, мес)
+const getDurationUnit = (duration) => duration < 1 ? "нед" : "мес";
 const durationUnit = computed(() => selectedRate.value.duration < 1 ? "нед" : "мес");
 
 onMounted(() => {

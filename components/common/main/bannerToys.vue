@@ -39,7 +39,7 @@
       <h3 class="banner-toys__price">Тарифы</h3>
       <div class="banner-toys__rates">
         <div class="banner-toys__rate" v-for="(rate, index) in rates" :key="index">
-          <div class="banner-toys__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/мес</div>
+          <div class="banner-toys__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{ getDurationUnit(rate.duration) }}</div>
           <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
         </div>
       </div>
@@ -67,6 +67,8 @@ const props = defineProps({
     default: false
   },
 })
+
+const getDurationUnit = (duration) => duration < 1 ? "нед" : "мес";
 </script>
 
 <style lang="scss" scoped>
