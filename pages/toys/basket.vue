@@ -38,7 +38,7 @@
           v-for="(rate, index) in rates" :key="index"
           @click="() => selectedRate = rate"
       >
-        <div class="basket__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/мес</div>
+        <div class="basket__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{durationUnit}}</div>
         <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
       </div>
     </div>
@@ -52,15 +52,18 @@
     </div>
     <div class="basket__info">
       <div>Цена</div>
-      <div><strong>{{ priceMonthly }} тг/мес</strong></div>
+      <div><strong>{{ priceMonthly }} тг/{{durationUnit}}</strong></div>
     </div>
     <div class="basket__info" v-if="extraTokens">
       <div>Дополнительные токены ({{ extraTokens }})</div>
-      <div><strong>{{ extraPrice }} тг/мес</strong></div>
+      <div><strong>{{ extraPrice }} тг/{{durationUnit}}</strong></div>
     </div>
     <div class="basket__info">
       <div>К оплате</div>
-      <div>{{ price }} на {{ selectedRate.duration }} мес</div>
+      <div>{{ price }} на
+        <span v-if="selectedRate.duration >= 1">{{ selectedRate.duration }} {{durationUnit}}</span>
+        <span v-else>{{ selectedRate.duration/0.25 }} {{durationUnit}}</span>
+      </div>
     </div>
     <base-button
         class="basket__submit"
@@ -135,6 +138,9 @@ const submit = async () => {
   isLoading.value = false;
   thanksWindow.value = true;
 }
+
+// Еденица длительности (нед, мес)
+const durationUnit = computed(() => selectedRate.value.duration < 1 ? "нед" : "мес");
 
 onMounted(() => {
   toysCartStore.fetchCart();
