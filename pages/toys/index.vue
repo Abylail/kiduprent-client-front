@@ -133,9 +133,10 @@ onMounted(() => {
 
 .toy-list {
   display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
   column-gap: 12px;
-  padding: 0 $side-space-mobile;
+  padding: 0 $side-space-mobile 48px;
 }
 
 .toy-title {
@@ -151,7 +152,7 @@ onMounted(() => {
 }
 
 .toy-page--mobile {
-  margin-top: 24px;
+  margin-top: 16px;
 }
 
 .toy-page__head {
@@ -160,7 +161,7 @@ onMounted(() => {
   justify-content: space-between;
   padding: 0 $side-space-mobile;
   font-size: $fs--mini;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .toy-page__description {

@@ -195,6 +195,7 @@ onMounted(() => {
     display: block;
     text-align: center;
     padding: 12px;
+    color: $color--blue;
   }
 
   &__info {

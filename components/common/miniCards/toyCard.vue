@@ -9,6 +9,11 @@
 
     <div class="toy-card__info">
       <h3 class="toy-card__title">{{ props.toy.name_ru }}</h3>
+
+      <div class="toy-card__age">
+        {{ getAge(props.toy) }}
+      </div>
+
       <div class="toy-card__price">
         <base-icon class="toy-card__icon" name="mdi-currency-usd" size="14" color="white"/>
         {{ props.toy.token }} токенов
@@ -74,21 +79,36 @@ const removeHandle = () => {
   if (process.server) return;
   toysCartStore.removeToy(props.toy);
 }
+
+// Получить возраст
+const getAge = (toy) => {
+  let minAge = "";
+  if (!toy.min_age) minAge = "";
+  else if (toy.min_age % 12 === 0) minAge = `от ${toy.min_age/12} лет`
+  else minAge = `от ${toy.min_age} мес`;
+
+  const maxAge = toy.max_age % 12 === 0
+      ? `до ${toy.max_age/12} лет`
+      : `до ${toy.max_age} мес`;
+  return `${minAge} ${maxAge}`
+};
 </script>
 
 <style lang="scss" scoped>
 .toy-card {
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   flex: 1;
   color: $color--black;
-  padding: $side-space-mobile 0;
-  margin-right: 8px;
+  padding: 8px 2vw;
+  //margin-right: 8px;
+  margin-bottom: 8px;
   min-width: 150px;
   max-width: 180px;
   width: 100%;
+  background-color: white;
 
   &__info {
     display: flex;
@@ -106,7 +126,7 @@ const removeHandle = () => {
   &__title {
     color: $color--blue-dark;
     font-size: $fs--mini;
-    margin: 8px 0;
+    margin: 8px 0 4px;
   }
 
   &__icon {
@@ -114,6 +134,12 @@ const removeHandle = () => {
     border-radius: 100%;
     padding: 1px;
     background-color: $color--blue-dark;
+  }
+
+  &__age {
+    font-size: $fs--nano;
+    margin-bottom: 4px;
+    color: $color--gray-dark;
   }
 
   &__price {
