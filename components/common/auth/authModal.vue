@@ -30,7 +30,7 @@
           :loading="isLoading"
           full-width
           @click="submitOtp()"
-      >Войти</base-button>
+      >{{ enterButtonTitle }}</base-button>
     </div>
   </base-backdrop>
 </template>
@@ -47,7 +47,15 @@ import {sendCode, successLogin as analSuccessLogin, errorLogin} from "../../../u
 
 const emit = defineEmits(["update:open", "final"])
 const props = defineProps({
-  open: Boolean
+  open: Boolean,
+  title: {
+    type: String,
+    default: null
+  },
+  enterButtonTitle: {
+    type: String,
+    default: null
+  },
 })
 
 watch(() => props.open, (val) => {
@@ -113,7 +121,13 @@ const submitOtp = async () => {
 
 const step = ref(1);
 
+const enterButtonTitle = computed(() => {
+  if (props.enterButtonTitle) return props.enterButtonTitle;
+  return "Войти";
+})
+
 const title = computed(() => {
+  if (props.title) return props.title;
   if (step.value === 1) return "Введите номер";
   if (step.value === 2) return "Введите смс код";
   return null;

@@ -77,7 +77,12 @@
     <a class="basket__help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
   </div>
 
-  <auth-modal v-model:open="openAuth" @final="authFinal($event)"/>
+  <auth-modal
+      title="Отправка заявки"
+      enter-button-title="Оставить заявку"
+      v-model:open="openAuth"
+      @final="authFinal($event)"
+  />
 
   <base-backdrop v-model:active="thanksWindow">
     <div class="thanks-window container">
@@ -194,7 +199,7 @@ onMounted(() => {
   &__help {
     display: block;
     text-align: center;
-    padding: 12px;
+    margin: 12px 0;
     color: $color--blue;
   }
 
