@@ -17,9 +17,13 @@
   </div>
 
   <div :class="[{'toy-page--mobile': !$device.isDesktop}, {'toy-page--desktop': $device.isDesktop}]">
+    <div class="container">
+      <h1 class="toy-title">Подписка на игрушки</h1>
+      <p class="toy-page__description">У вас есть 100 токенов, по каждому тарифу</p>
+    </div>
     <div class="toy-page__head">
-      <h1 class="container toy-title">Подписка на игрушки</h1>
-      <button class="toy-page__how" @click="howItWorks = true">Как это работает?</button>
+      <button class="toy-page-help" @click="howItWorks = true">Как это работает?</button>
+      <a class="toy-page-help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
     </div>
     <div class="toy-list">
       <toy-card
@@ -143,7 +147,7 @@ onMounted(() => {
   vertical-align: bottom;
   font-size: 1rem;
   line-height: 1rem;
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .toy-page--mobile {
@@ -155,13 +159,21 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 0 $side-space-mobile;
-  margin-top: 24px;
+  font-size: $fs--mini;
+  margin-bottom: 8px;
 }
 
-.toy-page__how {
+.toy-page__description {
+  color: $color--gray-dark;
+  font-size: $fs--mini;
+  padding: 4px 0;
+}
+
+.toy-page-help {
   white-space: nowrap;
   height: 1rem;
   color: $color--blue;
+  font-size: $fs--mini;
 }
 
 .toy-filter {

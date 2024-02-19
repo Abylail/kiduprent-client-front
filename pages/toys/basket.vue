@@ -21,6 +21,7 @@
       full-width
       @click="submitWindow = true"
     >Продолжить</base-button>
+    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
   </div>
 
   <div class="container" v-if="!toysCartStore.getList.length">
@@ -73,6 +74,7 @@
         full-width
         @click="submitHandle()"
     >Оставить заявку</base-button>
+    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
   </div>
 
   <auth-modal v-model:open="openAuth" @final="authFinal($event)"/>
@@ -174,6 +176,7 @@ onMounted(() => {
   &__back {
     font-weight: bold;
     margin-bottom: 12px;
+    color: $color--blue-dark;
   }
 
   &__empty {
@@ -186,6 +189,12 @@ onMounted(() => {
     font-weight: bolder !important;
     font-size: $fs--default;
     margin-top: 16px;
+  }
+
+  &__help {
+    display: block;
+    text-align: center;
+    padding: 12px;
   }
 
   &__info {
