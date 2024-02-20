@@ -8,7 +8,7 @@
     />
 
     <div class="toy-card__info">
-      <h3 class="toy-card__title">{{ props.toy.name_ru }}</h3>
+      <h3 class="toy-card__title">{{ $getProp(props.toy, 'name') }}</h3>
 
       <div class="toy-card__age">
         {{ getAge(props.toy) }}
@@ -16,7 +16,7 @@
 
       <div class="toy-card__price">
         <base-icon class="toy-card__icon" name="mdi-currency-usd" size="14" color="white"/>
-        {{ props.toy.token }} токенов
+        {{ props.toy.token }} токен
       </div>
 
       <div class="toy-card__basket-connection" v-if="basket">
@@ -27,7 +27,7 @@
             size="mini"
             full-width
             @click="addHandle()"
-        >Добавить +</base-button>
+        >{{ $t('add_button') }}</base-button>
         <base-button
             v-else
             class="toy-card__add"
@@ -35,7 +35,7 @@
             size="mini"
             full-width
             @click="removeHandle()"
-        >Убрать</base-button>
+        >{{ $t('remove_button') }}</base-button>
       </div>
     </div>
 
@@ -48,6 +48,8 @@ import BaseIcon from "../../base/BaseIcon";
 import BaseButton from "../../base/BaseButton";
 import {useToysCartStore} from "../../../store/toys/basket";
 import {computed} from "vue";
+
+const nuxtApp = useNuxtApp();
 
 const props = defineProps({
   toy: {
@@ -63,6 +65,9 @@ const props = defineProps({
     default: false
   }
 })
+
+// Название игрушки
+const toyName = computed(() => props.toy.name_ru)
 
 const toysCartStore = useToysCartStore();
 
@@ -84,12 +89,12 @@ const removeHandle = () => {
 const getAge = (toy) => {
   let minAge = "";
   if (!toy.min_age) minAge = "";
-  else if (toy.min_age % 12 === 0) minAge = `от ${toy.min_age/12} лет`
-  else minAge = `от ${toy.min_age} мес`;
+  else if (toy.min_age % 12 === 0) minAge = nuxtApp.$t("from_age_year", {age: toy.min_age/12});
+  else minAge = nuxtApp.$t("from_age_month", {age: toy.min_age});
 
   const maxAge = toy.max_age % 12 === 0
-      ? `до ${toy.max_age/12} лет`
-      : `до ${toy.max_age} мес`;
+      ? nuxtApp.$t("until_age_year", {age: toy.max_age/12})
+      : nuxtApp.$t("until_age_month", {age: toy.max_age})
   return `${minAge} ${maxAge}`
 };
 </script>

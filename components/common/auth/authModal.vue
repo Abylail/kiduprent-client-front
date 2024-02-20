@@ -5,7 +5,7 @@
     <div class="auth__content" v-if="step === 1">
       <base-input
           v-model="phone"
-          title="Сотовый номер"
+          :title="$t('mobile_phone')"
           type="naked-gray"
           placeholder="+7 (000) 000-00-00"
           prev-icon="mdi-phone-outline"
@@ -17,12 +17,12 @@
           :loading="isLoading"
           full-width
           @click="sendSmsHandle()"
-      >Отправить код</base-button>
+      >{{ $t('send_code') }}</base-button>
     </div>
 
     <div class="auth__content" v-if="step === 2">
       <otp-input v-model="otp" :error="!!error" @submit="submitOtp()"/>
-      <div class="auth__hint">Введите полученный смс код</div>
+      <div class="auth__hint">{{ $t('enter_send_code') }}</div>
       <div class="auth__error" v-if="error">{{ error }}</div>
       <base-button
           class="auth__submit"
@@ -44,6 +44,8 @@ import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";
 import {phonePreparing} from "../../../helpers/phone";
 import {sendCode, successLogin as analSuccessLogin, errorLogin} from "../../../utlis/analitics";
+
+const nuxtApp = useNuxtApp()
 
 const emit = defineEmits(["update:open", "final"])
 const props = defineProps({
@@ -115,7 +117,7 @@ const submitOtp = async () => {
   else {
     errorLogin()
     otp.value = "";
-    error.value = "Неправильный пароль";
+    error.value = nuxtApp.$t('wrong_code');
   }
 }
 
@@ -123,13 +125,13 @@ const step = ref(1);
 
 const enterButtonTitle = computed(() => {
   if (props.enterButtonTitle) return props.enterButtonTitle;
-  return "Войти";
+  return nuxtApp.$t("enter");
 })
 
 const title = computed(() => {
   if (props.title) return props.title;
-  if (step.value === 1) return "Введите номер";
-  if (step.value === 2) return "Введите смс код";
+  if (step.value === 1) return nuxtApp.$t('enter_phone');
+  if (step.value === 2) return nuxtApp.$t('enter_sms_code');
   return null;
 })
 

@@ -1,5 +1,5 @@
 <template>
-  <mobile-header>
+  <mobile-header lang-switch>
     <div class="search-head">
       <nuxt-img class="search-head-logo"  src="/logo.svg" alt="logo"/>
       <span>Kidup.kz</span>
@@ -7,7 +7,7 @@
   </mobile-header>
 
   <div class="toy-filter">
-    <div class="toy-filter-right">Возраст</div>
+    <div class="toy-filter-right">{{ $t('age') }}</div>
     <base-select
         :model-value="activeAgeKey"
         :options="ages"
@@ -16,14 +16,14 @@
     />
   </div>
 
-  <div :class="[{'toy-page--mobile': !$device.isDesktop}, {'toy-page--desktop': $device.isDesktop}]">
+  <div :class="[{'toy-page--mobile': !nuxtApp.$device.isDesktop}, {'toy-page--desktop': $device.isDesktop}]">
     <div class="container">
-      <h1 class="toy-title">Подписка на игрушки</h1>
-      <p class="toy-page__description">У вас есть 100 токенов, по каждому тарифу</p>
+      <h1 class="toy-title">{{ $t('toy_subscription') }}</h1>
+      <p class="toy-page__description">{{ $t('100_tokens_any_rate') }}</p>
     </div>
     <div class="toy-page__head">
-      <button class="toy-page-help" @click="howItWorks = true">Как это работает?</button>
-      <a class="toy-page-help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
+      <button class="toy-page-help" @click="howItWorks = true">{{ $t('how_it_works') }}</button>
+      <a class="toy-page-help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
     </div>
     <div class="toy-list">
       <toy-card
@@ -41,9 +41,9 @@
   <base-backdrop v-model:active="showTokensAlert">
     <div class="token-alert container">
       <base-icon class="token-alert__icon" name="mdi-information-outline" size="70"/>
-      <div class="token-alert__title">Вы собрали вещей более чем на 100 токенов</div>
-      <div class="token-alert__subtitle">Дополнительные токены  <br/> 120тг = 1 токен</div>
-      <base-button type="yellow" size="big" full-width @click="() => showTokensAlert = false">Понятно</base-button>
+      <div class="token-alert__title">{{ $t('you_collect_more_than_100') }}</div>
+      <div class="token-alert__subtitle">{{ $t('extra_tokens') }}  <br/> 120тг = 1 токен</div>
+      <base-button type="yellow" size="big" full-width @click="() => showTokensAlert = false">{{ $t('understand') }}</base-button>
     </div>
   </base-backdrop>
 
@@ -66,24 +66,24 @@ import BaseBackdrop from "../../components/base/BaseBackdrop";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseButton from "../../components/base/BaseButton";
 import BannerToys from "../../components/common/main/bannerToys";
-const { $device } = useNuxtApp();
+const nuxtApp = useNuxtApp();
 
-const ages = [
-  {name: "Любой возраст", key: "0", min: null, max: null},
-  {name: "0 - 3 мес", key: "1", min: 0, max: 3},
-  {name: "3 - 6 мес", key: "2", min: 3, max: 6},
-  {name: "6 - 12 мес", key: "3", min: 6, max: 12},
-  {name: "12 - 18 мес", key: "4", min: 12, max: 18},
-  {name: "18 - 24 мес", key: "5", min: 18, max: 24},
-  {name: "2 - 3 года", key: "6", min: 24, max: 36},
-  {name: "3 - 5 лет", key: "7", min: 36, max: 60},
-  {name: "5+ лет", key: "8", min: 60, max: null},
-]
+const ages = computed(() => [
+  {name: nuxtApp.$t("any_age"), key: "0", min: null, max: null},
+  {name: `0 - 3 ${nuxtApp.$t('month_short')}`, key: "1", min: 0, max: 3},
+  {name: `3 - 6 ${nuxtApp.$t('month_short')}`, key: "2", min: 3, max: 6},
+  {name: `6 - 12 ${nuxtApp.$t('month_short')}`, key: "3", min: 6, max: 12},
+  {name: `12 - 18 ${nuxtApp.$t('month_short')}`, key: "4", min: 12, max: 18},
+  {name: `18 - 24 ${nuxtApp.$t('month_short')}`, key: "5", min: 18, max: 24},
+  {name: `2 - 3 ${nuxtApp.$t('year_short')}`, key: "6", min: 24, max: 36},
+  {name: `3 - 5 ${nuxtApp.$t('year_short')}`, key: "7", min: 36, max: 60},
+  {name: `5+ ${nuxtApp.$t('year_short')}`, key: "8", min: 60, max: null},
+])
 
 const router = useRouter();
 const route = useRoute();
 const activeAgeKey = computed(() => route.query?.ageKey || "0");
-const activeAge = computed(() => ages.find(a => a.key === activeAgeKey.value) || ages[0]);
+const activeAge = computed(() => ages.value.find(a => a.key === activeAgeKey.value) || ages.value[0]);
 
 const toysStore = useToysStore();
 const toysCartStore = useToysCartStore();

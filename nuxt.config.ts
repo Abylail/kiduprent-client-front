@@ -60,5 +60,9 @@ export default defineNuxtConfig({
       mobile: 1000,
       desktop: 1000
     }
-  }
+  },
+
+  build: {
+    transpile: ['vue-i18n']
+  },
 })

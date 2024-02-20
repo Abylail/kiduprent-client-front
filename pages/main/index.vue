@@ -1,5 +1,5 @@
 <template>
-  <mobile-header>
+  <mobile-header :lang-switch="false">
     <div class="main-page-mobile-header-title">
       <nuxt-img class="main-page-mini-logo" src="/logo.svg" alt="logo"/>
       <span>Kidup.kz</span>

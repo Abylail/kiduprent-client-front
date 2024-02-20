@@ -10,8 +10,10 @@
     <div class="mobile-header__title">
       <slot>{{ title }}</slot>
     </div>
-    <div class="mobile-header__right" v-if="slots.right">
-      <slot name="right"/>
+    <div class="mobile-header__right" v-if="showRight">
+      <slot name="right">
+        <lang-switch/>
+      </slot>
     </div>
   </header>
 </template>
@@ -19,6 +21,7 @@
 <script setup>
 import BaseIcon from "../../base/BaseIcon";
 import {computed} from "vue";
+import LangSwitch from "./langSwitch";
 const { $device, $goBack } = useNuxtApp();
 const slots = defineSlots()
 const props = defineProps({
@@ -28,8 +31,14 @@ const props = defineProps({
   goBack: {
     type: [String, Function],
     default: null
+  },
+  langSwitch: {
+    type: Boolean,
+    default: false
   }
 })
+
+const showRight = computed(() => props.langSwitch || slots.right)
 
 // Нажатие перейти назад
 const goBackHandle = () => {
@@ -37,9 +46,9 @@ const goBackHandle = () => {
   else if (typeof props.goBack === "function") props.goBack()
 }
 
-const isTwoColsLeft = computed(() => (slots.left || props.goBack) && !slots.right);
-const isTwoColsRight = computed(() => !(slots.left || props.goBack) && slots.right);
-const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
+const isTwoColsLeft = computed(() => (slots.left || props.goBack) && !showRight.value);
+const isTwoColsRight = computed(() => !(slots.left || props.goBack) && showRight.value);
+const isThreeCols = computed(() => (slots.left || props.goBack) && showRight.value);
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +66,7 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   &--two-cols--right {
     display: grid;
     align-items: center;
-    grid-template-columns: 1fr 36px;
+    grid-template-columns: 1fr 80px;
   }
 
   &--two-cols--left {
@@ -69,7 +78,7 @@ const isThreeCols = computed(() => (slots.left || props.goBack) && slots.right);
   &--three-cols {
     display: grid;
     align-items: center;
-    grid-template-columns: 36px 1fr 36px;
+    grid-template-columns: 36px 1fr 80px;
   }
 
   &__go-back {

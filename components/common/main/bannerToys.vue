@@ -1,7 +1,7 @@
 <template>
-  <div :class="[{'banner-toys--mobile': !$device.isDesktop}, {'banner-toys--desktop': $device.isDesktop}]">
-    <h2 class="banner-toys__title" v-if="props.title">Подписка на игрушки</h2>
-    <h3 class="banner-toys__subtitle" v-if="props.title">Берите любые игрушки в любое время <br/><span class="banner-toys__price">Всего за 14 999 в месяц</span></h3>
+  <div :class="[{'banner-toys--mobile': !nuxtApp.$device.isDesktop}, {'banner-toys--desktop': nuxtApp.$device.isDesktop}]">
+    <h2 class="banner-toys__title" v-if="props.title">{{ $t('toy_subscription') }}}</h2>
+    <h3 class="banner-toys__subtitle" v-if="props.title">{{ $t('take_any_toys_any_time') }} <br/><span class="banner-toys__price">{{ $t('just_for_monthly', {price: '14 999'}) }}</span></h3>
 
     <div class="banner-toys__content">
     <div class="banner-toys__block">
@@ -9,8 +9,8 @@
         <source :src="'/bannertoys1.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">Выберите игрушки</div>
-        <div class="banner-toys__block-description">Выберите из нашего каталога в котором более 100 игрушек</div>
+        <div class="banner-toys__block-title">{{ $t('select_toys') }}</div>
+        <div class="banner-toys__block-description">{{ $t('select_from_catalog_many_toys', {count: '100'}) }}</div>
       </div>
     </div>
 
@@ -19,8 +19,8 @@
         <source :src="'/bannertoys2.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">Получите и играйте</div>
-        <div class="banner-toys__block-description">Вы можете держать игрушки пока они вам не наскучат</div>
+        <div class="banner-toys__block-title">{{ $t('get_and_play') }}</div>
+        <div class="banner-toys__block-description">{{ $t('keep_toys_until_boring') }}</div>
       </div>
     </div>
 
@@ -29,14 +29,14 @@
         <source :src="'/bannertoys3.MOV'" type="video/mp4">
       </video>
       <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">Меняйте когда захотите</div>
-        <div class="banner-toys__block-description">Вы можете менять игрушки когда хотите, курьер заберет старые и привезет новые</div>
+        <div class="banner-toys__block-title">{{ $t('change_when_you_want') }}</div>
+        <div class="banner-toys__block-description">{{ $t('you_can_change_old') }}</div>
       </div>
     </div>
     </div>
 
     <div>
-      <h3 class="banner-toys__price">Тарифы</h3>
+      <h3 class="banner-toys__price">{{ $t('rates') }}</h3>
       <div class="banner-toys__rates">
         <div class="banner-toys__rate" v-for="(rate, index) in rates" :key="index">
           <div class="banner-toys__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{ getDurationUnit(rate.duration) }}</div>
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <base-button v-if="props.goCatalog" full-width size="big" @click="router.push('/toys')">Смотреть каталог</base-button>
+    <base-button v-if="props.goCatalog" full-width size="big" @click="router.push('/toys')">{{ $t('look_catalog') }}</base-button>
   </div>
 </template>
 
@@ -54,7 +54,7 @@ import {rates} from "../../../config/toysRates";
 import BaseButton from "../../base/BaseButton";
 import {useRouter} from "nuxt/app";
 
-const { $device } = useNuxtApp();
+const nuxtApp = useNuxtApp();
 const router = useRouter();
 
 const props = defineProps({
@@ -68,7 +68,7 @@ const props = defineProps({
   },
 })
 
-const getDurationUnit = (duration) => duration < 1 ? "нед" : "мес";
+const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short');
 </script>
 
 <style lang="scss" scoped>

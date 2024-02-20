@@ -5,11 +5,11 @@
         <base-icon class="cart-window__icon" name="mdi-currency-usd" size="24" color="white"/>
         <div class="cart-window__tokens">
           <span class="cart-window__count">{{ toysCartStore.getCount }}</span>/<span>100</span>
-          <div class="cart-window__price">{{ monthlyPrice }} тг/мес</div>
+          <div class="cart-window__price">{{ monthlyPrice }} тг/{{ $t('month_short') }}</div>
         </div>
       </div>
       <div class="cart-window__right">
-        В корзину
+        {{ $t('add_to_cart') }}
       </div>
     </base-button>
   </div>
@@ -29,7 +29,7 @@ const toysCartStore = useToysCartStore();
 const extraPrice = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100)*120 : 0);
 
 // Цена в месяц
-const monthlyPrice = computed(() => (rates[0].price_monthly + extraPrice.value))
+const monthlyPrice = computed(() => (rates.value[0].price_monthly + extraPrice.value))
 
 const router = useRouter()
 const goCart = () => {

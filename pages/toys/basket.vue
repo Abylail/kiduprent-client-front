@@ -1,6 +1,7 @@
 <template>
   <mobile-header
-      title="Корзина"
+      :title="$t('cart')"
+      lang-switch
       go-back="/toys"
   />
 
@@ -20,17 +21,17 @@
       size="big"
       full-width
       @click="submitWindow = true"
-    >Продолжить</base-button>
-    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
+    >{{ $t('continue') }}</base-button>
+    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
   </div>
 
   <div class="container" v-if="!toysCartStore.getList.length">
-    <div class="basket__empty">Ваша корзина пуста</div>
-    <base-button full-width @click="router.push('/toys')">К игрушкам</base-button>
+    <div class="basket__empty">{{ $t('cart_empty') }}</div>
+    <base-button full-width @click="router.push('/toys')">{{ $t('go_toys') }}</base-button>
   </div>
 
   <div class="basket__overall" :class="{'basket__overall--active': submitWindow}">
-    <button class="basket__back" @click="submitWindow = false"><base-icon name="mdi-arrow-left" size="14"/> К корзине</button>
+    <button class="basket__back" @click="submitWindow = false"><base-icon name="mdi-arrow-left" size="14"/> {{ $t('go_cart') }}</button>
 
     <div class="basket__rates">
       <div
@@ -45,25 +46,26 @@
     </div>
 
     <div class="basket__info">
-      <div>Токенов использовано</div>
+      <div>{{ $t('tokens_used') }}</div>
       <div>{{ toysCartStore.getCount }}/
         <span v-if="toysCartStore.getCount <= 100">100</span>
         <span v-else>{{toysCartStore.getCount}}</span>
       </div>
     </div>
     <div class="basket__info">
-      <div>Цена</div>
+      <div>{{ $t('price') }}</div>
       <div><strong>{{ priceMonthly }} тг/{{durationUnit}}</strong></div>
     </div>
     <div class="basket__info" v-if="extraTokens">
-      <div>Дополнительные токены ({{ extraTokens }})</div>
+      <div>{{ $t('extra_tokens') }} ({{ extraTokens }})</div>
       <div><strong>{{ extraPrice }} тг/{{durationUnit}}</strong></div>
     </div>
     <div class="basket__info">
-      <div>К оплате</div>
-      <div>{{ price }} на
+      <div>{{ $t('to_pay') }}</div>
+      <div>{{ price }} (
         <span v-if="selectedRate.duration >= 1">{{ selectedRate.duration }} {{durationUnit}}</span>
         <span v-else>{{ selectedRate.duration/0.25 }} {{durationUnit}}</span>
+        )
       </div>
     </div>
     <base-button
@@ -73,13 +75,13 @@
         :loading="isLoading"
         full-width
         @click="submitHandle()"
-    >Оставить заявку</base-button>
-    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">Помощь менеджера</a>
+    >{{ $t('submit_request') }}</base-button>
+    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
   </div>
 
   <auth-modal
-      title="Отправка заявки"
-      enter-button-title="Оставить заявку"
+      :title="$t('request_sending')"
+      :enter-button-title="$t('submit_request')"
       v-model:open="openAuth"
       @final="authFinal($event)"
   />
@@ -87,9 +89,9 @@
   <base-backdrop v-model:active="thanksWindow">
     <div class="thanks-window container">
       <base-icon class="thanks-window__icon" name="mdi-party-popper" size="70"/>
-      <div class="thanks-window__title">Спасибо на заявку</div>
-      <div class="thanks-window__subtitle">Наш менеджер свяжется с вами в ближайшее время</div>
-      <base-button type="yellow" size="big" full-width @click="router.push('/main')">На главную</base-button>
+      <div class="thanks-window__title">{{ $t('thank_you_for_request') }}</div>
+      <div class="thanks-window__subtitle">{{ $t('manager_calls_you') }}</div>
+      <base-button type="yellow" size="big" full-width @click="router.push('/main')">{{ $t('go_main') }}</base-button>
     </div>
   </base-backdrop>
 </template>
@@ -106,6 +108,7 @@ import {useAuthStore} from "../../store/client/parent/auth";
 import {useRouter} from "nuxt/app";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseBackdrop from "../../components/base/BaseBackdrop";
+const nuxtApp = useNuxtApp()
 
 const toysCartStore = useToysCartStore();
 
@@ -120,7 +123,7 @@ const extraPrice = computed(() => {
   else return monthlyExtraPrice
 });
 
-const selectedRate = ref(rates[0])
+const selectedRate = ref(rates.value[0])
 const priceMonthly = computed(() => selectedRate.value.price_monthly.toLocaleString())
 const price = computed(() => parseInt(selectedRate.value.price + (extraPrice.value*selectedRate.value.duration)).toLocaleString())
 
@@ -151,7 +154,7 @@ const submit = async () => {
 }
 
 // Еденица длительности (нед, мес)
-const getDurationUnit = (duration) => duration < 1 ? "нед" : "мес";
+const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short');
 const durationUnit = computed(() => selectedRate.value.duration < 1 ? "нед" : "мес");
 
 onMounted(() => {
