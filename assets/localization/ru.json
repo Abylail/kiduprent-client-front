@@ -51,5 +51,7 @@
   "wrong_code": "Неправильный код",
   "enter": "Войти",
   "enter_phone": "Введите номер",
-  "enter_sms_code": "Введите смс код"
+  "enter_sms_code": "Введите смс код",
+  "in_this_rate_you_can_change_toys": "В этом тарифе вы можете менять игрушку в любой момент",
+  "select_rate": "Выберите тариф"
 }

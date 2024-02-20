@@ -14,25 +14,13 @@
     />
   </div>
 
-  <div class="container" v-if="!!toysCartStore.getList.length && !submitWindow">
-    <base-button
-      class="basket__submit"
-      type="yellow"
-      size="big"
-      full-width
-      @click="submitWindow = true"
-    >{{ $t('continue') }}</base-button>
-    <a class="basket__help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
-  </div>
-
   <div class="container" v-if="!toysCartStore.getList.length">
     <div class="basket__empty">{{ $t('cart_empty') }}</div>
     <base-button full-width @click="router.push('/toys')">{{ $t('go_toys') }}</base-button>
   </div>
 
-  <div class="basket__overall" :class="{'basket__overall--active': submitWindow}">
-    <button class="basket__back" @click="submitWindow = false"><base-icon name="mdi-arrow-left" size="14"/> {{ $t('go_cart') }}</button>
-
+  <div class="basket__overall" v-if="!!toysCartStore.getList.length">
+    <h2 class="basket__overall-title">{{ $t('select_rate') }}</h2>
     <div class="basket__rates">
       <div
           class="basket__rate"
@@ -44,6 +32,12 @@
         <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
       </div>
     </div>
+
+    <base-notice
+        class="basket__banner"
+        v-if="selectedRate.duration >= 1"
+        :text="$t('in_this_rate_you_can_change_toys')"
+    />
 
     <div class="basket__info">
       <div>{{ $t('tokens_used') }}</div>
@@ -68,6 +62,7 @@
         )
       </div>
     </div>
+
     <base-button
         class="basket__submit"
         type="yellow"
@@ -108,12 +103,12 @@ import {useAuthStore} from "../../store/client/parent/auth";
 import {useRouter} from "nuxt/app";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseBackdrop from "../../components/base/BaseBackdrop";
+import BaseNotice from "../../components/base/BaseNotice";
 const nuxtApp = useNuxtApp()
 
 const toysCartStore = useToysCartStore();
 
 const isLoading = ref(false);
-const submitWindow = ref(false);
 
 // Цена за доп докены
 const extraTokens = computed(() => toysCartStore.getCount > 100 ? (toysCartStore.getCount-100) : 0);
@@ -166,19 +161,13 @@ onMounted(() => {
 .basket {
 
   &__overall {
-    position: fixed;
-    z-index: 1;
-    bottom: -100%;
-    left: 0;
-    right: 0;
-    padding: $side-space-mobile;
+    padding: 24px $side-space-mobile;
     background-color: white;
-    transition: .3s;
-    box-shadow: 0px -7px 10px 0px rgba(34, 60, 80, 0.2);
+  }
 
-    &--active {
-      bottom: 61px;
-    }
+  &__overall-title {
+    font-size: $fs--default;
+    padding: 8px 0;
   }
 
   &__back {
@@ -206,15 +195,15 @@ onMounted(() => {
     color: $color--blue;
   }
 
+  &__banner {
+    margin: 8px 0;
+  }
+
   &__info {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
     color: $color--blue-dark;
-  }
-
-  &__overall {
-    border-top: 1px solid $color--gray;
   }
 
   &__rates {
