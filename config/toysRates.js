@@ -5,26 +5,26 @@ export const rates = computed((n) => {
     return [
         {
             name_ru: nuxtApp.$t('6_month'),
-            price: 89996,
-            price_monthly: 14999,
+            price: 112200,
+            price_monthly: 18700,
             duration: 6,
         },
         {
             name_ru: nuxtApp.$t('3_month'),
-            price: 47996,
-            price_monthly: 15999,
+            price: 59997,
+            price_monthly: 19999,
             duration: 3,
         },
         {
             name_ru: nuxtApp.$t('1_month'),
-            price: 17990,
-            price_monthly: 17990,
+            price: 22400,
+            price_monthly: 22400,
             duration: 1,
         },
         {
             name_ru: nuxtApp.$t('1_week'),
-            price: 8999,
-            price_monthly: 8999,
+            price: 11200,
+            price_monthly: 11200,
             duration: 0.25,
         },
     ]
