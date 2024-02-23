@@ -77,6 +77,7 @@
   <auth-modal
       :title="$t('request_sending')"
       :enter-button-title="$t('submit_request')"
+      :sms-button-title="$t('submit_request')"
       v-model:open="openAuth"
       @final="authFinal($event)"
   />
@@ -150,7 +151,7 @@ const submit = async () => {
 
 // Еденица длительности (нед, мес)
 const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short');
-const durationUnit = computed(() => selectedRate.value.duration < 1 ? "нед" : "мес");
+const durationUnit = computed(() => selectedRate.value.duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short'));
 
 onMounted(() => {
   toysCartStore.fetchCart();

@@ -17,7 +17,7 @@
           :loading="isLoading"
           full-width
           @click="sendSmsHandle()"
-      >{{ $t('send_code') }}</base-button>
+      >{{ props.smsButtonTitle || $t('send_code') }}</base-button>
     </div>
 
     <div class="auth__content" v-if="step === 2">
@@ -30,7 +30,7 @@
           :loading="isLoading"
           full-width
           @click="submitOtp()"
-      >{{ enterButtonTitle }}</base-button>
+      >{{ props.enterButtonTitle || $t('enter') }}</base-button>
     </div>
   </base-backdrop>
 </template>
@@ -51,6 +51,10 @@ const emit = defineEmits(["update:open", "final"])
 const props = defineProps({
   open: Boolean,
   title: {
+    type: String,
+    default: null
+  },
+  smsButtonTitle: {
     type: String,
     default: null
   },

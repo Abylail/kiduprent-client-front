@@ -10,7 +10,7 @@
   "understand": "Түсінікті",
   "week_short": "апта",
   "month_short": "ай",
-  "year_short": "жыл",
+  "year_short": "жас",
   "from_age_month": "{age} айдан бастап",
   "from_age_year": "{age} жастан бастап",
   "until_age_month": "{age} айға дейін",
@@ -53,5 +53,6 @@
   "enter_phone": "Нөмірді енгізіңіз",
   "enter_sms_code": "Смс кодты енгізіңіз",
   "in_this_rate_you_can_change_toys": "Бұл тарифте ойыншықты кез келген уақытта ауыстыруға болады",
-  "select_rate": "Тарифті таңдаңыз"
+  "select_rate": "Тарифті таңдаңыз",
+  "select": "Таңдаңыз"
 }

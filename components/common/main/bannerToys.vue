@@ -1,6 +1,6 @@
 <template>
   <div :class="[{'banner-toys--mobile': !nuxtApp.$device.isDesktop}, {'banner-toys--desktop': nuxtApp.$device.isDesktop}]">
-    <h2 class="banner-toys__title" v-if="props.title">{{ $t('toy_subscription') }}}</h2>
+    <h2 class="banner-toys__title" v-if="props.title">{{ $t('toy_subscription') }}</h2>
     <h3 class="banner-toys__subtitle" v-if="props.title">{{ $t('take_any_toys_any_time') }} <br/><span class="banner-toys__price">{{ $t('just_for_monthly', {price: '14 999'}) }}</span></h3>
 
     <div class="banner-toys__content">

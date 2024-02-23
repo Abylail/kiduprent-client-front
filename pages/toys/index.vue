@@ -9,6 +9,7 @@
   <div class="toy-filter">
     <div class="toy-filter-right">{{ $t('age') }}</div>
     <base-select
+        :modal-title="$t('select')"
         :model-value="activeAgeKey"
         :options="ages"
         view-type="mini"
