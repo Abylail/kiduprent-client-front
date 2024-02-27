@@ -107,7 +107,9 @@ const props = defineProps({
   }
 })
 
-const valueLabel = computed(() => props.modelValue && props.options.find(o => o[props.itemValue] === props.modelValue)?.[props.itemText])
+const valueLabel = computed(() => {
+  return props.options?.find(o => o[props.itemValue] === props.modelValue)?.[props.itemText]
+})
 
 // Активен ли инпун
 const active = ref(false);

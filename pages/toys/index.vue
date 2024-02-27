@@ -7,13 +7,22 @@
   </mobile-header>
 
   <div class="toy-filter">
-    <div class="toy-filter-right">{{ $t('age') }}</div>
     <base-select
         :modal-title="$t('select')"
         :model-value="activeAgeKey"
         :options="ages"
         view-type="mini"
         @update:modelValue="selectAge($event)"
+    />
+    <base-select
+        :modal-title="$t('select')"
+        :model-value="activeCategoryId"
+        :options="categories"
+        empty-text="Все категории"
+        item-text="name_ru"
+        item-value="id"
+        view-type="mini"
+        @update:modelValue="selectCategory($event)"
     />
   </div>
 
@@ -26,6 +35,7 @@
       <button class="toy-page-help" @click="howItWorks = true">{{ $t('how_it_works') }}</button>
       <a class="toy-page-help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
     </div>
+
     <div class="toy-list">
       <toy-card
         v-for="toy in toysStore.getList" :key="toy.id"
@@ -67,6 +77,8 @@ import BaseBackdrop from "../../components/base/BaseBackdrop";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseButton from "../../components/base/BaseButton";
 import BannerToys from "../../components/common/main/bannerToys";
+import {useToyCategoriesStore} from "../../store/toys/categories";
+
 const nuxtApp = useNuxtApp();
 
 const ages = computed(() => [
@@ -86,8 +98,13 @@ const route = useRoute();
 const activeAgeKey = computed(() => route.query?.ageKey || "0");
 const activeAge = computed(() => ages.value.find(a => a.key === activeAgeKey.value) || ages.value[0]);
 
+const activeCategoryId = computed(() => route.query?.category ? +route.query.category : null);
+
 const toysStore = useToysStore();
 const toysCartStore = useToysCartStore();
+const toyCategoriesStore = useToyCategoriesStore();
+
+const categories = computed(() => [{name_ru: "Все категории", name_kz: "Все категории", id: null}, ...toyCategoriesStore.getList])
 
 const isLoading = ref(false);
 const fetchList = async () => {
@@ -96,12 +113,22 @@ const fetchList = async () => {
   isLoading.value = false;
 }
 await fetchList();
+toyCategoriesStore.fetchList();
 
 const selectAge = async (age) => {
   if (age === activeAgeKey.value) return;
   await router.replace({
     path: '/toys',
     query: {...route.query, ageKey: age || undefined}
+  })
+  fetchList()
+}
+
+const selectCategory = async (categoryId) => {
+  if (categoryId === activeCategoryId.value) return;
+  await router.replace({
+    path: '/toys',
+    query: {...route.query, category: categoryId || undefined}
   })
   fetchList()
 }
@@ -150,6 +177,10 @@ onMounted(() => {
   font-size: 1rem;
   line-height: 1rem;
   font-weight: bold;
+}
+
+.toy-page-categories {
+  padding: 4px 0;
 }
 
 .toy-page--mobile {
