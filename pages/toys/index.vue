@@ -109,7 +109,7 @@ const categories = computed(() => [{name_ru: "Все категории", name_k
 const isLoading = ref(false);
 const fetchList = async () => {
   isLoading.value = true;
-  await toysStore.fetchList({maxAge: activeAge.value.max, minAge: activeAge.value.min});
+  await toysStore.fetchList({maxAge: activeAge.value.max, minAge: activeAge.value.min, categoryId: activeCategoryId.value});
   isLoading.value = false;
 }
 await fetchList();

@@ -11,9 +11,9 @@ const getters = {
 
 const actions = {
     // Получить игрущки
-    async fetchList({maxAge, minAge}) {
+    async fetchList({maxAge, minAge, categoryId}) {
         this.list = null;
-        const { body, err } = await api.get("/toy/get", {params: {maxAge, minAge}});
+        const { body, err } = await api.get("/toy/get", {params: {maxAge, minAge, categoryId}});
         if (!err) this.list = body;
     },
 }
