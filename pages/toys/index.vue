@@ -40,7 +40,7 @@
       <toy-card
         v-for="toy in toysStore.getList" :key="toy.id"
         :toy="toy"
-        basket
+        basket route
       />
     </div>
     <base-loader v-if="isLoading" center-horizontal/>

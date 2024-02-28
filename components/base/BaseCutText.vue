@@ -6,7 +6,7 @@
       class="base-cut-text__show-all"
       v-if="needCut"
       @click.prevent="showAll = true"
-  >показать все</span>
+  >{{ $t('show_all') }}</span>
 </template>
 
 <script setup>

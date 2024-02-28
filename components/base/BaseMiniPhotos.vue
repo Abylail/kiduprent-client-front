@@ -7,7 +7,7 @@
           :src="getImageUrl(photo)"
           :style="{objectFit: props.objectFit}"
           alt=""
-          @click.stop.prevent="clickSlide(index)"
+          @click="clickSlide(index)"
       />
     </div>
 
@@ -59,6 +59,10 @@ const props = defineProps({
     type: String,
     default: "cover",
     validator: of => ["cover", "contain"]
+  },
+  fullOnClick: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -70,6 +74,7 @@ const showBigSlider = computed(() => typeof currentSlide.value === "number")
 const closeBigSlider = () => currentSlide.value = null;
 
 const clickSlide = (index) => {
+  if (!props.fullOnClick) return;
   currentSlide.value = index;
 }
 </script>

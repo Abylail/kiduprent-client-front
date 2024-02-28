@@ -25,5 +25,5 @@ export default defineNuxtPlugin(nuxtApp => {
 
     nuxtApp.provide("i18n", i18n.global);
     nuxtApp.provide("t", i18n.global.t);
-    nuxtApp.provide("getProp", (obj, nameSpace) => obj[`${nameSpace}_${i18n.global.locale}`] || obj[`${nameSpace}_ru}`] || obj[nameSpace])
+    nuxtApp.provide("getProp", (obj, nameSpace) => (obj[`${nameSpace}_${i18n.global.locale}`] || obj[`${nameSpace}_ru}`] || obj[nameSpace]))
 })

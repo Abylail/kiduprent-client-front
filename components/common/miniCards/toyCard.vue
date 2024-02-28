@@ -1,5 +1,5 @@
 <template>
-  <div class="toy-card" :class="{'toy-card--row': props.row}">
+  <div class="toy-card" :class="{'toy-card--row': props.row}" @click="goDetails()">
     <base-mini-photos
         class="toy-card__photos"
         :list="props.toy.photos"
@@ -26,7 +26,7 @@
             type="outline"
             size="mini"
             full-width
-            @click="addHandle()"
+            @click.stop.prevent="addHandle()"
         >{{ $t('add_button') }}</base-button>
         <base-button
             v-else
@@ -34,7 +34,7 @@
             type="outline-gray"
             size="mini"
             full-width
-            @click="removeHandle()"
+            @click.stop.prevent="removeHandle()"
         >{{ $t('remove_button') }}</base-button>
       </div>
     </div>
@@ -48,6 +48,7 @@ import BaseIcon from "../../base/BaseIcon";
 import BaseButton from "../../base/BaseButton";
 import {useToysCartStore} from "../../../store/toys/basket";
 import {computed} from "vue";
+import {useRouter} from "nuxt/app";
 
 const nuxtApp = useNuxtApp();
 
@@ -63,6 +64,10 @@ const props = defineProps({
   row: {
     type: Boolean,
     default: false
+  },
+  route: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -72,6 +77,12 @@ const toyName = computed(() => props.toy.name_ru)
 const toysCartStore = useToysCartStore();
 
 const isIncluded = computed(() => process.client && toysCartStore.getIdList.includes(props.toy.id));
+
+const router = useRouter()
+const goDetails = () => {
+  if (!props.route) return;
+  router.push(`/toys/toy-${props.toy.id}`)
+}
 
 // Добавить игрушку в корзину
 const addHandle = () => {
