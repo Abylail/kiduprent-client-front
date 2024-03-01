@@ -43,7 +43,10 @@
             :class="{'base-select__option--selected': modelValue && (option[itemValue] === modelValue)}"
             v-for="option in pack.value" :key="option"
             @click="selectHandle(option)"
-        >{{ option[itemText] }}</div>
+        >
+          <base-icon class="base-select__option-icon" v-if="props.itemIcon" :name="option[itemIcon]"/>
+          <span>{{ option[itemText] }}</span>
+        </div>
       </div>
     </div>
 
@@ -53,7 +56,10 @@
           :class="{'base-select__option--selected': modelValue && (option[itemValue] === modelValue)}"
           v-for="option in optionList" :key="option"
           @click="selectHandle(option)"
-      >{{ option[itemText] }}</div>
+      >
+        <base-icon class="base-select__option-icon" v-if="props.itemIcon" :name="option[itemIcon]"/>
+        <span>{{ option[itemText] }}</span>
+      </div>
     </div>
 
   </base-backdrop>
@@ -93,6 +99,10 @@ const props = defineProps({
     type: String,
     default: "key"
   },
+  itemIcon: {
+    type: String,
+    default: null
+  },
   modalTitle: {
     type: String,
     default: "Выберите"
@@ -104,7 +114,7 @@ const props = defineProps({
   sorting: { // Сортировать по алфавиту
     type: Boolean,
     default: false
-  }
+  },
 })
 
 const valueLabel = computed(() => {
@@ -227,6 +237,8 @@ $input-height: 28px;
   }
 
   &__option {
+    display: flex;
+    align-items: center;
     padding: 20px $side-space-mobile;
     &:hover {background-color: $color--gray-light}
 
@@ -243,6 +255,11 @@ $input-height: 28px;
     padding: 4px $side-space-mobile;
     background-color: $color--gray-light;
     font-size: $fs--mini;
+  }
+
+  &__option-icon {
+    padding-right: $side-space-mobile;
+    color: $color--blue;
   }
 
 }

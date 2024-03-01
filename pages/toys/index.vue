@@ -18,9 +18,10 @@
         :modal-title="$t('select')"
         :model-value="activeCategoryId"
         :options="categories"
-        empty-text="Все категории"
+        :empty-text="$t('all_categories')"
         item-text="name_ru"
         item-value="id"
+        item-icon="icon_mdi"
         view-type="mini"
         @update:modelValue="selectCategory($event)"
     />
@@ -104,7 +105,7 @@ const toysStore = useToysStore();
 const toysCartStore = useToysCartStore();
 const toyCategoriesStore = useToyCategoriesStore();
 
-const categories = computed(() => [{name_ru: "Все категории", name_kz: "Все категории", id: null}, ...toyCategoriesStore.getList])
+const categories = computed(() => [{name_ru: "Все категории", name_kz: "Все категории", id: null, icon_mdi: "mdi-check-all"}, ...toyCategoriesStore.getList])
 
 const isLoading = ref(false);
 const fetchList = async () => {
