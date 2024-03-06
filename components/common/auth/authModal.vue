@@ -44,6 +44,7 @@ import BaseInput from "../../base/BaseInput";
 import OtpInput from "./otpInput";
 import {phonePreparing} from "../../../helpers/phone";
 import {sendCode, successLogin as analSuccessLogin, errorLogin} from "../../../utlis/analitics";
+import {useToySubscribe} from "../../../store/client/parent/toySubscribe";
 
 const nuxtApp = useNuxtApp()
 
@@ -88,6 +89,7 @@ const successLogin = () => {
 }
 
 const authStore = useAuthStore();
+const toySubscribeStore = useToySubscribe();
 
 const isLoading = ref(false);
 
@@ -117,6 +119,7 @@ const submitOtp = async () => {
   if (isSuccess) {
     analSuccessLogin()
     successLogin();
+    await toySubscribeStore.fetchSubscribe(true);
   }
   else {
     errorLogin()

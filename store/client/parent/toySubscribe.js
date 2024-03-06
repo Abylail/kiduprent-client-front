@@ -16,8 +16,8 @@ const actions = {
     /**
      * Получить подписку
      * */
-    async fetchSubscribe() {
-        if (this.check) return;
+    async fetchSubscribe(force = false) {
+        if (!force && this.check) return;
         const { err, body } = await api.get("/parent/toySubscribe")
         if (!err && body) this.subscribe = body;
         this.check = true;

@@ -14,11 +14,12 @@
 
   <div class="active-toys">
     <div class="title">Игрушки у вас</div>
-    <toy-card
+    <div class="active-toys__list">
+      <toy-card
         v-for="toy in toySubscriberStore.getToys" :key="toy.id"
         :toy="toy"
-        row
-    />
+      />
+    </div>
     <base-button class="active-toys__order" type="yellow" full-width @click="router.push('/toys')">Заказать другие игрушки</base-button>
     <base-notice text="Что бы поменять игрушки вы можете оставить заявку на новые игрушки"/>
   </div>
@@ -65,6 +66,16 @@ const router = useRouter();
 
 .active-toys {
   margin-top: 16px;
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+
+    & > * {
+      margin-right: 8px;
+    }
+  }
 
   &__order {
     margin: 16px 0;

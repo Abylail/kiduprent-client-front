@@ -71,7 +71,6 @@ const actions = {
 
     // Записать координаты пользователя
     setUserCoords(coords) {
-        console.log(coords)
         this.clientCoords = JSON.parse(JSON.stringify(coords));
     }
 }
