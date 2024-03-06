@@ -98,6 +98,7 @@ const removeHandle = () => {
 
 // Получить возраст
 const getAge = (toy) => {
+  if (!toy.min_age && !toy.max_age) return null;
   let minAge = "";
   if (!toy.min_age) minAge = "";
   else if (toy.min_age % 12 === 0) minAge = nuxtApp.$t("from_age_year", {age: toy.min_age/12});

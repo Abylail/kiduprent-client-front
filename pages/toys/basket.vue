@@ -20,6 +20,7 @@
   </div>
 
   <div class="basket__overall" v-if="!!toysCartStore.getList.length">
+    <div v-if="!haveSubscribe">
     <h2 class="basket__overall-title">{{ $t('select_rate') }}</h2>
     <div class="basket__rates">
       <div
@@ -32,10 +33,11 @@
         <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
       </div>
     </div>
+    </div>
 
     <base-notice
         class="basket__banner"
-        v-if="selectedRate.duration >= 1"
+        v-if="!haveSubscribe && selectedRate.duration >= 1"
         :text="$t('in_this_rate_you_can_change_toys')"
     />
 
@@ -46,15 +48,15 @@
         <span v-else>{{toysCartStore.getCount}}</span>
       </div>
     </div>
-    <div class="basket__info">
+    <div class="basket__info" v-if="!haveSubscribe">
       <div>{{ $t('price') }}</div>
       <div><strong>{{ priceMonthly }} тг/{{durationUnit}}</strong></div>
     </div>
-    <div class="basket__info" v-if="extraTokens">
+    <div class="basket__info" v-if="extraTokens && !haveSubscribe">
       <div>{{ $t('extra_tokens') }} ({{ extraTokens }})</div>
       <div><strong>{{ extraPrice }} тг/{{durationUnit}}</strong></div>
     </div>
-    <div class="basket__info">
+    <div class="basket__info" v-if="!haveSubscribe">
       <div>{{ $t('to_pay') }}</div>
       <div>{{ price }} (
         <span v-if="selectedRate.duration >= 1">{{ selectedRate.duration }} {{durationUnit}}</span>
@@ -70,7 +72,7 @@
         :loading="isLoading"
         full-width
         @click="submitHandle()"
-    >{{ $t('submit_request') }}</base-button>
+    >{{ submitText }}</base-button>
     <a class="basket__help" href="https://wa.me/77753862246" target="_blank">{{ $t('manager_help') }}</a>
   </div>
 
@@ -105,9 +107,14 @@ import {useRouter} from "nuxt/app";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseBackdrop from "../../components/base/BaseBackdrop";
 import BaseNotice from "../../components/base/BaseNotice";
+import {useToySubscribe} from "../../store/client/parent/toySubscribe";
 const nuxtApp = useNuxtApp()
 
 const toysCartStore = useToysCartStore();
+
+const toySubscriberStore = useToySubscribe();
+const haveSubscribe = computed(() => !!toySubscriberStore.getSubscribe)
+const submitText = computed(() => haveSubscribe?.value ? nuxtApp.$t('submit_request_for_change') : nuxtApp.$t('submit_request'))
 
 const isLoading = ref(false);
 
