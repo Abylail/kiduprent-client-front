@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/logo-reverse.svg' }
       ],
     },
-    baseURL: process.env.NUXT_APP_BASE_URL
+    baseURL: process.env.NUXT_APP_BASE_URL,
   },
   css: ["~/assets/styles/global.scss"],
   vite: {
