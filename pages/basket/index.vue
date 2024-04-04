@@ -2,7 +2,6 @@
   <mobile-header
       :title="$t('cart')"
       lang-switch
-      go-back="/toys"
   />
 
   <div class="basket" v-if="!!toysCartStore.getList.length">

@@ -2,7 +2,7 @@
   <mobile-header lang-switch>
     <div class="search-head">
       <nuxt-img class="search-head-logo"  src="/logo.svg" alt="logo"/>
-      <span>Kidup.kz</span>
+      <span>Товары</span>
     </div>
   </mobile-header>
 

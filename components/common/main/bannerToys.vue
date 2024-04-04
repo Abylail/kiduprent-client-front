@@ -77,7 +77,6 @@ const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : 
   background-size: cover;
   color: $color--blue-dark;
   padding: 24px $side-space-mobile;
-  background-color: $color--yellow;
   //border-radius: 10px;
 
   .banner-toys__title {

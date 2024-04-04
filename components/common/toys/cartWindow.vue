@@ -33,7 +33,7 @@ const monthlyPrice = computed(() => (rates.value[0].price_monthly + extraPrice.v
 
 const router = useRouter()
 const goCart = () => {
-  router.push("/toys/basket");
+  router.push("/basket");
 }
 </script>
 

@@ -1,16 +1,19 @@
 <template>
   <div :class="[{'banner--mobile': !$device.isDesktop}, {'banner--desktop': $device.isDesktop}]">
     <h1 class="banner-title">
-      <span class="banner-hidden">Kidup.kz - </span>
-      Центры и кружки <br/>в одном месте
+      <span class="banner-hidden">Kidup rent - </span>
+      Подписка <br/>на детские товары
     </h1>
     <h2 class="banner-subtitle">
-      Лучшие места и занятия для развития ваших детей
+      Берите любые детские товары по подписке.
     </h2>
+    <p class="banner-subtitle">
+      Коляски, манежи, товары для развития ребенка и многое другое
+    </p>
     <button
         class="banner-action"
         @click="goLessons()"
-    >Поиск уроков</button>
+    >В каталог</button>
   </div>
 </template>
 
@@ -20,7 +23,7 @@ const { $device } = useNuxtApp();
 
 const router = useRouter();
 const goLessons = () => {
-  router.push("/catalog/almaty/lessons")
+  router.push("/toys")
 }
 </script>
 
@@ -28,12 +31,14 @@ const goLessons = () => {
 .banner--mobile {
   background-image: url("/banner.jpg");
   width: calc(100% - 35% - #{$side-space-mobile});
-  height: 55vw;
+  min-height: 55vw;
   background-size: cover;
   color: white;
   padding-right: 35%;
   padding-left: $side-space-mobile;
   padding-top: $side-space-mobile;
+  padding-bottom: $side-space-mobile;
+  background-position: 50% 75%;
 
   .banner-title {
     font-size: 5vw;
@@ -66,12 +71,13 @@ const goLessons = () => {
 .banner--desktop {
   background-image: url("/banner.jpg");
   width: 320px;
-  height: 250px;
+  min-height: 250px;
   background-size: cover;
   color: white;
   padding-right: 200px;
   padding-left: $side-space-mobile;
   padding-top: $side-space-mobile;
+  padding-bottom: $side-space-mobile;
 
   .banner-title {
     font-size: $fs--big-title;

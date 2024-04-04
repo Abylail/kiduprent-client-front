@@ -149,8 +149,7 @@ const connectPhone = computed(() => authStore.getClientData?.phone)
   padding: 20px;
   text-align: center;
   width: calc(100% - 4*#{$side-space-mobile});
-  margin-left: auto;
-  margin-right: auto;
+  margin: 16px auto;
 
   &__title {
     margin-bottom: 5px;

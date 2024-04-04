@@ -2,7 +2,7 @@
   <mobile-header :lang-switch="false">
     <div class="main-page-mobile-header-title">
       <nuxt-img class="main-page-mini-logo" src="/logo.svg" alt="logo"/>
-      <span>Kidup.kz</span>
+      <span>Kidup rent</span>
     </div>
   </mobile-header>
   <div :class="[{'main-page--mobile': !$device.isDesktop}, {'main-page--desktop': $device.isDesktop}]">
@@ -12,37 +12,11 @@
 <!--      <subject-list class="container&#45;&#45;white main-page-block"/>-->
     </div>
 
-    <!-- Топ центры -->
-    <div class="main-page-block">
-      <card-list title="Подборки уроков">
-        <lessons-collection-card
-            v-for="(lessonCollection, index) in lessonsCollections" :key="index"
-            :title="lessonCollection.title"
-            :image-path="lessonCollection.imagePath"
-            :path="lessonCollection.path"
-            @click="goCollection(lessonsCollections)"
-        />
-      </card-list>
-    </div>
-
-<!--    <div class="main-page-block">-->
-      <banner-toys title go-catalog/>
+    <banner-toys/>
 <!--    </div>-->
-
-    <!-- Топ центры -->
-    <div class="main-page-block">
-      <card-list title="Топ центры" to="/catalog/almaty/centers">
-        <center-card
-            v-for="(lesson, index) in mainStore.getTopCenters" :key="index"
-            :info="lesson"
-        />
-      </card-list>
-    </div>
 
     <!-- Напишите нам -->
     <still-questions/>
-
-    <subjects-feed title="Интересные занятия"/>
 
   </div>
 </template>

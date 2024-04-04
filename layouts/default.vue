@@ -20,10 +20,10 @@ import DesktopHeader from "../components/common/layoutComponents/desktopHeader";
 const { $device } = useNuxtApp();
 
 useSeoMeta({
-  title: "Kidup - развитие ребенка",
-  ogTitle: "Kidup - развитие ребенка",
-  description: "Центры, курсы и уроки для детей",
-  ogDescription: "Центры, курсы и уроки для детей",
+  title: "Kidup - подписка на детские товары",
+  ogTitle: "Kidup - подписка на детские товары",
+  description: "Берите любые детские товары по подписке. Коляски, манежи, товары для развития ребенка, эрго рюкзаки, пеленальный стол и многое другое.",
+  ogDescription: "Берите любые детские товары по подписке. Коляски, манежи, товары для развития ребенка, эрго рюкзаки, пеленальный стол и многое другое.",
 })
 </script>
 

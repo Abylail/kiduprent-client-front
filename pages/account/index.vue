@@ -9,16 +9,6 @@
       <personal-data/>
     </div>
 
-    <div class="account__block">
-      <div class="title">Мои дети</div>
-      <children/>
-    </div>
-
-    <div class="account__block">
-      <div class="title">Записи</div>
-      <registrations @select="selectRegistration($event)"/>
-    </div>
-
     <div class="account__block" v-if="toySubscriberStore.getSubscribe">
       <div class="title">Подписка на игрушки</div>
       <toy-subsribe/>
@@ -29,7 +19,7 @@
   <!-- Не авторизованный -->
   <div class="account" v-else>
     <div class="account__auth">
-      <p class="account__auth-text">Войдите что бы вы могли записываться и смотреть расписание</p>
+      <p class="account__auth-text">Войдите что бы вы могли обменивать товары</p>
       <base-button @click="openAuth = true">Вход / Регистрация</base-button>
     </div>
   </div>
@@ -40,11 +30,9 @@
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import PersonalData from "../../components/common/account/personalData";
-import Children from "../../components/common/account/children";
 import {useAuthStore} from "../../store/client/parent/auth";
 import AuthModal from "../../components/common/auth/authModal";
 import BaseButton from "../../components/base/BaseButton";
-import Registrations from "../../components/common/account/registrations";
 import {useRouter} from "nuxt/app";
 import ToySubsribe from "../../components/common/account/toySubsribe";
 import {useToySubscribe} from "../../store/client/parent/toySubscribe";
