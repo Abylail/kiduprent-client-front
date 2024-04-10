@@ -33,13 +33,21 @@
             full-width
             @click.stop.prevent="addHandle()"
         >{{ $t('add_button') }}</base-button>
-        <base-button
-            v-else
-            class="toy-card__add"
-            type="outline-gray"
-            full-width
-            @click.stop.prevent="removeHandle()"
-        >{{ $t('remove_button') }}</base-button>
+        <div class="toy-details-basket-added" v-else>
+          <base-button
+              class="toy-card__add"
+              type="outline-gray"
+              @click.stop.prevent="removeHandle()"
+          >
+            <base-icon name="mdi-delete"/>
+          </base-button>
+          <base-button
+              class="toy-card__add"
+              type="naked-blue"
+              full-width
+              @click.stop.prevent="goCart()"
+          >{{ $t('add_to_cart') }}</base-button>
+        </div>
       </div>
     </div>
 
@@ -85,7 +93,7 @@
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import {useToysStore} from "../../store/toys";
 import {computed} from "vue";
-import {useRoute} from "nuxt/app";
+import {useRoute, useRouter} from "nuxt/app";
 import BaseMiniPhotos from "../../components/base/BaseMiniPhotos";
 import BaseIcon from "../../components/base/BaseIcon";
 import BaseButton from "../../components/base/BaseButton";
@@ -97,6 +105,7 @@ const nuxtApp = useNuxtApp();
 
 const toysStore = useToysStore();
 
+const router = useRouter();
 const route = useRoute();
 const toyId = computed(() => +route.params.id);
 
@@ -106,6 +115,11 @@ await toysStore.fetchOne(toyId.value);
 const toysCartStore = useToysCartStore();
 
 const isIncluded = computed(() => process.client && toysCartStore.getIdList.includes(toysStore.getSingle.id));
+
+// Перейти в корзину
+const goCart = () => {
+  router.push("/basket");
+}
 
 // Добавить игрушку в корзину
 const addHandle = () => {
@@ -172,6 +186,11 @@ const age = computed(() => {
 
   .toy-details-basket {
     margin-top: 16px;
+  }
+
+  .toy-details-basket-added {
+    display: flex;
+    gap: 8px;
   }
 
   .toy-details-description {

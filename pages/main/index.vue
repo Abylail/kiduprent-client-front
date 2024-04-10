@@ -13,6 +13,8 @@
     </div>
 
     <banner-toys/>
+
+    <prices/>
 <!--    </div>-->
 
     <!-- Напишите нам -->
@@ -24,14 +26,11 @@
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
 import CardList from "../../components/common/cardList";
-import CenterCard from "../../components/common/miniCards/centerCard";
 import {useMainStore} from "../../store/main";
-import SubjectList from "../../components/common/main/subjectList";
-import SubjectsFeed from "../../components/common/main/subjectsFeed";
 import StillQuestions from "../../components/common/main/stillQuestions";
 import Banner from "../../components/common/main/banner";
-import LessonsCollectionCard from "../../components/common/main/lessonsCollectionCard";
 import BannerToys from "../../components/common/main/bannerToys";
+import Prices from "../../components/common/main/prices";
 const { $device } = useNuxtApp();
 
 const mainStore = useMainStore();

@@ -1,7 +1,7 @@
 <template>
   <div :class="[{'banner-toys--mobile': !nuxtApp.$device.isDesktop}, {'banner-toys--desktop': nuxtApp.$device.isDesktop}]">
     <h2 class="banner-toys__title" v-if="props.title">{{ $t('toy_subscription') }}</h2>
-    <h3 class="banner-toys__subtitle" v-if="props.title">{{ $t('take_any_toys_any_time') }} <br/><span class="banner-toys__price">{{ $t('just_for_monthly', {price: '18 700'}) }}</span></h3>
+    <h3 class="banner-toys__subtitle" v-if="props.title">{{ $t('take_any_toys_any_time') }} <br/><span class="banner-toys__price">{{ $t('just_for_monthly', {price: '20 840'}) }}</span></h3>
 
     <div class="banner-toys__content">
     <div class="banner-toys__block">
@@ -33,16 +33,6 @@
         <div class="banner-toys__block-description">{{ $t('you_can_change_old') }}</div>
       </div>
     </div>
-    </div>
-
-    <div>
-      <h3 class="banner-toys__price">{{ $t('rates') }}</h3>
-      <div class="banner-toys__rates">
-        <div class="banner-toys__rate" v-for="(rate, index) in rates" :key="index">
-          <div class="banner-toys__rate-title">{{ rate.price_monthly.toLocaleString() }} тг/{{ getDurationUnit(rate.duration) }}</div>
-          <div>{{ rate.name_ru }} ({{ rate.price.toLocaleString() }})</div>
-        </div>
-      </div>
     </div>
 
     <base-button v-if="props.goCatalog" full-width size="big" @click="router.push('/toys')">{{ $t('look_catalog') }}</base-button>
@@ -99,7 +89,8 @@ const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : 
     display: flex;
     flex-direction: row;
     column-gap: 16px;
-    margin: 48px 0;
+    &:not(:first-child) {margin-top: 48px;}
+    &:not(:last-child) {margin-bottom: 48px;}
 
     &.reverse {
       flex-direction: row-reverse;
