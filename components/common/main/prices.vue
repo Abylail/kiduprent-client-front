@@ -93,13 +93,28 @@ const submitHandle = r => {
 
 <style lang="scss" scoped>
 .prices {
+  margin: 20px;
+
+  &__title {
+    padding-bottom: 8px;
+  }
+
+  &__rates {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 8px;
+  }
 
   &__rate {
+    flex: 1;
+    min-width: 300px;
     background-color: white;
-    margin: 24px 0;
+    margin: 12px 0;
     padding: 16px;
     text-align: center;
     border-radius: 12px;
+    box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
   }
 
   &__rate-head {
@@ -167,7 +182,7 @@ const submitHandle = r => {
   }
 
   &__submit {
-    font-size: $fs--title;
+    font-size: $fs--default;
   }
 
 }
