@@ -44,6 +44,15 @@
         v-model:open="openAuth"
         @final="authFinal($event)"
     />
+
+    <base-backdrop v-model:active="thanksWindow">
+      <div class="thanks-window container">
+        <base-icon class="thanks-window__icon" name="mdi-party-popper" size="70"/>
+        <div class="thanks-window__title">{{ $t('thank_you_for_request') }}</div>
+        <div class="thanks-window__subtitle">{{ $t('manager_calls_you') }}</div>
+        <base-button type="yellow" size="big" full-width @click="router.push('/main')">{{ $t('go_main') }}</base-button>
+      </div>
+    </base-backdrop>
   </div>
 </template>
 
@@ -57,6 +66,8 @@ import BaseIcon from "../../base/BaseIcon";
 import {useToysCartStore} from "../../../store/toys/basket";
 import {useAuthStore} from "../../../store/client/parent/auth";
 import AuthModal from "../auth/authModal";
+import BaseBackdrop from "../../base/BaseBackdrop";
+import {useRouter} from "nuxt/app";
 
 // Еденица длительности (нед, мес)
 const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short');
@@ -68,6 +79,8 @@ const toysCartStore = useToysCartStore();
 const authStore = useAuthStore();
 
 const selectedRate = ref(null);
+
+const router = useRouter();
 
 // Отправить
 const submit = async () => {
@@ -185,5 +198,28 @@ const submitHandle = r => {
     font-size: $fs--default;
   }
 
+}
+
+.thanks-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__title {
+    text-align: center;
+    font-size: $fs--title;
+    margin: 24px 0 12px;
+  }
+
+  &__subtitle {
+    text-align: center;
+    margin: 12px 0 32px;
+  }
+
+  &__icon {
+    padding-top: 24px;
+    color: $color--blue;
+  }
 }
 </style>
