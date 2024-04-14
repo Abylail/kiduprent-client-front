@@ -115,19 +115,31 @@ const submitHandle = r => {
   &__rates {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-template-columns: repeat(4, minmax(330px, 1fr));
     gap: 8px;
+
+    user-select: none;
+    height: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory;
+    padding: 12px;
   }
 
   &__rate {
     flex: 1;
     min-width: 300px;
     background-color: white;
-    margin: 12px 0;
     padding: 16px;
     text-align: center;
     border-radius: 12px;
     box-shadow: 0px 4px 10px 0px rgba(34, 60, 80, 0.2);
+
+    display: inline-block;
+    scroll-snap-align: center;
+    margin: 0 4px;
+    &:first-child {margin-left: 0}
+    &:last-child {margin-right: 0}
   }
 
   &__rate-head {
@@ -172,7 +184,7 @@ const submitHandle = r => {
   }
 
   &__rate-price {
-    padding: 8px 0;
+    padding: 16px 0;
   }
 
   &__rate-minuses {
