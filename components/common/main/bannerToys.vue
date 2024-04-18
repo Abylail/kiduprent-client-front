@@ -8,18 +8,18 @@
       <video class="banner-toys__video" autoplay muted loop playsinline>
         <source :src="'/bannertoys1.MOV'" type="video/mp4">
       </video>
-      <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">{{ $t('select_toys') }}</div>
+      <div class="banner-toys__block-info">
+        <div class="banner-toys__block-title">1. {{ $t('select_toys') }}</div>
         <div class="banner-toys__block-description">{{ $t('select_from_catalog_many_toys', {count: '100'}) }}</div>
       </div>
     </div>
 
-    <div class="banner-toys__block reverse">
+    <div class="banner-toys__block">
       <video class="banner-toys__video" autoplay muted loop playsinline>
         <source :src="'/bannertoys2.MOV'" type="video/mp4">
       </video>
-      <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">{{ $t('get_and_play') }}</div>
+      <div class="banner-toys__block-info">
+        <div class="banner-toys__block-title">2. {{ $t('get_and_play') }}</div>
         <div class="banner-toys__block-description">{{ $t('keep_toys_until_boring') }}</div>
       </div>
     </div>
@@ -28,8 +28,8 @@
       <video class="banner-toys__video" autoplay muted loop playsinline>
         <source :src="'/bannertoys3.MOV'" type="video/mp4">
       </video>
-      <div class="banner-toys__block-into">
-        <div class="banner-toys__block-title">{{ $t('change_when_you_want') }}</div>
+      <div class="banner-toys__block-info">
+        <div class="banner-toys__block-title">3. {{ $t('change_when_you_want') }}</div>
         <div class="banner-toys__block-description">{{ $t('you_can_change_old') }}</div>
       </div>
     </div>
@@ -89,18 +89,23 @@ const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : 
     display: flex;
     flex-direction: row;
     column-gap: 16px;
-    &:not(:first-child) {margin-top: 48px;}
-    &:not(:last-child) {margin-bottom: 48px;}
+    &:not(:first-child) {margin-top: 24px;}
+    &:not(:last-child) {margin-bottom: 24px;}
 
     &.reverse {
       flex-direction: row-reverse;
     }
   }
 
+  .banner-toys__block-info {
+    display: flex;
+    align-items: center;
+  }
+
   .banner-toys__video {
-    height: 35vw;
-    width: 50vw;
-    min-width: 50vw;
+    height: 21vw;
+    width: 30vw;
+    min-width: 30vw;
     border-radius: 5px;
     overflow: hidden;
     object-fit: cover;
@@ -112,6 +117,7 @@ const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : 
   }
 
   .banner-toys__block-description {
+    display: none;
     font-size: $fs--mini;
     padding: 8px 0;
     color: $color--gray-dark;

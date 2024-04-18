@@ -1,5 +1,8 @@
 <template>
   <div class="card-list">
+    <div class="card-list__top-head container" v-if="subTitle">
+      <div class="card-list__subtitle">{{ subTitle }}</div>
+    </div>
     <div class="card-list__head container">
       <h2 class="card-list__title title">{{ props.title }}</h2>
       <nuxt-link class="card-list__go-all" v-if="props.to" :to="props.to">Смотреть все</nuxt-link>
@@ -20,12 +23,7 @@
 <script setup>
 const props = defineProps({
   title: String,
-  list: {
-    type: Array,
-    default: () => ([
-        { title: "Программирование для детей", rating: 4.9, address: "Макатаева 189", lang: "ru" }
-    ])
-  },
+  subTitle: String,
   to: {
     type: String,
     default: null
@@ -52,10 +50,13 @@ const props = defineProps({
     align-items: center;
   }
 
+  &__subtitle {
+    color: $color--gray-dark;
+  }
+
   &__go-all {
     color: $color--blue;
-    font-weight: bold;
-    font-size: $fs--mini;
+    //font-weight: bold;
   }
 
   &__card-loading {

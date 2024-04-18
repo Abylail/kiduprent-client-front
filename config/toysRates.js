@@ -5,8 +5,8 @@ export const rates = computed((n) => {
     return [
         {
             name_ru: nuxtApp.$t("6_month"),
-            price: 125040,
-            price_monthly: 20840,
+            price: 112200,
+            price_monthly: 18700,
             stars: 3,
             pluses: [
                 "100 токенов",
@@ -20,8 +20,8 @@ export const rates = computed((n) => {
         },
         {
             name_ru: nuxtApp.$t("3_month"),
-            price: 67500,
-            price_monthly: 22500,
+            price: 59997,
+            price_monthly: 19999,
             stars: 2,
             pluses: [
                 "100 токенов",
@@ -37,8 +37,8 @@ export const rates = computed((n) => {
         },
         {
             name_ru: nuxtApp.$t("1_month"),
-            price: 29167,
-            price_monthly: 29167,
+            price: 23400,
+            price_monthly: 23400,
             stars: 1,
             pluses: [
                 "100 токенов",
@@ -54,8 +54,8 @@ export const rates = computed((n) => {
         },
         {
             name_ru: nuxtApp.$t("1_week"),
-            price: 21000,
-            price_monthly: 21000,
+            price: 15880,
+            price_monthly: 15880,
             stars: 0,
             pluses: [
                 "100 токенов",

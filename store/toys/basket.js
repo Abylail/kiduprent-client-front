@@ -26,6 +26,12 @@ const actions = {
         localStorage.setItem(basketKey, JSON.stringify(this.list))
     },
 
+    // Добавить игрушки
+    async addToys(toyList) {
+        this.list = toyList;
+        this.syncStorageList();
+    },
+
     // Добавить игрушку
     async addToy(toy) {
         this.list.push(toy);
