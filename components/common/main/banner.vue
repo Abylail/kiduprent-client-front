@@ -1,19 +1,15 @@
 <template>
-  <div :class="[{'banner--mobile': !$device.isDesktop}, {'banner--desktop': $device.isDesktop}]">
-    <h1 class="banner-title">
-      <span class="banner-hidden">Kidup rent - </span>
-      Подписка <br/>на детские товары
-    </h1>
-    <h2 class="banner-subtitle">
-      Берите любые детские товары по подписке.
-    </h2>
-    <p class="banner-subtitle">
-      Коляски, манежи, товары для развития ребенка и многое другое
-    </p>
-    <button
-        class="banner-action"
-        @click="goLessons()"
-    >В каталог</button>
+  <div class="banner" :class="[{'banner--mobile': !$device.isDesktop}, {'banner--desktop': $device.isDesktop}]">
+    <div class="banner__actions">
+      <a
+          class="banner-go-prices"
+          href="#prices"
+      >Тарифы</a>
+      <button
+          class="banner-go-catalog"
+          @click="goLessons()"
+      >Товары</button>
+    </div>
   </div>
 </template>
 
@@ -29,81 +25,86 @@ const goLessons = () => {
 
 <style lang="scss" scoped>
 .banner--mobile {
-  background-image: url("/banner.jpg");
-  width: calc(100% - 35% - #{$side-space-mobile});
+  position: relative;
+  background-image: url("/banner.png");
   min-height: 55vw;
   background-size: cover;
   color: white;
-  padding-right: 35%;
-  padding-left: $side-space-mobile;
-  padding-top: $side-space-mobile;
-  padding-bottom: $side-space-mobile;
-  background-position: 50% 75%;
+  padding: 32px;
+  background-position: center;
 
-  .banner-title {
-    font-size: 5vw;
-    line-height: 1.5;
-    text-transform: uppercase;
+  .banner__actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: center;
+    position: absolute;
+    bottom: 5vw;
+    width: calc(100% - 64px);
   }
 
-  .banner-subtitle {
-    margin-top: 6vw;
-    font-size: 3vw;
-    line-height: 1.5;
-    text-transform: uppercase;
+  .banner-go-prices {
+    border: 1px solid #F9705A;
+    color: #F9705A;
+    font-size: 4vw;
+    width: 120px;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px 0;
+    border-radius: 10px;
   }
 
-  .banner-action {
-    display: inline-block;
-    margin-top: 7vw;
+  .banner-go-catalog {
     background-color: #F9705A;
     color: white;
-    font-size: 4.5vw;
-    padding: 8px 12px;
+    width: 120px;
+    text-align: center;
+    font-size: 4vw;
+    padding: 10px 0;
     border-radius: 10px;
-    box-shadow: 0px 0px 8px 3px rgba(34, 60, 80, 0.25);
-  }
-
-  .banner-hidden {
-    display: none;
   }
 }
 .banner--desktop {
-  background-image: url("/banner.jpg");
-  width: 320px;
-  min-height: 250px;
+  position: relative;
+  background-image: url("/banner.png");
+  width: 100%;
+  max-width: 700px;
+  min-height: 400px;
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
-  padding-right: 200px;
-  padding-left: $side-space-mobile;
-  padding-top: $side-space-mobile;
-  padding-bottom: $side-space-mobile;
+  margin: 32px auto;
+  border-radius: 24px;
 
-  .banner-title {
-    font-size: $fs--big-title;
-    line-height: 1.5;
-    text-transform: uppercase;
+  .banner__actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    justify-content: center;
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
   }
 
-  .banner-subtitle {
-    margin-top: 20px;
-    font-size: $fs--default;
-    line-height: 1.5;
-    text-transform: uppercase;
-  }
-
-  .banner-action {
-    display: inline-block;
-    margin-top: 20px;
-    background-color: #F9705A;
-    color: white;
+  .banner-go-prices {
+    border: 1px solid #F9705A;
+    color: #F9705A;
     font-size: $fs--title;
-    padding: 8px 12px;
+    width: 140px;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px 0;
     border-radius: 10px;
   }
 
-  .banner-hidden {
-    display: none;
+  .banner-go-catalog {
+    background-color: #F9705A;
+    color: white;
+    font-size: $fs--title;
+    padding: 10px 0;
+    width: 140px;
+    border-radius: 10px;
   }
 }
 </style>

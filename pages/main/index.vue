@@ -33,7 +33,6 @@
 
 <script setup>
 import MobileHeader from "../../components/common/layoutComponents/mobileHeader";
-import {useMainStore} from "../../store/main";
 import StillQuestions from "../../components/common/main/stillQuestions";
 import Banner from "../../components/common/main/banner";
 import BannerToys from "../../components/common/main/bannerToys";
@@ -131,12 +130,6 @@ definePageMeta({
   .main-page-search-wrapper {
     padding: $side-space-mobile;
     background-color: white;;
-  }
-
-  .main-page-top {
-    display: grid;
-    grid-template-columns: 540px 1fr;
-    margin: 16px 0;
   }
 
   .main-page-mini-logo {

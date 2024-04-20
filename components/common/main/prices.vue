@@ -1,5 +1,5 @@
 <template>
-  <div class="prices container">
+  <div class="prices container" id="prices">
     <h3 class="prices__title">{{ $t('rates') }}</h3>
     <div class="prices__rates">
       <div class="prices__rate" v-for="(rate, index) in rates" :key="index">
