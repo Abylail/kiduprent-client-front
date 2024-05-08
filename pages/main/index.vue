@@ -11,6 +11,16 @@
       <banner/>
     </div>
 
+    <div class="container go-survey">
+      <base-go-button
+        title="Получите 5000 тг"
+        sub-title="Пройдите маленький опрос"
+        icon="mdi-gift-outline"
+        type="bright"
+        @click="goSurvey()"
+      />
+    </div>
+
     <category-packs v-if="packsStore.getMainCategory" :category="packsStore.getMainCategory"/>
 
     <!-- Как это работает -->
@@ -39,15 +49,21 @@ import BannerToys from "../../components/common/main/bannerToys";
 import Prices from "../../components/common/main/prices";
 import {usePacksStore} from "../../store/packs";
 import CategoryPacks from "../../components/common/main/categoryPacks";
+import BaseButton from "../../components/base/BaseButton";
+import BaseGoButton from "../../components/base/BaseGoButton";
+import {useRouter} from "nuxt/app";
 const { $device } = useNuxtApp();
+
+
 
 const packsStore = usePacksStore();
 
 // Запрашиваю пакеты
 packsStore.fetchPackCategories();
 
-const goCollection = (collection) => {
-  console.log(collection)
+const router = useRouter();
+const goSurvey = () => {
+  router.push("/account/survey")
 }
 
 definePageMeta({
@@ -167,5 +183,10 @@ definePageMeta({
     margin-right: 8px;
   }
 
+}
+
+.go-survey {
+  margin: 16px 0;
+  max-width: 700px;
 }
 </style>

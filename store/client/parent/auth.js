@@ -72,7 +72,12 @@ const actions = {
     // Записать координаты пользователя
     setUserCoords(coords) {
         this.clientCoords = JSON.parse(JSON.stringify(coords));
-    }
+    },
+
+    async sendSurvey(answer) {
+        const { err, body } = await api.post("/toy/survey", {answer})
+        if (!err && body) this.clientData = body;
+    },
 }
 
 export const useAuthStore = defineStore("auth", {

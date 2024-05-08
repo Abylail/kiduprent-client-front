@@ -53,7 +53,7 @@ const actions = {
 
     // Отправить запрос на подписку
     async submitRequest(rate) {
-        const {err} = await api.post("/toy/subscribeRequest", {cart: this.list, rate})
+        const {err} = await api.post("/toy/subscribeRequest", {cart: this.list, rate: {...rate, price: (rate.sale_price || rate.price)}})
         if (!err) this.clear();
         return !err;
     },

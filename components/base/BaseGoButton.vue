@@ -1,5 +1,5 @@
 <template>
-  <button class="go-button" v-bind="$attrs">
+  <button class="go-button" :class="`go-button--${props.type}`" v-bind="$attrs">
     <base-icon class="go-button__icon" :name="icon"/>
     <div class="go-button__content">
       <span class="go-button__title">{{ title }}</span>
@@ -16,6 +16,11 @@ const props = defineProps({
   title: String,
   subTitle: String,
   icon: String,
+  type: {
+    type: String,
+    default: "default",
+    validator: t => ["default", "bright"].includes(t)
+  }
 })
 </script>
 
@@ -27,15 +32,12 @@ const props = defineProps({
   align-items: center;
   font-size: $fs--default;
   width: 100%;
-  background: white;
   padding: 10px;
   min-height: 64px;
   border-radius: 14px;
-  color: $color--black;
   text-align: left;
 
   &__icon {
-    background-color: white;
     padding: 8px;
     border-radius: 14px;
     color: $color--blue;
@@ -52,6 +54,20 @@ const props = defineProps({
 
   &__subtitle {
     color: $color--gray-dark;
+  }
+
+  // Типы
+  &--default {
+    background: white;
+    color: $color--black;
+    .go-button__icon {color: $color--blue;}
+    .go-button__subtitle {color: $color--gray-dark;}
+  }
+  &--bright {
+    background: #ff8334;
+    color: white;
+    .go-button__icon {color: white;}
+    .go-button__subtitle {color: $color--gray-light;}
   }
 }
 </style>

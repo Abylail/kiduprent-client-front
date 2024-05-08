@@ -1,8 +1,8 @@
 <template>
   <div class="prices container" id="prices">
-    <h3 class="prices__title">{{ $t('rates') }}</h3>
+    <h3 class="prices__title">{{ props.title || $t('rates') }}</h3>
     <div class="prices__rates">
-      <div class="prices__rate" v-for="(rate, index) in rates" :key="index">
+      <div class="prices__rate" v-for="(rate, index) in prices" :key="index">
         <div class="prices__rate-head">
           <div>
             <div class="prices__rate-title">{{ rate.name_ru }}</div>
@@ -32,7 +32,8 @@
           </div>
         </div>
 
-        <div class="prices__rate-price">К оплате: {{ rate.price.toLocaleString() }} тг</div>
+        <div class="prices__rate-price" :class="{'prices__rate-price--crossed': !!rate.sale_price}">К оплате: {{ rate.price.toLocaleString() }} тг</div>
+        <div class="prices__rate-price-sale" v-if="rate.sale_price">Со скидкой: {{ rate.sale_price.toLocaleString() }} тг</div>
         <base-button class="prices__submit" type="yellow" @click="submitHandle(rate)">Оставить заявку</base-button>
       </div>
     </div>
@@ -61,13 +62,23 @@ import BaseButton from "../../base/BaseButton";
 
 const nuxtApp = useNuxtApp();
 import {rates} from "../../../config/toysRates";
-import {computed} from "vue";
 import BaseIcon from "../../base/BaseIcon";
 import {useToysCartStore} from "../../../store/toys/basket";
 import {useAuthStore} from "../../../store/client/parent/auth";
 import AuthModal from "../auth/authModal";
 import BaseBackdrop from "../../base/BaseBackdrop";
 import {useRouter} from "nuxt/app";
+
+const props = defineProps({
+  title: {
+    type: String,
+    default: null
+  },
+  prices: {
+    type: Array,
+    default: () => rates.value
+  }
+});
 
 // Еденица длительности (нед, мес)
 const getDurationUnit = (duration) => duration < 1 ? nuxtApp.$t('week_short') : nuxtApp.$t('month_short');
@@ -184,7 +195,14 @@ const submitHandle = r => {
   }
 
   &__rate-price {
-    padding: 16px 0;
+    margin-top: 16px;
+    &--crossed {text-decoration:line-through}
+  }
+
+  &__rate-price-sale {
+    font-weight: bold;
+    font-size: $fs--title;
+    color: $color--orange;
   }
 
   &__rate-minuses {
@@ -208,6 +226,7 @@ const submitHandle = r => {
 
   &__submit {
     font-size: $fs--default;
+    margin-top: 16px;
   }
 
 }
