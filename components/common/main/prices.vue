@@ -51,7 +51,7 @@
         <base-icon class="thanks-window__icon" name="mdi-party-popper" size="70"/>
         <div class="thanks-window__title">{{ $t('thank_you_for_request') }}</div>
         <div class="thanks-window__subtitle">{{ $t('manager_calls_you') }}</div>
-        <base-button type="yellow" size="big" full-width @click="thanksWindow = false">{{ $t('go_main') }}</base-button>
+        <base-button type="yellow" size="big" full-width @click="goMain()">{{ $t('go_main') }}</base-button>
       </div>
     </base-backdrop>
   </div>
@@ -99,6 +99,11 @@ const submit = async () => {
   await toysCartStore.submitRequest(selectedRate.value);
   isLoading.value = false;
   thanksWindow.value = true;
+}
+
+const goMain = () => {
+  thanksWindow.value = false
+  router.push("/");
 }
 
 const openAuth = ref(false);
